@@ -1,0 +1,7 @@
+"campo","descricao"
+"Fonte dos dados","Ministerio da Saude"
+"Pesquisa","Vigitel"
+"Peso amostral","pesorake; para Populacao Negra, usa pesorake_cor quando disponivel"
+"Populacao alvo","Adultos com 18 anos ou mais nas capitais brasileiras e Distrito Federal"
+"Periodo","2006 a 2021 e 2023; sem microdados de 2022 no projeto"
+"Observacoes","Indicadores calculados por prevalencia ponderada conforme regras do dicionario"

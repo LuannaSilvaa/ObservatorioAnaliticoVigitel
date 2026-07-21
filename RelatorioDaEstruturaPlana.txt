@@ -1,0 +1,6 @@
+ESTRUTURA PLANA PARA GITHUB
+Arquivos na raiz: 81
+Pastas internas: 0
+Arquivos temáticos de idade detalhada: 9
+Indicadores preservados: 63
+Maior arquivo: BaseAgregadaCompletaDosIndicadoresParteUm.csv (21,41 MiB)

@@ -1,0 +1,17 @@
+VALIDAÇÃO COMPLETA DA BASE — V13.0 UNIFICADO
+==============================================================
+Indicadores: 63
+Linhas agregadas: 262,565
+Linhas de idade detalhada: 2,651,417
+Comparações principal × idade detalhada: 879
+Métodos documentados: 63
+Erros: 0
+Avisos: 1
+
+ERROS
+------
+Nenhum erro encontrado.
+
+AVISOS
+------
+A base incluída ainda usa pesos legados; o atualizador oficial está incluído no pacote.

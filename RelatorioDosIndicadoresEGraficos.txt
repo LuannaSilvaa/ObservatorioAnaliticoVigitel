@@ -1,0 +1,8 @@
+TESTE DE TODOS OS INDICADORES EM TODOS OS GRÁFICOS — V13.0 UNIFICADO
+==================================================================
+Indicadores: 63
+Tipos de gráfico: 13
+Combinações renderizadas: 819
+Falhas: 0
+
+Nenhuma falha encontrada.
