@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<!--
+  Página principal do Observatório Analítico de Indicadores do Vigitel.
+  A estrutura separa navegação, construção da análise, filtros, ResultadosProcessados e janelas auxiliares.
+  Ao incluir um novo recurso, mantenha os identificadores usados pelos arquivos JavaScript e confira a navegação por teclado.
+-->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Observatório Analítico de Indicadores do Vigitel</title>
+<meta content="#F7FAFD" id="themeColorMeta" name="theme-color"/>
+<meta content="Plataforma acadêmica para análise, comparação e visualização de indicadores do Vigitel." name="description"/>
+<meta content="Luanna Morais Alves da Silva" name="author"/>
+<meta content="index, follow" name="robots"/>
+<meta content="website" property="og:type"/>
+<meta content="Observatório Analítico de Indicadores do Vigitel" property="og:title"/>
+<meta content="Painel acadêmico para análise e visualização de indicadores de saúde pública do Vigitel." property="og:description"/>
+<link href="IdentidadeVisualDoObservatorio.svg" rel="icon" type="image/svg+xml"/>
+<link href="IdentidadeVisualDoObservatorio.css?edicao=consolidada" rel="stylesheet"/>
+<script src="ConfiguracaoDoTema.js?edicao=consolidada"></script>
+</head>
+<body>
+<header class="topbar">
+<div class="brand brand-emphasis">
+<svg aria-label="Logo do Observatório" class="site-logo" viewbox="0 0 84 84" xmlns="http://www.w3.org/2000/svg">
+<defs><lineargradient id="g" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#0d4f96"></stop><stop offset="1" stop-color="#11a7a1"></stop></lineargradient></defs>
+<rect fill="url(#g)" height="76" rx="20" width="76" x="4" y="4"></rect>
+<rect fill="#fff" height="16" rx="3" width="8" x="18" y="48"></rect><rect fill="#fff" height="28" rx="3" width="8" x="31" y="36"></rect><rect fill="#fff" height="38" rx="3" width="8" x="44" y="26"></rect>
+<path d="M18 27 C28 18, 40 18, 50 28 C57 35, 62 32, 67 22" fill="none" stroke="#dff7ff" stroke-linecap="round" stroke-width="5"></path>
+<circle cx="18" cy="27" fill="#dff7ff" r="4"></circle><circle cx="44" cy="26" fill="#dff7ff" r="4"></circle><circle cx="67" cy="22" fill="#dff7ff" r="4"></circle>
+</svg>
+<div class="brand-copy">
+<p class="brand-kicker">Observatório</p>
+<h1>Observatório Analítico de Indicadores do Vigitel</h1>
+<p class="brand-summary">Plataforma acadêmica para análise, comparação e visualização de indicadores de saúde pública.</p>
+<p class="creator-line">Projeto de extensão · LEPS/UFRN</p>
+</div>
+</div>
+<div class="header-side">
+<div class="header-side-top">
+<div class="ufrn-brand ufrn-compact">
+<svg aria-hidden="true" class="ufrn-logo" viewbox="0 0 54 54" xmlns="http://www.w3.org/2000/svg">
+<rect fill="#0b4285" height="50" rx="14" width="50" x="2" y="2"></rect>
+<rect fill="#fff" height="10" rx="2" width="5" x="12" y="32"></rect><rect fill="#fff" height="18" rx="2" width="5" x="21" y="24"></rect><rect fill="#fff" height="26" rx="2" width="5" x="30" y="16"></rect>
+</svg>
+<div class="ufrn-text"><strong>UFRN</strong><span>Universidade Federal do Rio Grande do Norte</span><small>LEPS · Laboratório de Estudos em População e Saúde</small></div>
+</div>
+<div aria-label="Alternar tema" class="theme-switcher" role="group">
+<button aria-pressed="false" class="theme-mode-btn" data-theme-mode="auto" id="themeModeAuto" title="Tema automático" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><rect fill="none" height="11" rx="2" stroke="currentColor" stroke-width="1.8" width="16" x="4" y="5"></rect><path d="M8 19h8" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg><span class="sr-only">Automático</span></button>
+<button aria-pressed="false" class="theme-mode-btn" data-theme-mode="light" id="themeModeLight" title="Tema claro" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="12" cy="12" fill="none" r="4" stroke="currentColor" stroke-width="1.9"></circle><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M18.7 5.3l-1.4 1.4M6.7 17.3l-1.4 1.4" stroke="currentColor" stroke-linecap="round" stroke-width="1.9"></path></svg><span class="sr-only">Claro</span></button>
+<button aria-pressed="false" class="theme-mode-btn" data-theme-mode="dark" id="themeModeDark" title="Tema escuro" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M20.4 15.3A8.5 8.5 0 0 1 8.7 3.6 8.5 8.5 0 1 0 20.4 15.3Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.9"></path></svg><span class="sr-only">Escuro</span></button>
+</div>
+</div>
+<nav aria-label="Menu principal" class="main-nav">
+<a class="active" href="#painel">▦ Painel</a>
+<a href="#metodologia">▤ Metodologia</a>
+<a href="#sobre">ⓘ Sobre</a>
+<a href="#contato">✉ Contato</a>
+<a href="#Microdados">↓ Microdados</a>
+<a href="#creditos">Créditos</a>
+</nav>
+</div>
+</header>
+<section aria-live="polite" class="base-version-banner" id="baseVersionBanner"><div><strong id="baseVersionName">Base incorporada v13.0</strong><span id="baseVersionDetails">Edições 2006–2021 e 2023; pesos originais das edições. A atualização harmonizada 2006–2024 deve ser feita na pasta de reprodução.</span></div></section>
+<button aria-controls="mobileFilterDrawer" aria-expanded="false" class="mobile-filter-button" id="mobileFilterButton" type="button">Filtros</button>
+<div class="mobile-filter-overlay" hidden="" id="mobileFilterOverlay"></div>
+<main class="workspace" id="painel">
+<aside class="left-panel">
+<div class="panel-title-row"><div><h2>Conjunto de tópicos e indicadores</h2><p>Arraste ou clique nos blocos para montar a análise.</p></div></div>
+<label class="search-box"><span>⌕</span><input id="searchInput" placeholder="Buscar indicadores..." type="search"/></label>
+<h3 class="group-title">1. Tema</h3><div class="block-group" id="themeBlocks"></div>
+<h3 class="group-title">2. Indicadores</h3><div class="block-group" id="indicatorBlocks"></div>
+<h3 class="group-title">3. Filtros</h3><div class="block-group" id="filterBlocks"></div>
+<h3 class="group-title">4. Gráfico</h3><div class="block-group" id="chartBlocks"></div>
+</aside>
+<section class="builder-panel">
+<div class="builder-head"><div><h2>Área de construção analítica</h2><p>Atualização automática ativa: qualquer alteração relevante é aplicada imediatamente ao gráfico e à tabela.</p></div><div class="builder-actions"><button class="btn" id="quickBuild">Montar automaticamente</button><button class="btn primary" id="generate">Gerar gráfico</button><button class="btn" id="clear">Limpar blocos</button></div></div>
+<div class="builder-flow">
+<div class="drop-slot" data-icon="▱" data-slot="theme"><span class="slot-label">1. Tema</span><div class="slot-content"></div></div>
+<div class="drop-slot" data-icon="⌁" data-slot="indicator"><span class="slot-label">2. Indicador</span><div class="slot-content"></div></div>
+<div class="drop-slot" data-icon="▽" data-slot="filters"><span class="slot-label">3. Filtros</span><div class="slot-content"></div></div>
+<div class="drop-slot" data-icon="▥" data-slot="chart"><span class="slot-label">4. Gráfico</span><div class="slot-content"></div></div>
+</div>
+<section class="results">
+<div class="results-head">
+<div><h2 id="resultTitle">Monte a análise</h2><p id="resultSubtitle">Use os blocos e os filtros para gerar o gráfico.</p></div><span class="badge"></span>
+<div class="export-row"><button class="btn primary" id="downloadImage" title="Baixar o gráfico como imagem PNG"><svg aria-hidden="true" viewbox="0 0 24 24"><rect fill="none" height="14" rx="2" stroke="currentColor" stroke-width="1.7" width="16" x="4" y="5"></rect><path d="m6 17 4.2-4 3 2.8 2.4-2.3L19 17" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"></path><circle cx="15.5" cy="9" fill="currentColor" r="1.5"></circle></svg>Baixar imagem PNG</button><button class="btn" id="downloadVectorSvg" title="Baixar o gráfico como imagem vetorial SVG"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M7 3h7l4 4v14H7V3Z" fill="none" stroke="currentColor" stroke-width="1.6"></path><path d="M14 3v5h5" fill="none" stroke="currentColor" stroke-width="1.6"></path><text fill="currentColor" font-size="4" font-weight="900" x="7.2" y="16.2">SVG</text></svg>Baixar SVG</button><button class="btn" id="downloadCsv"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M7 3h7l4 4v14H7V3Z" fill="none" stroke="currentColor" stroke-width="1.6"></path><path d="M14 3v5h5" fill="none" stroke="currentColor" stroke-width="1.6"></path><text fill="currentColor" font-size="4.2" font-weight="800" x="6.8" y="16">CSV</text></svg>Baixar análise CSV</button><button class="btn" id="downloadExcel"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M7 3h7l4 4v14H7V3Z" fill="none" stroke="currentColor" stroke-width="1.6"></path><path d="M14 3v5h5" fill="none" stroke="currentColor" stroke-width="1.6"></path><text fill="currentColor" font-size="4.2" font-weight="800" x="6.8" y="16">XLS</text></svg>Baixar análise Excel</button><button class="btn" id="downloadBaseCsv"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M5 7 12 3l7 4-7 4-7-4Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.7"></path><path d="M5 11 12 15l7-4M5 15l7 4 7-4" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.7"></path></svg>Baixar base CSV</button><button class="btn" id="downloadBaseExcel"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M5 7 12 3l7 4-7 4-7-4Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.7"></path><path d="M5 11 12 15l7-4M5 15l7 4 7-4" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.7"></path></svg>Baixar base Excel</button></div>
+<div class="export-options"><label class="export-field"><span>Preset de exportação</span><select id="exportPreset"><option value="auto">Automático</option><option value="a4-portrait">A4 retrato</option><option value="a4-landscape">A4 paisagem</option><option value="slide-16-9">Slide 16:9</option><option value="banner">Banner</option></select></label><label class="export-check"><input id="exportTransparentBg" type="checkbox"/> Fundo transparente</label></div>
+</div>
+<div class="chart-tools">
+<div class="chart-tool-group"><label class="chart-search" for="legendSearchInput"><span>Buscar na legenda</span><input id="legendSearchInput" placeholder="Ex.: 35 anos" type="search"/></label><button class="btn" id="clearLegendSearch" type="button">Limpar busca</button><button class="btn" id="showAllLegendItems" type="button">Mostrar todas</button></div>
+<div class="command-bar"><button class="btn" disabled="" id="undoAction" type="button">Desfazer</button><button class="btn" disabled="" id="redoAction" type="button">Refazer</button><button class="btn" id="saveAnalysisBtn" type="button">Salvar</button><button class="btn" id="versionHistoryBtn" type="button">Histórico</button><button class="btn" id="favoritesBtn" type="button">Favoritos</button><button class="btn" id="shareConfigBtn" type="button">Compartilhar</button><button class="btn" id="downloadReportPdf" type="button">Relatório PDF</button><button class="btn" id="openSelectedGlossary" type="button">Glossário</button><button class="btn" id="fullscreenChart" type="button">Tela cheia</button></div>
+<div class="compare-controls"><label><input id="compareEnabled" type="checkbox"/> Comparar indicadores</label><select aria-label="Segundo indicador para comparação" id="compareIndicator"></select></div>
+<span aria-live="polite" class="chart-save-status" id="analysisSaveStatus">A análise também é salva automaticamente.</span>
+</div>
+<div aria-live="polite" class="chart-explanation" id="chartExplanation"></div>
+<div aria-live="polite" class="chart-advice" id="chartAdvice" role="status"></div>
+<div aria-label="Área dos gráficos" class="chart-wrapper" id="chartWrapper" role="region"><div aria-hidden="true" class="loading-mask" id="chartLoading"><div class="loading-spinner"></div></div><div class="chart-comparison-grid" id="chartComparisonGrid"><div class="chart-comparison-item"><h3 class="chart-comparison-title" id="primaryChartLabel"></h3><div aria-live="polite" class="chart-card" id="chart"></div></div><div class="chart-comparison-item" id="compareChartItem"><h3 class="chart-comparison-title" id="secondaryChartLabel"></h3><div aria-live="polite" class="chart-card secondary" id="chartCompare"></div></div></div></div><p class="sr-only" id="chartAssistiveText">Use Tab para navegar até a legenda do gráfico. Pressione Enter ou Espaço em um item da legenda para ocultar ou mostrar categorias. O botão Tela cheia amplia a visualização.</p>
+<div class="table-tools"><div class="table-tool-group"><input id="tableSearch" placeholder="Buscar na tabela..." type="search"/><select id="tableSort"><option value="category-asc">Categoria A-Z</option><option value="category-desc">Categoria Z-A</option><option value="value-desc">Maior valor</option><option value="value-asc">Menor valor</option><option value="sample-desc">Maior amostra</option><option value="sample-asc">Menor amostra</option></select><select id="tablePageSize"><option value="10">10 por página</option><option selected="" value="25">25 por página</option><option value="50">50 por página</option><option value="100">100 por página</option></select></div><div class="table-tool-group"><button class="btn" id="tablePrev" type="button">Anterior</button><span class="table-status" id="tableStatus"></span><button class="btn" id="tableNext" type="button">Próxima</button></div></div>
+<div aria-label="Tabela de ResultadosProcessados" class="data-table-scroll" role="region" tabindex="0"><table class="data-table"><thead><tr><th>Indicador</th><th>Categoria</th><th>Valor (%)</th><th>IC 95% aproximado</th><th>CV aproximado (%)</th><th>Casos</th><th>Entrevistas</th><th>Precisão amostral</th><th>Fonte</th></tr></thead><tbody id="tableBody"></tbody></table></div>
+</section>
+</section>
+<aside aria-label="Filtros da análise" class="filter-panel" id="mobileFilterDrawer"><button aria-label="Fechar filtros" class="mobile-filter-close" id="mobileFilterClose" type="button">×</button>
+<div class="filter-top"><div class="filter-title"><span class="filter-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M4 5.5h16l-6.5 7.6V19l-3 1.6v-7.5L4 5.5Z" fill="none" stroke="#22e0ce" stroke-linejoin="round" stroke-width="1.9"></path></svg></span><h2>Filtros</h2></div><button class="clear-btn" id="clearFilters" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M8 8v11M12 8v11M16 8v11" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path><path d="M5 6h14M9 6V4h6v2M7 6l1 15h8l1-15" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span class="trash-label">Limpar</span></button></div>
+<details class="filter-cluster" open=""><summary><span class="ficon"><svg aria-hidden="true" viewbox="0 0 24 24"><rect fill="none" height="14.5" rx="2" stroke="#22e0ce" stroke-width="1.8" width="16" x="4" y="5.5"></rect><path d="M8 3.5v4M16 3.5v4M4 10h16" fill="none" stroke="#22e0ce" stroke-linecap="round" stroke-width="1.8"></path><path d="M8 13h2M12 13h2M16 13h1M8 16h2M12 16h2" stroke="#22e0ce" stroke-linecap="round" stroke-width="1.6"></path></svg></span> Período</summary><div class="cluster-body">
+<details class="mini-filter"><summary>Anos <span class="filter-summary-inline" id="yearSummary"></span></summary><div class="mini-filter-body"><div class="multi-actions"><button id="allYears" type="button">Todos</button><button id="noYears" type="button">Nenhum</button><button id="latestYear" type="button">Mais recente</button></div><div class="checkbox-list" id="yearChecks"></div></div></details>
+</div></details>
+<details class="filter-cluster" open=""><summary><span class="ficon"><svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="12" cy="7.3" fill="none" r="3" stroke="#22e0ce" stroke-width="1.8"></circle><path d="M5 20c.9-4.4 4-6.6 7-6.6s6.1 2.2 7 6.6" fill="none" stroke="#22e0ce" stroke-linecap="round" stroke-width="1.8"></path></svg></span><span class="cluster-title">Demográficos</span><button aria-label="Limpar filtros demográficos" class="cluster-trash" data-clear-section="demographic" title="Limpar filtros demográficos" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M8 8v11M12 8v11M16 8v11" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path><path d="M5 6h14M9 6V4h6v2M7 6l1 15h8l1-15" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span class="trash-label">Limpar</span></button></summary><div class="cluster-body">
+<div class="field"><label>Sexo</label><select id="sexFilter"></select></div>
+<details class="mini-filter"><summary>Idade detalhada <span class="filter-summary-inline" id="ageDetailSummary"></span></summary><div class="mini-filter-body"><div class="multi-actions"><button id="allAgeDetails" type="button">Todas</button><button id="noAgeDetails" type="button">Nenhuma</button></div><div class="checkbox-list" id="ageDetailChecks"></div></div></details>
+<details class="mini-filter"><summary>Faixa etária quinquenal <span class="filter-summary-inline" id="ageSummary"></span></summary><div class="mini-filter-body"><div class="multi-actions"><button id="allAges" type="button">Todas</button><button id="noAges" type="button">Nenhuma</button></div><div class="checkbox-list" id="ageChecks"></div></div></details>
+<div class="field"><label>Tipo de população</label><select id="popFilter"></select></div>
+</div></details>
+<details class="filter-cluster"><summary><span class="ficon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M12 21s7-6.2 7-12A7 7 0 0 0 5 9c0 5.8 7 12 7 12Z" fill="none" stroke="#22e0ce" stroke-linejoin="round" stroke-width="1.8"></path><circle cx="12" cy="9" fill="none" r="2.4" stroke="#22e0ce" stroke-width="1.8"></circle></svg></span><span class="cluster-title">Geográficos</span><button aria-label="Limpar filtros geográficos" class="cluster-trash" data-clear-section="geographic" title="Limpar filtros geográficos" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M8 8v11M12 8v11M16 8v11" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path><path d="M5 6h14M9 6V4h6v2M7 6l1 15h8l1-15" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span class="trash-label">Limpar</span></button></summary><div class="cluster-body"><div class="field"><label>Região</label><select id="regionFilter"></select></div><div class="field"><label>UF</label><select id="ufFilter"></select></div></div></details>
+<details class="filter-cluster"><summary><span class="ficon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M9.4 4.2 10 2h4l.6 2.2 2 .8 2-1.1 2.1 3.5-1.8 1.5.2 2.1 2 1.2-2 3.5-2.2-.8-1.7 1.2-.4 2.4h-4l-.6-2.3-1.9-.8-2.1 1.1-2-3.5 1.8-1.5-.1-2.1-2-1.2 2-3.5 2 .8 1.5-1.3Z" fill="none" stroke="#22e0ce" stroke-linejoin="round" stroke-width="1.55"></path><circle cx="12" cy="12" fill="none" r="3" stroke="#22e0ce" stroke-width="1.7"></circle></svg></span><span class="cluster-title">Outros filtros</span><button aria-label="Limpar outros filtros" class="cluster-trash" data-clear-section="other" title="Limpar outros filtros" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M8 8v11M12 8v11M16 8v11" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path><path d="M5 6h14M9 6V4h6v2M7 6l1 15h8l1-15" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span class="trash-label">Limpar</span></button></summary><div class="cluster-body"><div class="field"><label>Recorte do gráfico</label><select id="groupFilter"></select></div>
+<h4 class="mini-title">Edição do texto</h4>
+<div class="field"><label>Título personalizado</label><input id="customTitle" placeholder="Deixe vazio para usar o título automático" type="text"/></div>
+<div class="field"><label>Subtítulo personalizado</label><input id="customSubtitle" placeholder="Deixe vazio para usar o subtítulo automático" type="text"/></div>
+<div class="field"><label>Fonte da imagem</label><select id="fontFamily"><option>Arial</option><option>Georgia</option><option>Verdana</option><option>Times New Roman</option></select></div>
+<div class="field"><label>Alinhamento do título</label><select id="titleAlign"><option value="left">À esquerda</option><option value="center">Centralizado</option><option value="right">À direita</option></select></div>
+<div class="field"><label>Alinhamento do subtítulo</label><select id="subtitleAlign"><option value="left">À esquerda</option><option value="center">Centralizado</option><option value="right">À direita</option></select></div>
+<div class="field"><label>Tamanho do título</label><div class="range"><input id="titleSize" max="44" min="14" type="range" value="22"/><span id="titleSizeValue">22 px</span></div></div>
+<div class="field"><label>Tamanho do subtítulo</label><div class="range"><input id="subtitleSize" max="28" min="10" type="range" value="14"/><span id="subtitleSizeValue">14 px</span></div></div>
+<div class="field"><label>Tamanho geral da letra</label><div class="range"><input id="fontSize" max="30" min="10" type="range" value="18"/><span id="fontSizeValue">18 px</span></div></div>
+<div class="field"><label>Tamanho dos eixos</label><div class="range"><input id="axisSize" max="24" min="9" type="range" value="13"/><span id="axisSizeValue">13 px</span></div></div>
+<div class="field"><label>Tamanho dos valores</label><div class="range"><input id="valueSize" max="24" min="8" type="range" value="13"/><span id="valueSizeValue">13 px</span></div></div>
+<h4 class="mini-title">Cores e estilo</h4>
+<div class="color-field"><label>Cor principal</label><input id="primaryColor" type="color" value="#073B70"/></div>
+<div class="color-field"><label>Cor secundária</label><input id="secondaryColor" type="color" value="#0FA7A0"/></div>
+<div class="color-field"><label>Cor da letra</label><input id="textColor" type="color" value="#16324F"/></div>
+<div class="color-field"><label>Fundo da imagem</label><input id="chartBgColor" type="color" value="#FFFFFF"/></div>
+<div class="color-field"><label>Fundo da área do gráfico</label><input id="plotBgColor" type="color" value="#FFFFFF"/></div>
+<div class="color-field"><label>Cor da grade</label><input id="gridColor" type="color" value="#DDE7F2"/></div>
+<div class="color-field"><label>Cor da borda</label><input id="borderColor" type="color" value="#D6E1EE"/></div>
+<div class="field"><label>Paleta de cores</label><select id="paletteSelect"><option value="default">Profissional</option><option value="blue">Azul institucional</option><option value="green">Verde água</option><option value="warm">Cores quentes</option><option value="pastel">Pastel</option><option value="mono">Monocromática</option></select></div>
+<label><input checked="" id="showBorder" type="checkbox"/> Mostrar borda da imagem</label>
+<h4 class="mini-title">Eixos e rótulos</h4>
+<div class="field"><label>Título do eixo horizontal</label><input id="xAxisTitle" placeholder="Automático" type="text"/></div>
+<div class="field"><label>Título do eixo vertical</label><input id="yAxisTitle" placeholder="Automático" type="text"/></div>
+<label><input checked="" id="showXAxisTitle" type="checkbox"/> Mostrar título do eixo horizontal</label>
+<label><input checked="" id="showYAxisTitle" type="checkbox"/> Mostrar título do eixo vertical</label>
+<label><input checked="" id="showAxisLabels" type="checkbox"/> Mostrar valores dos eixos</label>
+<label><input checked="" id="showGrid" type="checkbox"/> Mostrar grade de apoio</label>
+<div class="field"><label>Rotação dos rótulos</label><select id="labelRotation"><option value="auto">Automática</option><option value="0">0°</option><option value="35">35°</option><option value="45">45°</option><option value="60">60°</option></select></div>
+<div class="field"><label>Casas decimais</label><select id="decimalPlaces"><option value="0">0</option><option selected="" value="1">1</option><option value="2">2</option></select></div>
+<div class="field"><label>Ordenação</label><select id="sortOrder"><option value="original">Original</option><option value="desc">Maior para menor</option><option value="asc">Menor para maior</option></select></div>
+<h4 class="mini-title">Valores, legenda e fonte</h4>
+<label><input checked="" id="showValues" type="checkbox"/> Mostrar valores no gráfico</label>
+<div class="field"><label>Posição dos valores</label><select id="valuePosition"><option value="outside">Fora</option><option value="inside">Dentro</option><option value="none">Ocultar</option></select></div>
+<label><input checked="" id="showLegend" type="checkbox"/> Mostrar legenda quando aplicável</label>
+<div class="field"><label>Posição da legenda</label><select id="legendPosition"><option value="right">À direita</option><option value="bottom">Embaixo</option></select></div>
+<div class="field"><label>Tamanho da legenda</label><div class="range"><input id="legendSize" max="30" min="8" type="range" value="13"/><span id="legendSizeValue">13 px</span></div></div>
+<label><input checked="" id="showSource" type="checkbox"/> Mostrar fonte</label>
+<div class="field"><label>Alinhamento da fonte</label><select id="sourceAlign"><option value="left">À esquerda</option><option value="center">Centralizada</option><option value="right">À direita</option></select></div>
+<div class="field"><label>Texto da fonte</label><input id="sourceText" placeholder="Fonte automática" type="text"/></div>
+<h4 class="mini-title">Ajustes específicos</h4>
+<div class="field"><label>Largura das barras</label><div class="range"><input id="barWidthScale" max="120" min="40" type="range" value="70"/><span id="barWidthScaleValue">70%</span></div></div>
+<div class="field"><label>Espessura da linha</label><div class="range"><input id="lineWidth" max="10" min="1" type="range" value="4"/><span id="lineWidthValue">4 px</span></div></div>
+<div class="field"><label>Tamanho dos pontos</label><div class="range"><input id="pointSize" max="12" min="0" type="range" value="5"/><span id="pointSizeValue">5 px</span></div></div>
+<label><input checked="" id="showPoints" type="checkbox"/> Mostrar pontos nas linhas</label>
+<div class="field"><label>Tamanho do furo da rosca</label><div class="range"><input id="donutHole" max="75" min="25" type="range" value="45"/><span id="donutHoleValue">45%</span></div></div>
+<label><input checked="" id="showTreemapLabels" type="checkbox"/> Mostrar textos no treemap</label>
+<h4 class="mini-title">Presets e aparência</h4>
+<p class="panel-subtitle">Escolha um visual pronto para apresentação, impressão ou alto contraste.</p>
+<div class="preset-grid"><button class="preset-btn" id="presetDefault" type="button">Padrão</button><button class="preset-btn" id="presetPresentation" type="button">Apresentação</button><button class="preset-btn" id="presetPrint" type="button">Impressão</button><button class="preset-btn" id="presetContrast" type="button">Alto contraste</button></div>
+<div class="appearance-actions"><button class="clear-btn" id="restoreAppearance" type="button">Restaurar aparência padrão</button></div></div></details>
+<div class="status" hidden="" id="dataStatus"></div>
+</aside>
+</main>
+<section class="info-section" id="metodologia">
+<h2>Metodologia e fontes</h2>
+<p class="panel-subtitle">O Observatório Analítico do Vigitel apresenta indicadores de saúde pública em formato interativo, permitindo consultar tendências, comparar recortes populacionais e baixar os ResultadosProcessados exibidos no painel. A plataforma utiliza dados do Vigitel, do Ministério da Saúde, organizados para facilitar a leitura por estudantes, pesquisadores, profissionais de saúde, gestores e demais pessoas interessadas em informações sobre fatores de risco e proteção para doenças crônicas.</p>
+<div class="info-grid">
+<article class="info-card"><h3>Fonte dos dados</h3><p>Os indicadores são baseados no Vigitel, sistema de vigilância que acompanha, por inquérito telefônico, fatores de risco e proteção para doenças crônicas nas capitais brasileiras e no Distrito Federal. A identificação da fonte aparece nos gráficos, nas tabelas e nas áreas de download.</p></article>
+<article class="info-card"><h3>Leitura dos ResultadosProcessados</h3><p>Os valores são apresentados em percentual e representam a prevalência estimada do indicador no recorte selecionado. Os filtros permitem observar diferenças por período, sexo, região, UF, idade, faixa etária e tipo de população.</p></article>
+<article class="info-card"><h3>Recortes disponíveis</h3><p>O painel permite análises por ano, localização, sexo, idade detalhada, faixa etária quinquenal e tipo de população. Quando nenhuma opção específica é marcada, o painel considera o conjunto completo disponível para aquele filtro.</p></article>
+<article class="info-card"><h3>Gráficos e tabelas</h3><p>Após selecionar tema, indicador, filtros e tipo de gráfico, a plataforma gera uma visualização com título, subtítulo, fonte e tabela de apoio. As informações foram organizadas para que o gráfico possa ser compreendido mesmo fora do ambiente do site.</p></article>
+<article class="info-card"><h3>Exportações</h3><p>O usuário pode baixar a análise em CSV ou Excel, exportar a base filtrada e salvar o gráfico em PNG ou SVG vetorial. Esses recursos apoiam relatórios, apresentações, estudos acadêmicos e materiais de divulgação.</p></article>
+<article class="info-card"><h3>Transparência</h3><p>O projeto disponibiliza os arquivos utilizados para ampliar a transparência e permitir consulta, conferência e reprodução das análises por outros usuários.</p></article>
+</div>
+</section>
+<section class="info-section" id="sobre">
+<h2>Sobre o projeto</h2>
+<p class="panel-subtitle">O Observatório Analítico do Vigitel é uma plataforma acadêmica de consulta e visualização de indicadores de saúde pública. Seu objetivo é transformar dados complexos em gráficos e tabelas de fácil leitura, ajudando o usuário a compreender padrões relacionados a hábitos, comportamentos e condições de saúde da população adulta brasileira.</p>
+<div class="info-grid">
+<article class="info-card"><h3>Objetivo</h3><p>Facilitar o acesso a indicadores do Vigitel por meio de uma interface visual, organizada e interativa, sem exigir que o usuário manipule planilhas ou escreva código para gerar análises.</p></article>
+<article class="info-card"><h3>Como usar</h3><p>A análise é montada em quatro etapas: escolha um tema e indicador, defina os filtros desejados, selecione o tipo de gráfico e gere a visualização. O resultado pode ser consultado na tela ou baixado em diferentes formatos.</p></article>
+<article class="info-card"><h3>Temas disponíveis</h3><p>O painel reúne indicadores relacionados a tabagismo, álcool, obesidade, alimentação, atividade física, autoavaliação de saúde, prevenção de câncer, morbidade referida e trânsito.</p></article>
+<article class="info-card"><h3>Público de interesse</h3><p>A ferramenta pode ser usada por estudantes, pesquisadores, profissionais de saúde, gestores públicos, extensionistas e pessoas interessadas em acompanhar indicadores de saúde no Brasil.</p></article>
+<article class="info-card"><h3>Período coberto</h3><p>A versão atual reúne dados de 2006 a 2023, exceto 2022, conforme a disponibilidade da base utilizada. O painel também considera a base específica de População Negra de 2018 quando aplicável.</p></article>
+<article class="info-card"><h3>Uso dos ResultadosProcessados</h3><p>Os gráficos e tabelas podem apoiar estudos acadêmicos, apresentações, relatórios técnicos, materiais de extensão e atividades de divulgação de dados em saúde pública.</p></article>
+</div>
+</section>
+<section class="info-section" id="contato">
+<h2>Contato e feedback</h2>
+<p class="panel-subtitle">O feedback dos usuários ajuda a melhorar a clareza dos textos, a organização dos filtros, a experiência de navegação e a qualidade das visualizações. Sugestões sobre indicadores, gráficos, acessibilidade e forma de apresentação dos dados podem orientar futuras melhorias do observatório.</p>
+<div class="info-grid">
+<article class="info-card"><h3>Responsável pelo projeto</h3><p>Luanna Morais Alves da Silva.</p></article>
+<article class="info-card"><h3>Instituição</h3><p>Universidade Federal do Rio Grande do Norte — UFRN.</p></article>
+<article class="info-card"><h3>Laboratório</h3><p>LEPS — Laboratório de Estudos em População e Saúde.</p></article>
+<article class="info-card"><h3>Finalidade</h3><p>Disponibilizar uma ferramenta acadêmica e pública para visualização, comparação e exportação de indicadores de saúde.</p></article>
+<article class="info-card"><h3>Melhorias esperadas</h3><p>Comentários dos usuários podem contribuir para aprimorar filtros, títulos, legendas, textos explicativos, exportações e adaptação para diferentes telas.</p></article>
+<article class="info-card"><h3>Evoluções futuras</h3><p>Novas versões podem incluir tutoriais, indicadores adicionais, recursos de acessibilidade, novos formatos de visualização e atualizações da base de dados.</p></article>
+</div>
+</section>
+<section class="info-section" id="creditos">
+<h2>Créditos institucionais e fontes de referência</h2>
+<p class="panel-subtitle">
+    Este observatório utiliza dados e referências institucionais relacionados à saúde pública, à demografia e à Universidade Federal do Rio Grande do Norte. Os links abaixo direcionam o usuário para as páginas oficiais associadas ao contexto acadêmico e institucional do projeto.
+  </p>
+<div class="info-grid credits-grid">
+<article class="info-card credit-card">
+<h3>Vigitel / Ministério da Saúde</h3>
+<p>Fonte principal dos indicadores de vigilância de fatores de risco e proteção para doenças crônicas utilizados neste painel.</p>
+<a href="https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/v/vigitel" rel="noopener noreferrer" target="_blank">Acessar página do Vigitel</a>
+</article>
+<article class="info-card credit-card">
+<h3>UFRN</h3>
+<p>Instituição de referência do projeto e espaço acadêmico de formação, pesquisa e extensão.</p>
+<a href="https://www.ufrn.br/" rel="noopener noreferrer" target="_blank">Acessar site da UFRN</a>
+</article>
+<article class="info-card credit-card">
+<h3>CCET / UFRN</h3>
+<p>Centro acadêmico da UFRN relacionado às áreas de ciências exatas, estatística, tecnologia e produção de conhecimento científico.</p>
+<a href="https://www.ccet.ufrn.br/" rel="noopener noreferrer" target="_blank">Acessar site do CCET</a>
+</article>
+<article class="info-card credit-card">
+<h3>Pós-Graduação / UFRN</h3>
+<p>Página institucional da pós-graduação vinculada ao contexto acadêmico e científico da UFRN.</p>
+<a href="https://posgraduacao.ufrn.br/5570" rel="noopener noreferrer" target="_blank">Acessar página da pós-graduação</a>
+</article>
+<article class="info-card credit-card">
+<h3>Demografia UFRN</h3>
+<p>Portal relacionado à produção, divulgação e circulação de informações em demografia, população e saúde.</p>
+<a href="https://demografiaufrn.net/" rel="noopener noreferrer" target="_blank">Acessar Demografia UFRN</a>
+</article>
+<article class="info-card credit-card">
+<h3>Uso acadêmico</h3>
+<p>Ao utilizar gráficos, tabelas ou arquivos baixados neste painel, recomenda-se indicar o Vigitel/Ministério da Saúde como fonte dos dados e mencionar o Observatório Analítico do Vigitel como ferramenta de visualização.</p>
+</article>
+</div>
+</section>
+<section class="info-section" id="Microdados">
+<h2>Microdados e arquivos para download</h2>
+<p class="panel-subtitle">Esta seção reúne os arquivos disponíveis para consulta e download. O acesso aos Microdados e às bases tratadas permite maior transparência, conferência dos ResultadosProcessados e desenvolvimento de análises próprias fora do painel.</p>
+<div class="info-grid">
+<article class="info-card"><h3>Microdados e reprodução</h3><p>Os microdados não são redistribuídos neste repositório. A pasta <strong>Reproducao</strong> contém os scripts, os dicionários e os testes necessários para atualizar o painel após a obtenção dos arquivos oficiais.</p><a href="https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/v/vigitel" rel="noopener noreferrer" target="_blank">Consultar a página oficial do Vigitel</a></article>
+</div>
+</section>
+<dialog class="app-dialog" id="favoritesDialog"><div class="dialog-head"><h2>Análises favoritas</h2><button aria-label="Fechar" class="dialog-close" data-close-dialog="favoritesDialog" type="button">×</button></div><div class="dialog-body"><div class="favorite-save-row"><input id="favoriteName" maxlength="80" placeholder="Nome da análise" type="text"/><button class="btn primary" id="saveFavoriteBtn" type="button">Salvar favorita</button></div><div class="favorite-list" id="favoriteList"></div></div></dialog>
+<dialog class="app-dialog" id="versionHistoryDialog"><div class="dialog-head"><h2>Histórico de versões da análise</h2><button aria-label="Fechar" class="dialog-close" data-close-dialog="versionHistoryDialog" type="button">×</button></div><div class="dialog-body"><div class="version-toolbar"><p>As versões ficam guardadas neste navegador. Abra uma versão anterior para recuperar filtros, gráfico, aparência e comparação.</p><button class="btn" id="clearVersionHistory" type="button">Limpar histórico</button></div><div class="version-list" id="versionHistoryList"></div></div></dialog>
+<dialog class="app-dialog" id="testsDialog"><div class="dialog-head"><h2>Verificação automática do sistema</h2><button aria-label="Fechar" class="dialog-close" data-close-dialog="testsDialog" type="button">×</button></div><div class="dialog-body"><div class="test-summary" id="testSummary"></div><div class="test-list" id="testList"></div></div></dialog>
+<section aria-hidden="true" class="report-print-area" id="reportPrintArea"></section>
+<dialog aria-labelledby="glossaryDialogTitle" class="app-dialog glossary-dialog" id="glossaryDialog">
+<div class="dialog-head"><div><span class="eyebrow">Ajuda contextual</span><h2 id="glossaryDialogTitle">Glossário dos indicadores</h2></div><button aria-label="Fechar" class="dialog-close" data-close-dialog="glossaryDialog" type="button">×</button></div>
+<label class="dialog-search"><span>Buscar indicador</span><input id="glossarySearch" placeholder="Digite o nome ou código" type="search"/></label>
+<div class="glossary-layout"><nav aria-label="Lista de indicadores" class="glossary-list" id="glossaryList"></nav><article class="glossary-content" id="glossaryContent"><p>Selecione um indicador para ver definição, fórmula, população analisada e cuidados de interpretação.</p></article></div>
+</dialog>
+<script defer="" src="BaseAnaliticaDoVigitel.js?edicao=consolidada"></script>
+<script defer="" src="CatalogoDeIdadeDetalhada.js?edicao=consolidada"></script>
+<script defer="" src="MetodologiaDosIndicadores.js?edicao=consolidada"></script>
+<script defer="" src="SistemaAnaliticoDoVigitel.js?edicao=consolidada"></script>
+<script defer="" src="GlossarioMetodologico.js?edicao=consolidada"></script>
+<script defer="" src="InterfaceResponsiva.js?edicao=consolidada"></script>
+<script defer="" src="InicializacaoDoObservatorio.js?edicao=consolidada"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Marca visual do Observatório. Alterações devem preservar o contraste e a leitura em tamanhos reduzidos. -->
+  <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#0d4f96"/><stop offset="1" stop-color="#11a7a1"/></linearGradient></defs>
+  <rect width="64" height="64" rx="16" fill="url(#g)"/>
+  <rect x="13" y="37" width="7" height="14" rx="2" fill="#fff"/>
+  <rect x="27" y="28" width="7" height="23" rx="2" fill="#fff"/>
+  <rect x="41" y="18" width="7" height="33" rx="2" fill="#fff"/>
+  <path d="M13 22c9-8 18-8 27 0 5 5 8 3 12-3" fill="none" stroke="#dff7ff" stroke-width="4" stroke-linecap="round"/>
+</svg>
