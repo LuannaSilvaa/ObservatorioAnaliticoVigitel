@@ -205,6 +205,20 @@ def main() -> int:
 
     import RecalculoDosIndicadores as engine
 
+    def load_existing_metadata_robust():
+        text = (ROOT / "BaseAnaliticaDoVigitel.js").read_text(encoding="utf-8")
+        marker = "const DATA = "
+        start = text.index(marker) + len(marker)
+        data, _ = json.JSONDecoder().raw_decode(text[start:])
+        indicators = data["indicators"]
+        for item in indicators:
+            if item["id"] in engine.LABEL_OVERRIDES:
+                item["label"], item["description"] = engine.LABEL_OVERRIDES[item["id"]]
+            item["unit"] = "%"
+            item["classification"] = engine.CLASSIFICATIONS.get(item["id"], "Derivado/recorte validado")
+        return data["themes"], indicators
+
+    engine.load_existing_metadata = load_existing_metadata_robust
     engine.YEAR_WORDS = {str(year): f"Ano{year}" for year in years}
     engine.FILE_YEAR_TOKENS = {f"Ano{year}": str(year) for year in years}
     engine.YEARS = [str(year) for year in years]
