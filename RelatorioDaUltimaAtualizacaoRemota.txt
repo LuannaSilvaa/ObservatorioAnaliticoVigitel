@@ -2,3 +2,35 @@ ATUALIZAÇÃO REMOTA DO OBSERVATÓRIO VIGITEL
 Arquivo: vigitel-2006-2024-peso-rake.csv
 Início: 2026-07-23T23:23:51Z
 
+To https://github.com/LuannaSilvaa/ObservatorioAnaliticoVigitel
+   f1348cc..c16a25e  HEAD -> main
+
+===== Preparação e recálculo =====
+CSV detectado: separador=','; codificação=latin1; colunas utilizadas=52 de 486
+Traceback (most recent call last):
+  File "/home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py", line 99, in <module>
+    raise SystemExit(processador.main())
+                     ^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemota.py", line 195, in main
+    read_csv_chunks(source, writer)
+  File "/home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py", line 77, in ler_csv_em_blocos
+    for numero, bloco in enumerate(
+                         ^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/pandas/io/parsers/readers.py", line 1866, in __next__
+    return self.get_chunk()
+           ^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/pandas/io/parsers/readers.py", line 2012, in get_chunk
+    return self.read(nrows=size)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/pandas/io/parsers/readers.py", line 1947, in read
+    ) = self._engine.read(  # type: ignore[attr-defined]
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/pandas/io/parsers/c_parser_wrapper.py", line 217, in read
+    data = _concatenate_chunks(chunks, self.names)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/pandas/io/parsers/c_parser_wrapper.py", line 361, in _concatenate_chunks
+    warning_columns.append(column_names[name])
+                           ~~~~~~~~~~~~^^^^^^
+IndexError: list index out of range
+
+FALHA: Falha na preparação ou no recálculo.

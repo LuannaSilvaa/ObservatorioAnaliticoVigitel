@@ -1,7 +1,7 @@
 {
-  "status": "processing",
-  "updatedAt": "2026-07-23T23:23:51Z",
-  "message": "A base foi recebida e está sendo preparada para recálculo.",
+  "status": "error",
+  "updatedAt": "2026-07-23T23:23:55Z",
+  "message": "A atualização foi recusada:     for numero, bloco in enumerate(                          ^^^^^^^^^^   File \"/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/pandas/io/parsers/readers.py\", line 1866, in __next__     return self.get_chunk()            ^^^^^^^^^^^^^^^^   File \"/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/pandas/io/parsers/readers.py\", line 2012, in get_chunk     return self.read(nrows=size)            ^^^^^^^^^^^^^^^^^^^^^   File \"/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/pandas/io/parsers/readers.py\", line 1947, in read     ) = self._engine.read(  # type: ignore[attr-defined]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   File \"/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/pandas/io/parsers/c_parser_wrapper.py\", line 217, in read     data = _concatenate_chunks(chunks, self.names)            ^^^^^. A base pública anterior foi preservada.",
   "sourceFile": "vigitel-2006-2024-peso-rake.csv",
   "requestId": "358930099"
 }
