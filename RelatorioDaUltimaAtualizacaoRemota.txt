@@ -1,0 +1,242 @@
+DIAGNÓSTICO DA ATUALIZAÇÃO REMOTA DO VIGITEL
+Execução: 30051660970
+Registrado em: 2026-07-23T23:22:30Z
+
+atualizar	Processar, validar e publicar para todos	﻿2026-07-23T22:58:26.2148914Z ##[group]Run set -u
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2149939Z ^[[36;1mset -u^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2150314Z ^[[36;1mgit config user.name "Observatório Vigitel - Administração remota"^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2150880Z ^[[36;1mgit config user.email "41898282+github-actions[bot]@users.noreply.github.com"^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2151298Z ^[[36;1m^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2151549Z ^[[36;1mLOG="RelatorioDaUltimaAtualizacaoRemota.txt"^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2151863Z ^[[36;1m: > "$LOG"^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2152419Z ^[[36;1mprintf 'ATUALIZAÇÃO REMOTA DO OBSERVATÓRIO VIGITEL\nArquivo: %s\nInício: %s\n\n' "$BASE_NAME" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$LOG"^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2153009Z ^[[36;1m^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2153210Z ^[[36;1mescrever_estado() {^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2153496Z ^[[36;1m  STATUS="$1" MENSAGEM="$2" python - <<'PY'^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2153822Z ^[[36;1mimport json, os^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2154083Z ^[[36;1mfrom datetime import datetime, timezone^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2154376Z ^[[36;1mestado = {^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2154653Z ^[[36;1m    "status": os.environ["STATUS"],^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2155164Z ^[[36;1m    "updatedAt": datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2155683Z ^[[36;1m    "message": os.environ["MENSAGEM"],^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2156000Z ^[[36;1m    "sourceFile": os.environ["BASE_NAME"],^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2156319Z ^[[36;1m    "requestId": os.environ["RELEASE_ID"],^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2156602Z ^[[36;1m}^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2157083Z ^[[36;1mopen("EstadoDaAtualizacao.json", "w", encoding="utf-8").write(json.dumps(estado, ensure_ascii=False, indent=2) + "\n")^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2157617Z ^[[36;1mPY^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2157810Z ^[[36;1m}^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2157984Z ^[[36;1m^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2158177Z ^[[36;1mpublicar_estado() {^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2158515Z ^[[36;1m  git add EstadoDaAtualizacao.json "$LOG" 2>/dev/null || true^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2158910Z ^[[36;1m  git commit -m "$1" >/dev/null 2>&1 || true^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2159557Z ^[[36;1m  git push origin HEAD:main >> "$LOG" 2>&1 || true^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2159876Z ^[[36;1m}^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2160061Z ^[[36;1m^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2160243Z ^[[36;1mfalhar() {^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2160453Z ^[[36;1m  CODIGO="$1"^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2160674Z ^[[36;1m  MOTIVO="$2"^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2160923Z ^[[36;1m  printf '\nFALHA: %s\n' "$MOTIVO" >> "$LOG"^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2161302Z ^[[36;1m  cp "$LOG" /tmp/RelatorioDaUltimaAtualizacaoRemota.txt^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2161691Z ^[[36;1m  git fetch origin main >/dev/null 2>&1 || true^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2162057Z ^[[36;1m  git reset --hard origin/main >/dev/null 2>&1 || true^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2162399Z ^[[36;1m  git clean -fd >/dev/null 2>&1 || true^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2162773Z ^[[36;1m  cp /tmp/RelatorioDaUltimaAtualizacaoRemota.txt "$LOG"^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2163194Z ^[[36;1m  DETALHE=$(tail -n 20 "$LOG" | tr '\n' ' ' | cut -c1-900)^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2163774Z ^[[36;1m  escrever_estado "error" "A atualização foi recusada: $DETALHE. A base pública anterior foi preservada."^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2164320Z ^[[36;1m  git add EstadoDaAtualizacao.json "$LOG"^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2164831Z ^[[36;1m  git commit -m "Registra detalhes da falha na atualização remota do Vigitel" >/dev/null 2>&1 || true^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2165371Z ^[[36;1m  git pull --rebase origin main >> "$LOG" 2>&1 || true^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2165740Z ^[[36;1m  git push origin HEAD:main >> "$LOG" 2>&1 || true^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2166191Z ^[[36;1m  gh api -X POST "repos/$GITHUB_REPOSITORY/pages/builds" >/dev/null 2>&1 || true^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2166768Z ^[[36;1m  NOME=$(jq -r '.name // "Atualização do Vigitel"' /tmp/pedido.json | sed 's/^\[ERRO\] //')^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2167339Z ^[[36;1m  CORPO=$(jq -r '.body // ""' /tmp/pedido.json | sed '/<!-- vigitel-status:erro -->/,$d')^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2168333Z ^[[36;1m  MENSAGEM=$(printf '%s\n\n%s\n%s\n%s\n' "$CORPO" '<!-- vigitel-status:erro -->' 'A base foi recusada e a versão pública anterior foi mantida.' "$DETALHE")^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2169657Z ^[[36;1m  gh api -X PATCH "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID" -f name="[ERRO] $NOME" -f body="$MENSAGEM" >/dev/null 2>&1 || true^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2170243Z ^[[36;1m  exit "$CODIGO"^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2170467Z ^[[36;1m}^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2170646Z ^[[36;1m^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2170830Z ^[[36;1mexecutar() {^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2171045Z ^[[36;1m  TITULO="$1"^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2171257Z ^[[36;1m  shift^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2171519Z ^[[36;1m  printf '\n===== %s =====\n' "$TITULO" | tee -a "$LOG"^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2171845Z ^[[36;1m  "$@" 2>&1 | tee -a "$LOG"^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2172140Z ^[[36;1m  return ${PIPESTATUS[0]}^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2172389Z ^[[36;1m}^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2172577Z ^[[36;1m^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2172959Z ^[[36;1mescrever_estado "processing" "A base foi recebida e está sendo preparada para recálculo."^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2173543Z ^[[36;1mpublicar_estado "Registra início da atualização remota do Vigitel"^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2173931Z ^[[36;1m^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2174665Z ^[[36;1mexecutar "Preparação e recálculo" python ProcessarAtualizacaoRemotaOtimizado.py --base "$BASE_FILE" --source-name "$BASE_NAME" || falhar $? "Falha na preparação ou no recálculo."^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2175823Z ^[[36;1mexecutar "Validação da base completa" python ValidacaoDaBaseCompleta.py || falhar $? "Falha na validação da base completa."^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2176763Z ^[[36;1mexecutar "Teste dos indicadores e gráficos" node TesteDosIndicadoresEGraficos.js || falhar $? "Falha no teste dos indicadores e gráficos."^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2177699Z ^[[36;1mexecutar "Validação da publicação" python ValidacaoDaPublicacaoNoGitHub.py || falhar $? "Falha na validação da publicação."^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2178280Z ^[[36;1m^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2178567Z ^[[36;1mif [ -n "${DICTIONARY_FILE:-}" ] && [ -f "$DICTIONARY_FILE" ]; then^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2179452Z ^[[36;1m  rm -f DicionarioDosDadosDoVigitel.csv DicionarioDosDadosDoVigitel.xls DicionarioDosDadosDoVigitel.xlsm^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2180131Z ^[[36;1m  EXT=$(printf '%s' "${DICTIONARY_FILE##*.}" | tr '[:upper:]' '[:lower:]')^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2180597Z ^[[36;1m  cp "$DICTIONARY_FILE" "DicionarioDosDadosDoVigitel.$EXT"^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2180946Z ^[[36;1mfi^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2181146Z ^[[36;1mrm -rf Microdados^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2181373Z ^[[36;1m^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2181555Z ^[[36;1mARQUIVOS=(^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2181782Z ^[[36;1m  BaseAnaliticaDoVigitel.js^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2182066Z ^[[36;1m  CatalogoDeIdadeDetalhada.js^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2182373Z ^[[36;1m  MetodologiaDosIndicadores.js^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2182675Z ^[[36;1m  DadosIdadeDetalhadaTabagismo.js^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2182976Z ^[[36;1m  DadosIdadeDetalhadaAlcool.js^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2183308Z ^[[36;1m  DadosIdadeDetalhadaEstadoNutricional.js^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2183652Z ^[[36;1m  DadosIdadeDetalhadaAlimentacao.js^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2183990Z ^[[36;1m  DadosIdadeDetalhadaAtividadeFisica.js^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2184355Z ^[[36;1m  DadosIdadeDetalhadaAutoavaliacaoDeSaude.js^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2184736Z ^[[36;1m  DadosIdadeDetalhadaPrevencaoDoCancer.js^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2185088Z ^[[36;1m  DadosIdadeDetalhadaMorbidades.js^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2185426Z ^[[36;1m  DadosIdadeDetalhadaConducaoETransito.js^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2185757Z ^[[36;1m  RelatorioDaValidacaoDaBase.txt^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2186078Z ^[[36;1m  RelatorioDosIndicadoresEGraficos.txt^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2186428Z ^[[36;1m  RelatorioDeValidacaoDosIndicadores.txt^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2186726Z ^[[36;1m)^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2186904Z ^[[36;1m^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2187175Z ^[[36;1mprintf '\n===== TAMANHOS DOS ARQUIVOS GERADOS =====\n' >> "$LOG"^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2187678Z ^[[36;1mGRANDES=""^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2187910Z ^[[36;1mfor ARQUIVO in "${ARQUIVOS[@]}"; do^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2188196Z ^[[36;1m  if [ -f "$ARQUIVO" ]; then^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2188593Z ^[[36;1m    TAMANHO=$(stat -c%s "$ARQUIVO")^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2189127Z ^[[36;1m    printf '%12s bytes  %s\n' "$TAMANHO" "$ARQUIVO" >> "$LOG"^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2189533Z ^[[36;1m    if [ "$TAMANHO" -ge 99000000 ]; then^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2189837Z ^[[36;1m      GRANDES="$GRANDES $ARQUIVO"^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2190105Z ^[[36;1m    fi^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2190291Z ^[[36;1m  fi^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2190477Z ^[[36;1mdone^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2190674Z ^[[36;1mif [ -n "$GRANDES" ]; then^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2191033Z ^[[36;1m  falhar 90 "Arquivos gerados excedem o limite do GitHub:$GRANDES"^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2191395Z ^[[36;1mfi^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2191573Z ^[[36;1m^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2191763Z ^[[36;1mANOS=$(python - <<'PY'^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2192015Z ^[[36;1mimport json^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2192350Z ^[[36;1mtexto = open("BaseAnaliticaDoVigitel.js", encoding="utf-8").read()^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2192744Z ^[[36;1mmarcador = "const DATA = "^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2193074Z ^[[36;1minicio = texto.index(marcador) + len(marcador)^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2193474Z ^[[36;1mdados, _ = json.JSONDecoder().raw_decode(texto[inicio:])^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2193916Z ^[[36;1mprint(json.dumps(dados["dims"]["years"], ensure_ascii=False))^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2194271Z ^[[36;1mPY^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2194564Z ^[[36;1m) || falhar $? "Não foi possível ler os anos da base processada."^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2194921Z ^[[36;1m^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2195410Z ^[[36;1mSTATUS="success" MENSAGEM="Base recalculada, validada e publicada para todos os usuários." ANOS="$ANOS" python - <<'PY'^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2195979Z ^[[36;1mimport json, os^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2196242Z ^[[36;1mfrom datetime import datetime, timezone^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2196539Z ^[[36;1mestado = {^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2196775Z ^[[36;1m    "status": os.environ["STATUS"],^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2197277Z ^[[36;1m    "updatedAt": datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2197799Z ^[[36;1m    "message": os.environ["MENSAGEM"],^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2198116Z ^[[36;1m    "sourceFile": os.environ["BASE_NAME"],^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2198436Z ^[[36;1m    "requestId": os.environ["RELEASE_ID"],^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2198762Z ^[[36;1m    "years": json.loads(os.environ["ANOS"]),^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2199292Z ^[[36;1m}^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2199785Z ^[[36;1mopen("EstadoDaAtualizacao.json", "w", encoding="utf-8").write(json.dumps(estado, ensure_ascii=False, indent=2) + "\n")^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2200328Z ^[[36;1mPY^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2200635Z ^[[36;1mprintf '\nConcluído: %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$LOG"^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2201004Z ^[[36;1m^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2201361Z ^[[36;1mARQUIVOS+=(EstadoDaAtualizacao.json RelatorioDaUltimaAtualizacaoRemota.txt)^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2201835Z ^[[36;1mfor ARQUIVO in "${ARQUIVOS[@]}"; do^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2202148Z ^[[36;1m  [ -e "$ARQUIVO" ] && git add "$ARQUIVO"^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2202436Z ^[[36;1mdone^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2202956Z ^[[36;1mfor ARQUIVO in DicionarioDosDadosDoVigitel.csv DicionarioDosDadosDoVigitel.xls DicionarioDosDadosDoVigitel.xlsm; do^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2203588Z ^[[36;1m  [ -e "$ARQUIVO" ] && git add "$ARQUIVO"^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2203913Z ^[[36;1m  git add -u "$ARQUIVO" 2>/dev/null || true^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2204198Z ^[[36;1mdone^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2204383Z ^[[36;1m^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2204891Z ^[[36;1mgit commit -m "Publica atualização remota da base do Vigitel" >> "$LOG" 2>&1 || falhar $? "Não foi possível criar o commit da atualização."^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2205684Z ^[[36;1mgit push origin HEAD:main >> "$LOG" 2>&1 || falhar $? "O GitHub recusou o envio dos arquivos processados."^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2206151Z ^[[36;1m^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2206662Z ^[[36;1mgh api -X DELETE "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID" >/dev/null 2>&1 || true^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2207307Z ^[[36;1mgh api -X DELETE "repos/$GITHUB_REPOSITORY/git/refs/tags/$RELEASE_TAG" >/dev/null 2>&1 || true^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2208026Z ^[[36;1mgh api -X POST "repos/$GITHUB_REPOSITORY/pages/builds" >/dev/null 2>&1 || true^[[0m
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2270352Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2270708Z env:
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2270973Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.13/x64
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2271432Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib/pkgconfig
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2271903Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2272285Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2272669Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2273055Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2275583Z   GH_TOKEN: ***
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2275866Z   BASE_FILE: /tmp/vigitel/vigitel-2006-2024-peso-rake.csv
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2276214Z   BASE_NAME: vigitel-2006-2024-peso-rake.csv
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2276507Z   DICTIONARY_FILE: 
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2276709Z   RELEASE_ID: 358930099
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2276953Z   RELEASE_TAG: untagged-237c86e036f0805cf18e
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:26.2277225Z ##[endgroup]
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:27.1720599Z 
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:27.1721220Z ===== Preparação e recálculo =====
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:35.7722568Z /home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py:35: DtypeWarning: Columns (0: q14a, 1: q21a, 2: q23a, 3: q32a, 4: q37a, 5: q38a, 6: q43a, 7: gordura, 8: leiteint, 9: refri5, 10: refritl5, 11: feijao5, 12: q16, 13: q21, 14: q23, 15: q32, 16: q34, 17: q34a, 18: q34b, 19: q34c, 20: q34d, 21: q39, 22: q40, 23: q40a, 24: q72, 25: q79, 26: q80, 27: q81, 28: q82, 29: q83, 30: q83a, 31: r107, 32: r108, 33: iddmamo, 34: mamo, 35: mamodois, 36: papa, 37: papatres) have mixed types. Specify dtype option on import or set low_memory=False.
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:35.7726092Z   for bloco in pd.read_csv(
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:43.8489760Z /home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py:35: DtypeWarning: Columns (0: q55a, 1: q85, 2: q86, 3: q87, 4: r101, 5: r102, 6: r103, 7: r104, 8: flvreg, 9: flvreco, 10: q34a, 11: q34b, 12: q34c, 13: q34d, 14: q40a, 15: q25, 16: q26, 17: q66a, 18: r109, 19: r110, 20: r111, 21: r112, 22: r113, 23: r114, 24: r115, 25: r116, 26: r117, 27: plano, 28: frutareg2024) have mixed types. Specify dtype option on import or set low_memory=False.
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:43.8492028Z   for bloco in pd.read_csv(
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:51.9113124Z /home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py:35: DtypeWarning: Columns (0: q37b, 1: q38b, 2: q85, 3: q86, 4: q87, 5: r105, 6: inativo, 7: ati_l, 8: ativo_livre, 9: inat_des_trab, 10: inat_des_esc, 11: inat_desl, 12: atilaz_trans, 13: q83a, 14: r107, 15: r108, 16: q66a, 17: r109, 18: r110, 19: r111, 20: r112, 21: r113, 22: r114, 23: r115, 24: r116, 25: r117, 26: plano, 27: telefone, 28: q37, 29: q38, 30: q52, 31: q53, 32: q54, 33: q67, 34: q68, 35: q84_a, 36: q84_b, 37: q84_c, 38: q88, 39: q89, 40: q90, 41: q91, 42: q92, 43: q93, 44: fumocasa, 45: fumotrab, 46: inativo_2023) have mixed types. Specify dtype option on import or set low_memory=False.
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:58:51.9116100Z   for bloco in pd.read_csv(
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:59:00.1178311Z /home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py:35: DtypeWarning: Columns (0: q41, 1: q57, 2: q58, 3: q59, 4: q73, 5: q77, 6: q78, 7: q85, 8: q86, 9: q87, 10: q34, 11: q89, 12: q90, 13: q91, 14: q92, 15: q93, 16: cep, 17: q34e, 18: q59a, 19: r120, 20: r121, 21: r122, 22: r123, 23: r124, 24: r125, 25: r126, 26: r127) have mixed types. Specify dtype option on import or set low_memory=False.
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:59:00.1181778Z   for bloco in pd.read_csv(
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:59:08.3616223Z /home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py:35: DtypeWarning: Columns (0: q83, 1: q84_a, 2: q84_b, 3: q84_c, 4: q34e, 5: r123, 6: r126, 7: r127, 8: r128, 9: q40b, 10: q43_ou, 11: r129, 12: r130, 13: r131, 14: r132, 15: r133, 16: r134, 17: q85a) have mixed types. Specify dtype option on import or set low_memory=False.
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:59:08.3619369Z   for bloco in pd.read_csv(
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:59:12.5123821Z /home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py:35: DtypeWarning: Columns (0: cep) have mixed types. Specify dtype option on import or set low_memory=False.
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:59:12.5125445Z   for bloco in pd.read_csv(
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:59:16.5494907Z /home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py:35: DtypeWarning: Columns (0: cep) have mixed types. Specify dtype option on import or set low_memory=False.
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:59:16.5497533Z   for bloco in pd.read_csv(
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:59:20.5611268Z /home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py:35: DtypeWarning: Columns (0: q14, 1: q30, 2: refri5, 3: regiao, 4: q72, 5: q79, 6: q80, 7: q81, 8: q82, 9: iddmamo, 10: mamo, 11: mamodois, 12: papa, 13: papatres, 14: telefone, 15: q38, 16: r122, 17: r124, 18: r125, 19: r128, 20: r131, 21: r132, 22: r133, 23: r134, 24: q61a, 25: r138) have mixed types. Specify dtype option on import or set low_memory=False.
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:59:20.5613281Z   for bloco in pd.read_csv(
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:59:24.7476508Z /home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py:35: DtypeWarning: Columns (0: q12, 1: q78, 2: regiao, 3: ati_l, 4: ina_livre, 5: inat_des_trab, 6: inat_des_esc, 7: inat_desl, 8: atilaz_trans, 9: q37, 10: r120, 11: r121, 12: q43_ou, 13: r144, 14: q61a, 15: r139, 16: r140, 17: r141, 18: r142, 19: r146, 20: r144a, 21: r144b, 22: r145, 23: r147, 24: r149, 25: r151, 26: r152, 27: lanche_7, 28: sal, 29: af4dominios, 30: af4dominios_int, 31: af3dominios, 32: af3dominios_int, 33: af3dominios_insu, 34: dislip, 35: af3dominios_insu_2023) have mixed types. Specify dtype option on import or set low_memory=False.
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:59:24.7480435Z   for bloco in pd.read_csv(
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:59:28.9385604Z /home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py:35: DtypeWarning: Columns (0: q37, 1: q61a, 2: r147) have mixed types. Specify dtype option on import or set low_memory=False.
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:59:28.9388534Z   for bloco in pd.read_csv(
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:59:32.9454267Z /home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py:35: DtypeWarning: Columns (0: q10, 1: q76, 2: r130, 3: q61a, 4: r133a, 5: r133b, 6: r134a, 7: r151, 8: r152, 9: af4dominios, 10: af4dominios_int, 11: af3dominios_int, 12: r158, 13: r159, 14: r160, 15: r161, 16: r157, 17: q69_ou, 18: r130a, 19: q76a) have mixed types. Specify dtype option on import or set low_memory=False.
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:59:32.9456866Z   for bloco in pd.read_csv(
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:59:37.1139633Z /home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py:35: DtypeWarning: Columns (0: q61a, 1: r147) have mixed types. Specify dtype option on import or set low_memory=False.
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:59:37.1142194Z   for bloco in pd.read_csv(
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:59:41.1113908Z /home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py:35: DtypeWarning: Columns (0: q30, 1: q76, 2: refri5, 3: q37, 4: r130, 5: q61a, 6: r133a, 7: r133b, 8: r147, 9: r158, 10: r159, 11: r160, 12: r161, 13: r130a, 14: q76a, 15: r200, 16: r201, 17: r202, 18: r134b, 19: r301, 20: r301_ou, 21: r302, 22: r303, 23: r304, 24: r305_dia, 25: r305_hora, 26: r305_obs) have mixed types. Specify dtype option on import or set low_memory=False.
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:59:41.1117259Z   for bloco in pd.read_csv(
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:59:45.2445412Z /home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py:35: DtypeWarning: Columns (0: q61a, 1: r147) have mixed types. Specify dtype option on import or set low_memory=False.
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:59:45.2447981Z   for bloco in pd.read_csv(
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:59:49.2695962Z /home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py:35: DtypeWarning: Columns (0: q43, 1: q43a, 2: q79, 3: q37, 4: r130, 5: q85a, 6: q61a, 7: r145, 8: sal, 9: r130a, 10: r200, 11: r201, 12: r301, 13: r301_ou, 14: r302, 15: r303, 16: r304, 17: r305_dia, 18: r305_hora, 19: r305_obs, 20: q59b, 21: q59c, 22: r203, 23: r204, 24: r134c, 25: q79a, 26: r900, 27: d1, 28: d2, 29: d3, 30: d4, 31: d5, 32: d6, 33: tempo_tela_stv, 34: tempo_tela_total, 35: ind_med_has, 36: med_has, 37: ind_med_db, 38: med_db, 39: insulina) have mixed types. Specify dtype option on import or set low_memory=False.
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:59:49.2698851Z   for bloco in pd.read_csv(
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:59:53.4721813Z /home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py:35: DtypeWarning: Columns (0: q61a, 1: r147, 2: r134b, 3: d1, 4: d2, 5: d6) have mixed types. Specify dtype option on import or set low_memory=False.
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:59:53.4723559Z   for bloco in pd.read_csv(
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:59:57.5690677Z /home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py:35: DtypeWarning: Columns (0: q14, 1: q22, 2: q24, 3: q30, 4: q31, 5: q33, 6: q78, 7: gordura, 8: leiteint, 9: refri5, 10: atilaz, 11: q32, 12: q80, 13: q81, 14: q82, 15: iddmamo, 16: mamo, 17: mamodois, 18: papa, 19: papatres, 20: q38, 21: r143, 22: q61a, 23: r138, 24: doces5, 25: r146, 26: r147, 27: dislip, 28: q79a, 29: d2, 30: d4, 31: d5, 32: d6, 33: q15a, 34: q16a, 35: q28a, 36: q29a, 37: q30a, 38: q31a, 39: r143a, 40: r171, 41: r172, 42: r173, 43: r174, 44: r179, 45: r180, 46: has, 47: db) have mixed types. Specify dtype option on import or set low_memory=False.
+atualizar	Processar, validar e publicar para todos	2026-07-23T22:59:57.5694395Z   for bloco in pd.read_csv(
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:00:01.8095183Z /home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py:35: DtypeWarning: Columns (0: q14, 1: q80, 2: q81, 3: q82, 4: iddmamo, 5: mamo, 6: mamodois, 7: papa, 8: papatres, 9: q38, 10: q61a, 11: r138, 12: r147, 13: q79a) have mixed types. Specify dtype option on import or set low_memory=False.
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:00:01.8097538Z   for bloco in pd.read_csv(
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:00:05.8770032Z /home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py:35: DtypeWarning: Columns (0: q37, 1: q61a, 2: q69_ou) have mixed types. Specify dtype option on import or set low_memory=False.
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:00:05.8771584Z   for bloco in pd.read_csv(
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:00:09.9643932Z /home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py:35: DtypeWarning: Columns (0: q15, 1: feijao5, 2: q21, 3: q23, 4: q37, 5: r144a, 6: r144b, 7: r147, 8: lanche_7, 9: q15a, 10: q16a, 11: q28a, 12: q29a, 13: q30a, 14: q31a, 15: r143a, 16: r171, 17: r172, 18: r173, 19: has, 20: db, 21: r401a_1, 22: r401c_1, 23: r401c_2, 24: r402) have mixed types. Specify dtype option on import or set low_memory=False.
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:00:09.9646245Z   for bloco in pd.read_csv(
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:00:14.2398004Z /home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py:35: DtypeWarning: Columns (0: q31, 1: q37, 2: q61a, 3: r147, 4: r401a_1, 5: r402) have mixed types. Specify dtype option on import or set low_memory=False.
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:00:14.2400221Z   for bloco in pd.read_csv(
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:00:18.3521750Z /home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py:35: DtypeWarning: Columns (0: q12, 1: q15, 2: feijao5, 3: q61a, 4: r401c_1, 5: r190, 6: r403, 7: r175, 8: r176, 9: r901, 10: r901_ou, 11: r902, 12: eletronico, 13: fumantetotal, 14: eletronicoexp, 15: exeletronico) have mixed types. Specify dtype option on import or set low_memory=False.
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:00:18.3524322Z   for bloco in pd.read_csv(
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:00:22.6356735Z /home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py:35: DtypeWarning: Columns (0: q61a, 1: r147, 2: r180, 3: r401c_1, 4: r401c_3) have mixed types. Specify dtype option on import or set low_memory=False.
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:00:22.6361826Z   for bloco in pd.read_csv(
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:00:26.8089475Z /home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py:35: DtypeWarning: Columns (0: q63, 1: q39, 2: q61a, 3: q61a_fx, 4: r138, 5: r157, 6: r130a, 7: r202, 8: r134b, 9: r134c, 10: r900, 11: d1, 12: d3, 13: r174, 14: r179, 15: r180, 16: r401a_1, 17: r402, 18: r175, 19: r176, 20: r901, 21: r901_ou, 22: r902, 23: r404, 24: r404_ou, 25: r205, 26: r206, 27: r207, 28: depressao, 29: ind_med_depr) have mixed types. Specify dtype option on import or set low_memory=False.
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:00:26.8092347Z   for bloco in pd.read_csv(
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:00:31.1252987Z /home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py:35: DtypeWarning: Columns (0: r501, 1: r502, 2: r503, 3: r504, 4: r505, 5: r505_ou, 6: r506, 7: r506_ou) have mixed types. Specify dtype option on import or set low_memory=False.
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:00:31.1254986Z   for bloco in pd.read_csv(
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:00:35.4030765Z /home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py:35: DtypeWarning: Columns (0: r157, 1: r505, 2: tipo_fone, 3: r505_1, 4: r505_2) have mixed types. Specify dtype option on import or set low_memory=False.
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:00:35.4032709Z   for bloco in pd.read_csv(
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:00:39.6993532Z /home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py:35: DtypeWarning: Columns (0: q8b, 1: q12, 2: q14, 3: q35, 4: inativo, 5: q40, 6: q80, 7: q81, 8: q82, 9: iddmamo, 10: mamo, 11: mamodois, 12: papa, 13: papatres, 14: q37, 15: q38, 16: q61a, 17: q61a_fx, 18: r138, 19: r149, 20: af3dominios, 21: af3dominios_insu, 22: r130a, 23: r134b, 24: r134c, 25: q79a, 26: r900, 27: d1, 28: d3, 29: r174, 30: r301_a, 31: r301_b, 32: r301_c, 33: r301_d, 34: r301_e, 35: r301_f, 36: r301_g, 37: r301_h, 38: r301_i, 39: r301_j, 40: r301_k, 41: r301_l, 42: r302_a, 43: r302_b, 44: r302_c, 45: r302_d, 46: r302_e, 47: r302_f, 48: r302_g, 49: r302_h, 50: r302_i, 51: r302_j, 52: r302_k, 53: r302_l, 54: r302_m, 55: r401c_1, 56: r403, 57: r501, 58: r502, 59: r503, 60: r504, 61: r505_ou, 62: r506, 63: r506_ou, 64: r505_1, 65: r505_2, 66: r303_a, 67: r303_b, 68: r303_c, 69: r303_d, 70: r303_e, 71: r303_f, 72: r303_g, 73: r303_h, 74: r303_i, 75: r303_j, 76: r303_k, 77: r303_l, 78: r303_m, 79: r303_n, 80: r303_o, 81: r303_p, 82: r303_q, 83: r303_r, 84: r303_s, 85: r303_t, 86: r303_u, 87: r303_v, 88: r303_w, 89: r1001, 90: r1002, 91: r1003, 92: r405, 93: r403a, 94: r208, 95: r209, 96: r501a, 97: r502a, 98: r503a, 99: r600, 100: r601_a, 101: r601_b, 102: r601_c, 103: r601_d, 104: r601_e, 105: r601_f, 106: r601_g, 107: r601_h, 108: r601_i, 109: r601_i_ou, 110: r602, 111: r603, 112: r604, 113: r703, 114: r704, 115: r705, 116: r706, 117: r707, 118: r801, 119: conducao, 120: sono_insuf_curto, 121: insonia) have mixed types. Specify dtype option on import or set low_memory=False.
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:00:39.6999966Z   for bloco in pd.read_csv(
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:00:43.7349479Z /home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py:35: DtypeWarning: Columns (0: q14, 1: q31, 2: papa, 3: papatres, 4: q61a, 5: q61a_fx, 6: r147, 7: q69_ou, 8: r134b, 9: d1, 10: r401a_1, 11: r402, 12: r404_ou, 13: r303_d, 14: r303_g, 15: r303_m, 16: r303_p, 17: r303_s, 18: r303_w) have mixed types. Specify dtype option on import or set low_memory=False.
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:00:43.7352390Z   for bloco in pd.read_csv(
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:01:20.0947197Z Traceback (most recent call last):
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:01:20.0958249Z   File "/home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py", line 48, in <module>
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:01:20.0959729Z     raise SystemExit(processador.main())
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:01:20.0960096Z                      ^^^^^^^^^^^^^^^^^^
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:01:20.0960775Z   File "/home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemota.py", line 226, in main
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:01:20.0961429Z     engine.main()
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:01:20.0962026Z   File "/home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/RecalculoDosIndicadores.py", line 728, in main
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:01:20.0962682Z     validate(data, indicators)
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:01:20.0963330Z   File "/home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/RecalculoDosIndicadores.py", line 819, in validate
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:01:20.0964459Z     raise RuntimeError("A validação encontrou erros críticos. Consulte o relatório.")
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:01:20.0969991Z RuntimeError: A validação encontrou erros críticos. Consulte o relatório.
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:01:20.8349217Z The following paths are ignored by one of your .gitignore files:
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:01:20.8349981Z RelatorioDaUltimaAtualizacaoRemota.txt
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:01:20.8350561Z hint: Use -f if you really want to add them.
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:01:20.8351302Z hint: Disable this message with "git config set advice.addIgnoredFile false"
+atualizar	Processar, validar e publicar para todos	2026-07-23T23:01:21.2207165Z ##[error]Process completed with exit code 1.
