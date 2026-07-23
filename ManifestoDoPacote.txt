@@ -1,0 +1,26 @@
+ARQUIVOS DO PACOTE
+==================
+
+AdministracaoIndependenteDoObservatorio.py
+  Tamanho: 51,478 bytes
+  SHA-256: dfcf3ab3d8516bc3db47c06069f7088bd3408fb6125bc3bd94185918b2993ef0
+
+AdministracaoIntegradaAoIndex.js
+  Tamanho: 12,121 bytes
+  SHA-256: d9a03cb5c26bbc7a8f7594ad10d9786549796d918492da7afdc3c4fe440f2d11
+
+AdministracaoIntegradaAoIndex.py
+  Tamanho: 22,646 bytes
+  SHA-256: 78641b1036caadca98d7593f9d4df836a81ccc1c7af07e2e020fdc1be6c89374
+
+index.html
+  Tamanho: 52,092 bytes
+  SHA-256: 987e85c7d59aa905e3b58c23c245392471cbe530503b9bb39421e6da73896204
+
+IniciarObservatorioComAdministracao.bat
+  Tamanho: 445 bytes
+  SHA-256: 52bf029873c863d50c7681b217dc562342968c5f4a827d50172e7c9628e6e8fa
+
+LEIAMEAdministracaoNoIndex.txt
+  Tamanho: 3,060 bytes
+  SHA-256: 8fd032045a738198a09c68b18e3da8fae812027d61a542469e6ae3448121165a

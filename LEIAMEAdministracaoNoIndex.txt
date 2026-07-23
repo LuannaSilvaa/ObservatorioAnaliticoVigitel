@@ -1,0 +1,96 @@
+ADMINISTRAÇÃO INTEGRADA AO INDEX — OBSERVATÓRIO VIGITEL
+========================================================
+
+CONTEÚDO DO PACOTE
+------------------
+1. index.html
+   Index atualizado com o botão “⚙ Administração” visível no menu, a área
+   administrativa integrada e a atualização dinâmica do período coberto.
+
+2. AdministracaoIntegradaAoIndex.js
+   Controla login local, seleção da base e do dicionário, progresso,
+   exibição dos anos disponíveis, recarga do painel e download dos pacotes.
+
+3. AdministracaoIntegradaAoIndex.py
+   Inicia o servidor local protegido e conecta o index ao processamento.
+
+4. AdministracaoIndependenteDoObservatorio.py
+   Executa backup, atualização, validações, restauração em caso de falha
+   e criação dos arquivos ZIP resultantes.
+
+5. IniciarObservatorioComAdministracao.bat
+   Arquivo para abrir o Observatório com a Administração funcionando.
+
+COMO INSTALAR
+-------------
+Copie os cinco arquivos acima para a raiz do projeto, no mesmo local de:
+
+- BaseAnaliticaDoVigitel.js
+- AtualizarBaseDoPainel.py
+- RecalculoDosIndicadores.py
+- ValidacaoDaBaseCompleta.py
+- ValidacaoDaPublicacaoNoGitHub.py
+- TesteDosIndicadoresEGraficos.js
+- requirements-atualizacao.txt
+
+Permita a substituição do index.html e, caso já exista, dos arquivos da
+Administração.
+
+COMO ABRIR
+----------
+Não abra o index.html diretamente com dois cliques.
+
+Dê dois cliques em:
+
+IniciarObservatorioComAdministracao.bat
+
+O navegador será aberto normalmente em:
+
+http://127.0.0.1:8765/index.html#administracao
+
+No primeiro acesso, crie seu login e sua senha. As credenciais ficam somente
+no computador e a senha é armazenada como hash.
+
+BOTÃO ADMINISTRAÇÃO
+-------------------
+O botão “⚙ Administração” aparece no menu tanto localmente quanto no site
+público.
+
+- No servidor local, ele abre a tela de login e atualização.
+- No GitHub Pages ou em outra hospedagem estática, ele exibe um aviso explicando
+  que a Administração deve ser aberta pelo arquivo BAT no computador.
+
+Isso ocorre porque uma página pública estática não pode executar o Python local
+nem alterar os arquivos do computador.
+
+ANOS FUTUROS
+------------
+O sistema não possui 2024 como limite fixo. Ele lê os anos realmente presentes
+na base processada e atualiza automaticamente:
+
+- filtro de anos;
+- botão “Mais recente”;
+- lista de anos da Administração;
+- aviso superior;
+- texto “Período coberto”;
+- DATA.dims.years;
+- DATA.meta.yearsLabel.
+
+Assim, edições de 2025, 2026 e posteriores podem ser incluídas. Caso o Vigitel
+altere nomes de variáveis, pesos ou definições metodológicas, será necessário
+enviar também o dicionário atualizado e adaptar as regras afetadas.
+
+FORMATOS ACEITOS
+----------------
+Base e dicionário:
+
+- CSV
+- XLS
+- XLSM
+
+A planilha XLSM é lida como fonte de dados; macros não são executadas.
+
+IMPORTANTE
+----------
+Este pacote contém somente os arquivos novos ou modificados da Administração.
+Ele deve ser colocado dentro da pasta completa do seu projeto existente.
