@@ -13,6 +13,61 @@ import ProcessarAtualizacaoRemota as processador
 import RecalculoDosIndicadores as calculador
 
 
+UF_PARA_CIDADE = {
+    "SE": 1, "PA": 2, "MG": 3, "RR": 4, "MS": 5, "MT": 6, "PR": 7,
+    "SC": 8, "CE": 9, "GO": 10, "PB": 11, "AP": 12, "AL": 13,
+    "AM": 14, "RN": 15, "TO": 16, "RS": 17, "RO": 18, "PE": 19,
+    "AC": 20, "RJ": 21, "BA": 22, "MA": 23, "SP": 24, "PI": 25,
+    "ES": 26, "DF": 27,
+}
+
+CODIGO_UF_PARA_CIDADE = {
+    28: 1, 15: 2, 31: 3, 14: 4, 50: 5, 51: 6, 41: 7, 42: 8,
+    23: 9, 52: 10, 25: 11, 16: 12, 27: 13, 13: 14, 24: 15,
+    17: 16, 43: 17, 11: 18, 26: 19, 12: 20, 33: 21, 29: 22,
+    21: 23, 35: 24, 22: 25, 32: 26, 53: 27,
+}
+
+CODIGO_MUNICIPIO_PARA_CIDADE = {
+    2800308: 1, 1501402: 2, 3106200: 3, 1400100: 4, 5002704: 5,
+    5103403: 6, 4106902: 7, 4205407: 8, 2304400: 9, 5208707: 10,
+    2507507: 11, 1600303: 12, 2704302: 13, 1302603: 14, 2408102: 15,
+    1721000: 16, 4314902: 17, 1100205: 18, 2611606: 19, 1200401: 20,
+    3304557: 21, 2927408: 22, 2111300: 23, 3550308: 24, 2211001: 25,
+    3205309: 26, 5300108: 27,
+}
+
+NOME_PARA_CIDADE = {
+    "aracaju": 1, "se": 1,
+    "belem": 2, "pa": 2,
+    "belo_horizonte": 3, "mg": 3,
+    "boa_vista": 4, "rr": 4,
+    "campo_grande": 5, "ms": 5,
+    "cuiaba": 6, "mt": 6,
+    "curitiba": 7, "pr": 7,
+    "florianopolis": 8, "sc": 8,
+    "fortaleza": 9, "ce": 9,
+    "goiania": 10, "go": 10,
+    "joao_pessoa": 11, "pb": 11,
+    "macapa": 12, "ap": 12,
+    "maceio": 13, "al": 13,
+    "manaus": 14, "am": 14,
+    "natal": 15, "rn": 15,
+    "palmas": 16, "to": 16,
+    "porto_alegre": 17, "rs": 17,
+    "porto_velho": 18, "ro": 18,
+    "recife": 19, "pe": 19,
+    "rio_branco": 20, "ac": 20,
+    "rio_de_janeiro": 21, "rj": 21,
+    "salvador": 22, "ba": 22,
+    "sao_luis": 23, "ma": 23,
+    "sao_paulo": 24, "sp": 24,
+    "teresina": 25, "pi": 25,
+    "vitoria": 26, "es": 26,
+    "brasilia": 27, "df": 27,
+}
+
+
 def detectar_formato(fonte: Path) -> tuple[str, str, list[str]]:
     """Lê apenas uma amostra para detectar codificação, separador e cabeçalho."""
     with fonte.open("rb") as arquivo:
@@ -63,8 +118,8 @@ def indices_necessarios(cabecalho: list[str]) -> list[int]:
     return selecionados
 
 
-def numero_ponderacao(serie: pd.Series) -> pd.Series:
-    """Converte pesos com ponto ou vírgula decimal para valores numéricos."""
+def numero_decimal(serie: pd.Series) -> pd.Series:
+    """Converte números com ponto ou vírgula decimal."""
     if pd.api.types.is_numeric_dtype(serie):
         return pd.to_numeric(serie, errors="coerce")
 
@@ -78,30 +133,58 @@ def numero_ponderacao(serie: pd.Series) -> pd.Series:
     return pd.to_numeric(texto, errors="coerce")
 
 
-def harmonizar_pesos(frame: pd.DataFrame) -> pd.DataFrame:
-    """Usa o peso novo quando válido e completa suas ausências com o peso legado."""
+def harmonizar_cidade(serie: pd.Series) -> pd.Series:
+    """Converte número interno, UF, capital e códigos IBGE para cidade de 1 a 27."""
+    numerica = numero_decimal(serie)
+    resultado = numerica.where(numerica.between(1, 27))
+
+    inteiros = numerica.round().astype("Int64")
+    resultado = resultado.fillna(inteiros.map(CODIGO_UF_PARA_CIDADE))
+    resultado = resultado.fillna(inteiros.map(CODIGO_MUNICIPIO_PARA_CIDADE))
+
+    textual = serie.astype("string").map(processador.normalize)
+    resultado = resultado.fillna(textual.map(NOME_PARA_CIDADE))
+    return pd.to_numeric(resultado, errors="coerce")
+
+
+def harmonizar_sexo(serie: pd.Series) -> pd.Series:
+    """Converte códigos e rótulos de sexo para q7: 1 masculino e 2 feminino."""
+    numerica = numero_decimal(serie)
+    resultado = numerica.where(numerica.isin([1, 2]))
+    textual = serie.astype("string").map(processador.normalize)
+    rotulos = {
+        "masculino": 1, "homem": 1, "m": 1, "male": 1,
+        "feminino": 2, "mulher": 2, "f": 2, "female": 2,
+    }
+    return resultado.fillna(textual.map(rotulos))
+
+
+def harmonizar_frame(frame: pd.DataFrame) -> pd.DataFrame:
+    """Padroniza variáveis essenciais antes da separação anual."""
     frame = processador.normalize_frame(frame.copy())
 
-    possui_novo = "pesorake2025" in frame.columns
-    possui_legado = "pesorake" in frame.columns
+    if "cidade" in frame.columns:
+        frame["cidade"] = harmonizar_cidade(frame["cidade"])
+    if "q6" in frame.columns:
+        frame["q6"] = numero_decimal(frame["q6"])
+    if "q7" in frame.columns:
+        frame["q7"] = harmonizar_sexo(frame["q7"])
 
-    if possui_novo:
-        novo = numero_ponderacao(frame["pesorake2025"])
-    else:
-        novo = pd.Series(float("nan"), index=frame.index, dtype="float64")
+    novo = (
+        numero_decimal(frame["pesorake2025"])
+        if "pesorake2025" in frame.columns
+        else pd.Series(float("nan"), index=frame.index, dtype="float64")
+    )
+    legado = (
+        numero_decimal(frame["pesorake"])
+        if "pesorake" in frame.columns
+        else pd.Series(float("nan"), index=frame.index, dtype="float64")
+    )
+    peso = novo.where(novo.notna() & novo.gt(0), legado)
+    frame["pesorake2025"] = peso
+    if "pesorake" not in frame.columns:
+        frame["pesorake"] = peso
 
-    if possui_legado:
-        legado = numero_ponderacao(frame["pesorake"])
-    else:
-        legado = pd.Series(float("nan"), index=frame.index, dtype="float64")
-
-    peso_harmonizado = novo.where(novo.notna() & novo.gt(0), legado)
-    if not peso_harmonizado.notna().any():
-        raise ValueError("O bloco não possui pesos positivos em pesorake2025 nem em pesorake.")
-
-    frame["pesorake2025"] = peso_harmonizado
-    if not possui_legado:
-        frame["pesorake"] = peso_harmonizado
     return frame
 
 
@@ -137,6 +220,54 @@ def ler_csv_em_blocos(fonte: Path, gravador: processador.AnnualWriter) -> None:
     print(f"Preparação do CSV concluída: {total:,} linhas.", flush=True)
 
 
+def diagnosticar_filtros() -> None:
+    """Mostra quantas linhas passam por idade, sexo, cidade e peso."""
+    totais = {"linhas": 0, "idade": 0, "sexo": 0, "cidade": 0, "peso": 0, "todos": 0}
+    amostras_cidade: set[str] = set()
+    amostras_sexo: set[str] = set()
+
+    for arquivo in sorted(processador.MICRO.glob("MicrodadosAno*.csv")):
+        cabecalho = pd.read_csv(arquivo, nrows=0, encoding="utf-8-sig").columns
+        peso_coluna = "pesorake2025" if "pesorake2025" in cabecalho else "pesorake"
+        colunas = [coluna for coluna in ("cidade", "q6", "q7", peso_coluna) if coluna in cabecalho]
+        for bloco in pd.read_csv(
+            arquivo,
+            usecols=colunas,
+            chunksize=50_000,
+            encoding="utf-8-sig",
+            low_memory=False,
+        ):
+            cidade = numero_decimal(bloco["cidade"])
+            idade = numero_decimal(bloco["q6"])
+            sexo = numero_decimal(bloco["q7"])
+            peso = numero_decimal(bloco[peso_coluna])
+
+            ok_idade = idade.between(18, 120)
+            ok_sexo = sexo.isin([1, 2])
+            ok_cidade = cidade.between(1, 27)
+            ok_peso = peso.notna() & peso.gt(0)
+
+            totais["linhas"] += len(bloco)
+            totais["idade"] += int(ok_idade.sum())
+            totais["sexo"] += int(ok_sexo.sum())
+            totais["cidade"] += int(ok_cidade.sum())
+            totais["peso"] += int(ok_peso.sum())
+            totais["todos"] += int((ok_idade & ok_sexo & ok_cidade & ok_peso).sum())
+
+            if len(amostras_cidade) < 15:
+                amostras_cidade.update(map(str, bloco["cidade"].dropna().head(15).tolist()))
+            if len(amostras_sexo) < 10:
+                amostras_sexo.update(map(str, bloco["q7"].dropna().head(10).tolist()))
+
+    print(
+        "DIAGNÓSTICO DOS FILTROS: "
+        + "; ".join(f"{chave}={valor:,}" for chave, valor in totais.items()),
+        flush=True,
+    )
+    print(f"Amostra cidade: {sorted(amostras_cidade)[:15]}", flush=True)
+    print(f"Amostra q7: {sorted(amostras_sexo)[:10]}", flush=True)
+
+
 def imprimir_relatorios_de_validacao() -> None:
     """Envia os relatórios produzidos ao log antes que o workflow restaure a base anterior."""
     nomes = (
@@ -153,18 +284,26 @@ def imprimir_relatorios_de_validacao() -> None:
 
 
 _escrita_anual_original = processador.AnnualWriter.write
+_calculo_original = calculador.main
 
 
-def escrever_anualmente_com_peso_harmonizado(
+def escrever_anualmente_harmonizado(
     gravador: processador.AnnualWriter,
     frame: pd.DataFrame,
 ) -> None:
-    """Harmoniza o peso antes de delegar a separação anual ao processador principal."""
-    _escrita_anual_original(gravador, harmonizar_pesos(frame))
+    """Padroniza as variáveis essenciais antes da separação anual."""
+    _escrita_anual_original(gravador, harmonizar_frame(frame))
 
 
-processador.AnnualWriter.write = escrever_anualmente_com_peso_harmonizado
+def calcular_com_diagnostico() -> None:
+    """Registra os filtros essenciais antes do cálculo completo."""
+    diagnosticar_filtros()
+    _calculo_original()
+
+
+processador.AnnualWriter.write = escrever_anualmente_harmonizado
 processador.read_csv_chunks = ler_csv_em_blocos
+calculador.main = calcular_com_diagnostico
 
 if __name__ == "__main__":
     try:
