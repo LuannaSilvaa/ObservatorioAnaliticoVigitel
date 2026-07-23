@@ -1,0 +1,22 @@
+name: Executar atualização pendente agora
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/ExecutarAtualizacaoPendenteAgora.yml"
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  acionar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Iniciar o processamento da base enviada
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run AtualizacaoRemotaDaBase.yml --ref main
