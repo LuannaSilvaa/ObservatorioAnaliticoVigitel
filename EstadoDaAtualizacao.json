@@ -1,7 +1,7 @@
 {
-  "status": "error",
-  "updatedAt": "2026-07-23T20:51:26Z",
-  "message": "A atualização foi recusada por uma validação. A base pública anterior foi preservada.",
+  "status": "processing",
+  "updatedAt": "2026-07-23T22:35:56Z",
+  "message": "A base enviada pela Administração está sendo recalculada e validada.",
   "sourceFile": "vigitel-2006-2024-peso-rake.csv",
   "requestId": "358930099"
 }
