@@ -1,7 +1,7 @@
 {
-  "status": "processing",
-  "updatedAt": "2026-07-23T23:29:17Z",
-  "message": "A base foi recebida e está sendo preparada para recálculo.",
+  "status": "error",
+  "updatedAt": "2026-07-23T23:30:08Z",
+  "message": "A atualização foi recusada: Indicadores: 63 Tipos de gráfico: 13 Combinações renderizadas: 819 Falhas: 0  Nenhuma falha encontrada.  Traceback (most recent call last):   File \"/home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py\", line 117, in <module>     raise SystemExit(processador.main())                      ^^^^^^^^^^^^^^^^^^   File \"/home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemota.py\", line 226, in main     engine.main()   File \"/home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/RecalculoDosIndicadores.py\", line 728, in main     validate(data, indicators)   File \"/home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/RecalculoDosIndicadores.py\", line 819, in validate     raise RuntimeError(\"A validação encontrou erros críticos. Consulte o rela. A base pública anterior foi preservada.",
   "sourceFile": "vigitel-2006-2024-peso-rake.csv",
   "requestId": "358930099"
 }
