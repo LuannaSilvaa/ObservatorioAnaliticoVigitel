@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import os
 import re
 import unicodedata
 from datetime import datetime, timezone
@@ -47,6 +48,14 @@ def normalize(value: object) -> str:
 
 
 def normalize_frame(frame: pd.DataFrame) -> pd.DataFrame:
+    # O CSV oficial consolidado pode trazer categorias textuais. No GitHub
+    # Actions, convertemos esses rótulos para os códigos do dicionário antes
+    # de aplicar aliases e remover eventuais colunas duplicadas.
+    if os.environ.get("GITHUB_ACTIONS", "").lower() == "true":
+        from HarmonizacaoPeloDicionarioOficial import aplicar_mapeamentos
+
+        frame = aplicar_mapeamentos(frame)
+
     frame.columns = [normalize(column) for column in frame.columns]
     frame = frame.loc[:, ~frame.columns.duplicated()]
     return frame.dropna(how="all")
@@ -98,7 +107,8 @@ class AnnualWriter:
 
 
 def read_csv_chunks(source: Path, writer: AnnualWriter) -> None:
-    raw = source.read_bytes()[:250000]
+    with source.open("rb") as stream:
+        raw = stream.read(250000)
     sample = ""
     encoding = "utf-8-sig"
     for candidate in ("utf-8-sig", "utf-8", "latin1"):
