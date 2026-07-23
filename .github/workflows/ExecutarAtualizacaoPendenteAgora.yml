@@ -27,4 +27,4 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             "repos/$GITHUB_REPOSITORY/actions/workflows/AtualizacaoRemotaDaBase.yml/dispatches" \
             -f ref=main
-          echo "Processamento solicitado após correção do leitor seletivo de CSV."
+          echo "Processamento solicitado com harmonização entre pesorake2025 e pesorake."
