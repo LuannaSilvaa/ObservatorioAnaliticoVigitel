@@ -249,9 +249,11 @@ jobs:
           fi
 
           ANOS=$(python - <<'PY'
-          import json, re
+          import json
           texto = open("BaseAnaliticaDoVigitel.js", encoding="utf-8").read()
-          dados = json.loads(re.search(r"const DATA = (\{.*?\});\s*const \\$", texto, re.S).group(1))
+          marcador = "const DATA = "
+          inicio = texto.index(marcador) + len(marcador)
+          dados, _ = json.JSONDecoder().raw_decode(texto[inicio:])
           print(json.dumps(dados["dims"]["years"], ensure_ascii=False))
           PY
           ) || falhar $? "Não foi possível ler os anos da base processada."
