@@ -1,7 +1,7 @@
 {
-  "status": "idle",
-  "updatedAt": "2026-07-23T00:00:00Z",
-  "message": "Nenhuma atualização remota está em processamento.",
-  "sourceFile": null,
-  "years": []
+  "status": "processing",
+  "updatedAt": "2026-07-23T20:48:40Z",
+  "message": "A base enviada pela Administração está sendo recalculada e validada.",
+  "sourceFile": "vigitel-2006-2024-peso-rake.csv",
+  "requestId": "358930099"
 }
