@@ -29,9 +29,8 @@ jobs:
           jq '[.[]
             | select(.draft == true)
             | select(.author.login == "LuannaSilvaa")
-            | select(.tag_name | startswith("atualizacao-vigitel-"))
             | select((((.body // "") | contains("vigitel-status:erro"))) | not)
-          ] | sort_by(.created_at) | .[0] // empty' /tmp/releases.json > /tmp/pedido.json
+          ] | sort_by(.created_at) | reverse | .[0] // empty' /tmp/releases.json > /tmp/pedido.json
 
           if [ ! -s /tmp/pedido.json ]; then
             echo "found=false" >> "$GITHUB_OUTPUT"
