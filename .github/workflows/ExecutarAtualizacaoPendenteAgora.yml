@@ -27,4 +27,4 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             "repos/$GITHUB_REPOSITORY/actions/workflows/AtualizacaoRemotaDaBase.yml/dispatches" \
             -f ref=main
-          echo "Processamento solicitado com leitura seletiva, blocos menores e diagnóstico automático de falhas."
+          echo "Processamento solicitado com leitura seletiva e preservação completa dos erros de validação."
