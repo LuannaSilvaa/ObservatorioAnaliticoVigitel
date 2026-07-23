@@ -1,0 +1,48 @@
+name: Extrair dicionário oficial do Vigitel
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/ExtrairDicionarioOficial.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  extrair:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar o repositório
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Preparar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar bibliotecas
+        run: python -m pip install --upgrade pip pandas openpyxl
+
+      - name: Baixar e resumir o dicionário oficial
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 \
+            "https://svs.aids.gov.br/daent/cgdnt/vigitel/dicionario-vigitel-2006-2024.xlsx" \
+            --output /tmp/dicionario-vigitel-2006-2024.xlsx
+          python ExtrairResumoDoDicionarioOficial.py
+
+      - name: Publicar o resumo
+        run: |
+          set -euo pipefail
+          git config user.name "Observatório Vigitel - Dicionário oficial"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f ResumoDoDicionarioOficial.txt
+          git commit -m "Registra resumo do dicionário oficial do Vigitel" || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
