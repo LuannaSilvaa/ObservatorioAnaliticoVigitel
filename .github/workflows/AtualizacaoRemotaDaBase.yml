@@ -18,20 +18,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
-      - name: Baixar o repositório
-        uses: actions/checkout@v4
-        with:
-          ref: main
-          fetch-depth: 0
-
-      - name: Preparar dependências
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Instalar bibliotecas
-        run: python -m pip install --upgrade pip pandas numpy openpyxl xlrd
-
       - name: Localizar e baixar envio administrativo
         id: pedido
         env:
@@ -82,6 +68,23 @@ jobs:
           echo "base=/tmp/vigitel/$BASE_NOME" >> "$GITHUB_OUTPUT"
           echo "base_name=$BASE_NOME" >> "$GITHUB_OUTPUT"
           if [ -n "$DIC_NOME" ]; then echo "dictionary=/tmp/vigitel/$DIC_NOME" >> "$GITHUB_OUTPUT"; else echo "dictionary=" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Baixar o repositório
+        if: steps.pedido.outputs.found == 'true'
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Preparar dependências
+        if: steps.pedido.outputs.found == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar bibliotecas
+        if: steps.pedido.outputs.found == 'true'
+        run: python -m pip install --upgrade pip pandas numpy openpyxl xlrd
 
       - name: Processar, validar e publicar para todos
         if: steps.pedido.outputs.found == 'true'
