@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import csv
 import io
+import sys
 from pathlib import Path
 
 import pandas as pd
@@ -82,6 +83,7 @@ def ler_csv_em_blocos(fonte: Path, gravador: processador.AnnualWriter) -> None:
             usecols=colunas,
             chunksize=5_000,
             low_memory=True,
+            dtype=str,
         ),
         start=1,
     ):
@@ -93,7 +95,26 @@ def ler_csv_em_blocos(fonte: Path, gravador: processador.AnnualWriter) -> None:
     print(f"Preparação do CSV concluída: {total:,} linhas.", flush=True)
 
 
+def imprimir_relatorios_de_validacao() -> None:
+    """Envia os relatórios produzidos ao log antes que o workflow restaure a base anterior."""
+    nomes = (
+        "RelatorioDeValidacaoDosIndicadores.txt",
+        "RelatorioDaValidacaoDaBase.txt",
+        "RelatorioDosIndicadoresEGraficos.txt",
+    )
+    for nome in nomes:
+        caminho = Path(__file__).resolve().parent / nome
+        if not caminho.is_file():
+            continue
+        print(f"\n===== CONTEÚDO DE {nome} =====", file=sys.stderr, flush=True)
+        print(caminho.read_text(encoding="utf-8", errors="replace"), file=sys.stderr, flush=True)
+
+
 processador.read_csv_chunks = ler_csv_em_blocos
 
 if __name__ == "__main__":
-    raise SystemExit(processador.main())
+    try:
+        raise SystemExit(processador.main())
+    except BaseException:
+        imprimir_relatorios_de_validacao()
+        raise
