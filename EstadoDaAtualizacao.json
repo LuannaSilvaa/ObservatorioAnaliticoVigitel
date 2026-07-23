@@ -1,7 +1,7 @@
 {
-  "status": "error",
-  "updatedAt": "2026-07-23T23:22:30Z",
-  "message": "A atualização falhou: atualizar\tProcessar, validar e publicar para todos\t2026-07-23T23:01:20.0964459Z     raise RuntimeError(\"A validação encontrou erros críticos. Consulte o relatório.\") atualizar\tProcessar, validar e publicar para todos\t2026-07-23T23:01:20.0969991Z RuntimeError: A validação encontrou erros críticos. Consulte o relatório. atualizar\tProcessar, validar e publicar para todos\t2026-07-23T23:01:21.2207165Z ##[error]Process completed with exit code 1.  A base pública anterior foi preservada.",
+  "status": "processing",
+  "updatedAt": "2026-07-23T23:23:51Z",
+  "message": "A base foi recebida e está sendo preparada para recálculo.",
   "sourceFile": "vigitel-2006-2024-peso-rake.csv",
   "requestId": "358930099"
 }
