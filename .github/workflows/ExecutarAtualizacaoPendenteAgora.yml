@@ -19,4 +19,12 @@ jobs:
       - name: Iniciar o processamento da base enviada
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh workflow run AtualizacaoRemotaDaBase.yml --ref main
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            "repos/$GITHUB_REPOSITORY/actions/workflows/AtualizacaoRemotaDaBase.yml/dispatches" \
+            -f ref=main
+          echo "Processamento remoto solicitado com sucesso."
