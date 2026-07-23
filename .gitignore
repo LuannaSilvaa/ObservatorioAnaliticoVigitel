@@ -8,3 +8,4 @@ Microdados/*.csv
 Microdados/*.zip
 MicrodadosBackup/
 Relatorio*.txt
+!RelatorioDaUltimaAtualizacaoRemota.txt
