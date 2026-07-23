@@ -12,14 +12,11 @@ concurrency:
 permissions:
   contents: write
   pages: write
-  id-token: write
 
 jobs:
   atualizar:
     runs-on: ubuntu-latest
     timeout-minutes: 120
-    outputs:
-      published: ${{ steps.publicacao.outputs.published }}
     steps:
       - name: Baixar o repositório
         uses: actions/checkout@v4
@@ -87,7 +84,6 @@ jobs:
           if [ -n "$DIC_NOME" ]; then echo "dictionary=/tmp/vigitel/$DIC_NOME" >> "$GITHUB_OUTPUT"; else echo "dictionary=" >> "$GITHUB_OUTPUT"; fi
 
       - name: Processar, validar e publicar para todos
-        id: publicacao
         if: steps.pedido.outputs.found == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -161,29 +157,4 @@ jobs:
           git push origin HEAD:main
           gh api -X DELETE "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID"
           gh api -X DELETE "repos/$GITHUB_REPOSITORY/git/refs/tags/$RELEASE_TAG" >/dev/null 2>&1 || true
-          echo "published=true" >> "$GITHUB_OUTPUT"
-
-  publicar:
-    needs: atualizar
-    if: needs.atualizar.outputs.published == 'true'
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Baixar a versão atualizada
-        uses: actions/checkout@v4
-        with:
-          ref: main
-
-      - name: Configurar o GitHub Pages
-        uses: actions/configure-pages@v5
-
-      - name: Preparar os arquivos públicos
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: .
-
-      - name: Publicar para todos
-        id: deployment
-        uses: actions/deploy-pages@v4
+          gh api -X POST "repos/$GITHUB_REPOSITORY/pages/builds" >/dev/null
