@@ -19,6 +19,37 @@
 <link href="IdentidadeVisualDoObservatorio.svg" rel="icon" type="image/svg+xml"/>
 <link href="IdentidadeVisualDoObservatorio.css?edicao=consolidada" rel="stylesheet"/>
 <script src="ConfiguracaoDoTema.js?edicao=consolidada"></script>
+
+<style id="administracaoIntegradaStyles">
+#administracao[hidden],#administracaoNav[hidden]{display:none!important}
+.admin-integrated-shell{display:grid;gap:1.25rem}
+.admin-integrated-hero{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;padding:1.35rem 1.45rem;border:1px solid var(--border-color,#d8e2ec);border-radius:22px;background:linear-gradient(135deg,rgba(13,79,150,.08),rgba(17,167,161,.08))}
+.admin-integrated-badge{display:inline-flex;align-items:center;gap:.45rem;padding:.42rem .72rem;border-radius:999px;background:rgba(19,138,138,.12);color:#0d6767;font-size:.82rem;font-weight:800;white-space:nowrap}
+.admin-integrated-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:1rem}
+.admin-integrated-card{padding:1.25rem;border:1px solid var(--border-color,#d8e2ec);border-radius:20px;background:var(--card-bg,#fff);box-shadow:0 12px 34px rgba(24,57,85,.07)}
+.admin-integrated-card h3{margin:0 0 .4rem}.admin-integrated-card p{margin:.3rem 0;color:var(--muted-color,#5f7285)}
+.admin-access-form,.admin-file-grid{display:grid;gap:.9rem;margin-top:1rem}
+.admin-access-form label,.admin-file-grid label{display:grid;gap:.42rem;font-weight:750;color:var(--text-color,#17324d)}
+.admin-access-form input,.admin-file-grid input[type=file]{width:100%;padding:.8rem .9rem;border:1px solid var(--border-color,#cfdbe7);border-radius:12px;background:var(--input-bg,#fff);color:inherit}
+.admin-file-drop{padding:1rem;border:1.5px dashed #89a7c2;border-radius:16px;background:rgba(13,79,150,.035)}
+.admin-file-name{display:block;margin-top:.45rem;font-size:.85rem;font-weight:650;color:var(--muted-color,#5f7285);word-break:break-word}
+.admin-integrated-actions{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem;margin-top:1rem}
+.admin-integrated-message{margin-top:1rem!important;padding:.8rem .95rem;border-radius:12px;background:#eef5fb;color:#244861!important;border-left:4px solid #4d8fc6}
+.admin-integrated-message[data-type="success"]{background:#eaf8f1;color:#176343!important;border-left-color:#229865}
+.admin-integrated-message[data-type="error"]{background:#fff0f0;color:#9b3030!important;border-left-color:#d55252}
+.admin-integrated-message[data-type="working"]{background:#fff8e8;color:#7a5a12!important;border-left-color:#d9a52b}
+.admin-summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.75rem;margin-top:1rem}
+.admin-summary-item{padding:.9rem;border-radius:15px;background:rgba(13,79,150,.055);border:1px solid rgba(13,79,150,.11)}
+.admin-summary-item span{display:block;font-size:.78rem;color:var(--muted-color,#5f7285);margin-bottom:.25rem}.admin-summary-item strong{display:block;font-size:1rem;line-height:1.3}
+.admin-year-list{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.8rem}.admin-year-list span{padding:.35rem .58rem;border-radius:999px;background:rgba(17,167,161,.11);border:1px solid rgba(17,167,161,.22);font-size:.82rem;font-weight:750}.admin-year-list em{color:var(--muted-color,#5f7285)}
+.admin-progress-wrap{margin-top:1rem}.admin-progress-head{display:flex;justify-content:space-between;gap:1rem;margin-bottom:.45rem;font-weight:750}.admin-progress-track{height:11px;border-radius:999px;background:#e3ebf2;overflow:hidden}.admin-progress-bar{height:100%;width:0;background:linear-gradient(90deg,#0d4f96,#11a7a1);transition:width .25s ease}
+.admin-log{margin:1rem 0 0;min-height:150px;max-height:330px;overflow:auto;padding:1rem;border-radius:14px;background:#10283d;color:#d9edf8;font:12px/1.55 Consolas,"Courier New",monospace;white-space:pre-wrap;word-break:break-word}
+.admin-checkboxes{display:flex;flex-wrap:wrap;gap:1rem;margin-top:.85rem}.admin-checkboxes label{display:flex;align-items:center;gap:.45rem;font-weight:650}
+.admin-package-links{display:flex;flex-wrap:wrap;gap:.65rem;margin-top:1rem}
+.admin-session-row{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:.8rem}.admin-session-row strong{color:#0d6767}
+@media(max-width:900px){.admin-integrated-grid{grid-template-columns:1fr}.admin-summary-grid{grid-template-columns:1fr}.admin-integrated-hero{flex-direction:column}.admin-session-row{align-items:flex-start;flex-direction:column}}
+</style>
+
 </head>
 <body>
 <header class="topbar">
@@ -58,6 +89,7 @@
 <a href="#sobre">ⓘ Sobre</a>
 <a href="#contato">✉ Contato</a>
 <a href="#Microdados">↓ Microdados</a>
+<a href="#administracao" id="administracaoNav">⚙ Administração</a>
 <a href="#creditos">Créditos</a>
 </nav>
 </div>
@@ -188,7 +220,7 @@
 <article class="info-card"><h3>Como usar</h3><p>A análise é montada em quatro etapas: escolha um tema e indicador, defina os filtros desejados, selecione o tipo de gráfico e gere a visualização. O resultado pode ser consultado na tela ou baixado em diferentes formatos.</p></article>
 <article class="info-card"><h3>Temas disponíveis</h3><p>O painel reúne indicadores relacionados a tabagismo, álcool, obesidade, alimentação, atividade física, autoavaliação de saúde, prevenção de câncer, morbidade referida e trânsito.</p></article>
 <article class="info-card"><h3>Público de interesse</h3><p>A ferramenta pode ser usada por estudantes, pesquisadores, profissionais de saúde, gestores públicos, extensionistas e pessoas interessadas em acompanhar indicadores de saúde no Brasil.</p></article>
-<article class="info-card"><h3>Período coberto</h3><p>A versão atual reúne dados de 2006 a 2023, exceto 2022, conforme a disponibilidade da base utilizada. O painel também considera a base específica de População Negra de 2018 quando aplicável.</p></article>
+<article class="info-card"><h3>Período coberto</h3><p id="periodoCobertoTexto">O período é identificado automaticamente a partir dos anos realmente disponíveis na base processada. O painel também considera a base específica de População Negra de 2018 quando aplicável.</p></article>
 <article class="info-card"><h3>Uso dos Resultados Processados</h3><p>Os gráficos e tabelas podem apoiar estudos acadêmicos, apresentações, relatórios técnicos, materiais de extensão e atividades de divulgação de dados em saúde pública.</p></article>
 </div>
 </section>
@@ -241,6 +273,95 @@
 </article>
 </div>
 </section>
+
+<section class="info-section" hidden id="administracao">
+  <div class="admin-integrated-shell">
+    <div class="admin-integrated-hero">
+      <div>
+        <span class="eyebrow">Acesso local protegido</span>
+        <h2>Administração do Observatório</h2>
+        <p class="panel-subtitle">Atualize a base, o dicionário, os indicadores e a relação de anos disponíveis sem sair da página principal.</p>
+      </div>
+      <span class="admin-integrated-badge">● Funciona somente neste computador</span>
+    </div>
+
+    <article class="admin-integrated-card" id="adminIntegratedAccess">
+      <h3 id="adminIntegratedAccessTitle">Entrar na administração</h3>
+      <form class="admin-access-form" id="adminIntegratedAccessForm">
+        <label>Login
+          <input autocomplete="username" id="adminIntegratedUsername" minlength="3" required type="text"/>
+        </label>
+        <label>Senha
+          <input autocomplete="current-password" id="adminIntegratedPassword" minlength="10" required type="password"/>
+        </label>
+        <div hidden id="adminIntegratedSetupFields">
+          <label>Confirme a senha
+            <input autocomplete="new-password" id="adminIntegratedPasswordConfirmation" minlength="10" type="password"/>
+          </label>
+        </div>
+        <div hidden id="adminIntegratedLoginFields"></div>
+        <div class="admin-integrated-actions">
+          <button class="btn primary" id="adminIntegratedAccessButton" type="submit">Entrar</button>
+        </div>
+      </form>
+    </article>
+
+    <div hidden id="adminIntegratedPanel">
+      <div class="admin-session-row">
+        <strong id="adminIntegratedSessionUser">Sessão administrativa</strong>
+        <button class="btn" id="adminIntegratedLogout" type="button">Sair da administração</button>
+      </div>
+
+      <div class="admin-integrated-grid">
+        <article class="admin-integrated-card">
+          <h3>Base atualmente carregada</h3>
+          <div class="admin-summary-grid">
+            <div class="admin-summary-item"><span>Período disponível</span><strong id="adminYearsSummary">Identificando...</strong></div>
+            <div class="admin-summary-item"><span>Última atualização</span><strong id="adminLastUpdateSummary">Identificando...</strong></div>
+            <div class="admin-summary-item"><span>Formatos aceitos</span><strong>CSV, XLS e XLSM</strong></div>
+          </div>
+          <h4>Anos disponíveis no painel</h4>
+          <div class="admin-year-list" id="adminAvailableYears"><em>Identificando...</em></div>
+        </article>
+
+        <article class="admin-integrated-card">
+          <h3>Nova atualização</h3>
+          <div class="admin-file-grid">
+            <label class="admin-file-drop">Base completa ou arquivo anual do Vigitel
+              <input accept=".csv,.xls,.xlsm,text/csv,application/vnd.ms-excel,application/vnd.ms-excel.sheet.macroEnabled.12" id="adminIntegratedBaseFile" type="file"/>
+              <span class="admin-file-name" id="adminBaseFileName">Nenhum arquivo selecionado</span>
+            </label>
+            <label class="admin-file-drop">Dicionário correspondente (opcional)
+              <input accept=".csv,.xls,.xlsm,text/csv,application/vnd.ms-excel,application/vnd.ms-excel.sheet.macroEnabled.12" id="adminIntegratedDictionaryFile" type="file"/>
+              <span class="admin-file-name" id="adminDictionaryFileName">Nenhum arquivo selecionado</span>
+            </label>
+          </div>
+          <div class="admin-checkboxes">
+            <label><input checked id="adminMakeDelta" type="checkbox"/> Gerar pacote somente com os arquivos atualizados</label>
+            <label><input checked id="adminMakeFull" type="checkbox"/> Gerar cópia completa do projeto</label>
+          </div>
+          <div class="admin-integrated-actions">
+            <button class="btn primary" id="adminIntegratedUpdateButton" type="button">Atualizar, validar e aplicar</button>
+            <button class="btn" id="adminRefreshStatusButton" type="button">Atualizar andamento</button>
+            <button class="btn" hidden id="adminReloadPanelButton" type="button">Recarregar painel agora</button>
+          </div>
+          <p aria-live="polite" class="admin-integrated-message" data-type="info" id="adminIntegratedMessage">Selecione a base para iniciar.</p>
+        </article>
+      </div>
+
+      <article class="admin-integrated-card">
+        <h3>Processamento e validação</h3>
+        <div class="admin-progress-wrap">
+          <div class="admin-progress-head"><span id="adminIntegratedStage">Aguardando atualização</span><span id="adminIntegratedProgressValue">0%</span></div>
+          <div class="admin-progress-track"><div class="admin-progress-bar" id="adminIntegratedProgressBar"></div></div>
+        </div>
+        <pre class="admin-log" id="adminIntegratedLog">Nenhum registro de processamento.</pre>
+        <div class="admin-package-links" id="adminIntegratedPackages"></div>
+      </article>
+    </div>
+  </div>
+</section>
+
 <section class="info-section" id="Microdados">
 <h2>Microdados e arquivos para download</h2>
 <p class="panel-subtitle">Esta seção reúne os arquivos disponíveis para consulta e download. O acesso aos Microdados e às bases tratadas permite maior transparência, conferência dos ResultadosProcessados e desenvolvimento de análises próprias fora do painel.</p>
@@ -263,6 +384,102 @@
 <script defer="" src="SistemaAnaliticoDoVigitel.js?edicao=consolidada"></script>
 <script defer="" src="GlossarioMetodologico.js?edicao=consolidada"></script>
 <script defer="" src="InterfaceResponsiva.js?edicao=consolidada"></script>
+<script defer="" src="AdministracaoIntegradaAoIndex.js?edicao=local-integrada"></script>
 <script defer="" src="InicializacaoDoObservatorio.js?edicao=consolidada"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  try {
+    if (typeof DATA === "undefined" || !DATA || !DATA.dims) return;
+
+    const anos = Array.from(
+      new Set((DATA.dims.years || []).map(Number).filter(Number.isFinite))
+    ).sort((a, b) => a - b);
+
+    if (!anos.length) return;
+
+    const primeiro = anos[0];
+    const ultimo = anos[anos.length - 1];
+    const presentes = new Set(anos);
+    const ausentes = [];
+
+    for (let ano = primeiro; ano <= ultimo; ano += 1) {
+      if (!presentes.has(ano)) ausentes.push(ano);
+    }
+
+    let periodo = primeiro === ultimo ? String(primeiro) : `${primeiro} a ${ultimo}`;
+
+    if (ausentes.length) {
+      const lista = ausentes.length === 1
+        ? String(ausentes[0])
+        : `${ausentes.slice(0, -1).join(", ")} e ${ausentes[ausentes.length - 1]}`;
+      periodo += ` (exceto ${lista})`;
+    }
+
+    const periodoCoberto = document.getElementById("periodoCobertoTexto");
+    if (periodoCoberto) {
+      periodoCoberto.innerHTML =
+        `A versão atual reúne dados de <strong>${periodo}</strong>, conforme os anos efetivamente presentes na base processada. ` +
+        "O painel também considera a base específica de População Negra de 2018 quando aplicável.";
+    }
+
+    const detalhes = document.getElementById("baseVersionDetails");
+    if (detalhes) {
+      detalhes.textContent =
+        `${periodo}; pesos, variáveis e metadados conforme a base incorporada ao painel.`;
+    }
+  } catch (erro) {
+    console.warn("Não foi possível atualizar automaticamente o período exibido.", erro);
+  }
+});
+</script>
+<script>
+(function () {
+  "use strict";
+
+  function manterBotaoAdministracaoVisivel() {
+    const botao = document.getElementById("administracaoNav");
+    if (!botao) return;
+
+    botao.removeAttribute("hidden");
+
+    const observador = new MutationObserver(function () {
+      if (botao.hasAttribute("hidden")) {
+        botao.removeAttribute("hidden");
+      }
+    });
+
+    observador.observe(botao, {
+      attributes: true,
+      attributeFilter: ["hidden"]
+    });
+
+    botao.addEventListener("click", function (evento) {
+      const acessoLocal =
+        location.hostname === "127.0.0.1" ||
+        location.hostname === "localhost";
+
+      if (acessoLocal) return;
+
+      evento.preventDefault();
+
+      alert(
+        "A Administração funciona somente no aplicativo local.\n\n" +
+        "Para acessá-la, abra o arquivo " +
+        "\"IniciarObservatorioComAdministracao.bat\" no computador " +
+        "onde está a pasta completa do projeto."
+      );
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      manterBotaoAdministracaoVisivel
+    );
+  } else {
+    manterBotaoAdministracaoVisivel();
+  }
+})();
+</script>
 </body>
 </html>
