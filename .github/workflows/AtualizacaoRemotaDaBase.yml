@@ -130,6 +130,7 @@ jobs:
             git add EstadoDaAtualizacao.json
             git commit -m "Registra falha na atualização remota do Vigitel" || true
             git push origin HEAD:main
+            gh api -X POST "repos/$GITHUB_REPOSITORY/pages/builds" >/dev/null || true
             NOME=$(jq -r '.name // "Atualização do Vigitel"' /tmp/pedido.json)
             CORPO=$(jq -r '.body // ""' /tmp/pedido.json)
             MENSAGEM=$(printf '%s\n\n%s\n%s\n' "$CORPO" '<!-- vigitel-status:erro -->' 'A base foi recusada. A versão pública anterior foi mantida. Consulte a execução em Actions.')
