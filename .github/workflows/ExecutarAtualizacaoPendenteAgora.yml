@@ -27,4 +27,4 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             "repos/$GITHUB_REPOSITORY/actions/workflows/AtualizacaoRemotaDaBase.yml/dispatches" \
             -f ref=main
-          echo "Processamento solicitado com harmonização entre pesorake2025 e pesorake."
+          echo "Processamento solicitado com cidade, sexo, idade e pesos harmonizados."
