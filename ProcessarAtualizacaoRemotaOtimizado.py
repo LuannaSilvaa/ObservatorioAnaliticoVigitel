@@ -82,7 +82,7 @@ def ler_csv_em_blocos(fonte: Path, gravador: processador.AnnualWriter) -> None:
             encoding=codificacao,
             usecols=colunas,
             chunksize=5_000,
-            low_memory=True,
+            low_memory=False,
             dtype=str,
         ),
         start=1,
