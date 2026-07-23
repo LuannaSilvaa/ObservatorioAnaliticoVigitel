@@ -52,7 +52,7 @@
       success: 'Atualização concluída',
       processing: 'Processando atualização',
       error: 'Atualização recusada',
-      idle: 'Aguardando nova atualização'
+      idle: 'Aguardando execução'
     };
     const status = String(kind || 'idle').toLowerCase();
 
@@ -62,7 +62,7 @@
     }
 
     if (box) {
-      box.textContent = message || 'Nenhuma atualização está em processamento.';
+      box.textContent = message || 'Salve o rascunho e execute o fluxo no GitHub Actions.';
       box.dataset.type = status === 'success'
         ? 'success'
         : status === 'error'
@@ -103,6 +103,8 @@
       .admin-remote-step{display:grid;grid-template-columns:34px 1fr;gap:.75rem;margin-top:.85rem;padding:.8rem;border:1px solid rgba(13,79,150,.1);border-radius:14px;background:rgba(13,79,150,.04)}
       .admin-remote-step>b{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#0d4f96;color:#fff}
       .admin-remote-step p{margin:.15rem 0 0}
+      .admin-remote-step.admin-remote-action{border-color:rgba(17,167,161,.4);background:rgba(17,167,161,.09)}
+      .admin-remote-step.admin-remote-action>b{background:#0b7f79}
       .admin-remote-tag{display:grid;grid-template-columns:1fr auto auto;gap:.5rem;margin:.75rem 0}
       .admin-remote-tag input{width:100%;padding:.75rem;border:1px solid var(--border-color,#ccd8e4);border-radius:12px;background:var(--input-bg,#fff);color:inherit;font:600 .85rem Consolas,monospace}
       .admin-remote-flow{display:grid;grid-template-columns:repeat(6,1fr);gap:.5rem;margin-top:1rem}
@@ -136,6 +138,8 @@
     if (!section) return;
     section.removeAttribute('hidden');
 
+    const workflowUrl = repoUrl('/actions/workflows/AtualizacaoRemotaDaBase.yml');
+
     section.innerHTML = `
       <div class="admin-integrated-shell">
         <div class="admin-integrated-hero">
@@ -144,7 +148,7 @@
             <h2>Administração do Observatório</h2>
             <p class="panel-subtitle">Quando a atualização é aprovada, ela é gravada no painel público e passa a funcionar para todos.</p>
           </div>
-          <span class="admin-integrated-badge" data-status="idle" id="adminRemoteStatusBadge">Aguardando nova atualização</span>
+          <span class="admin-integrated-badge" data-status="idle" id="adminRemoteStatusBadge">Aguardando execução</span>
         </div>
 
         <div class="admin-integrated-grid">
@@ -160,7 +164,7 @@
             <p class="admin-integrated-message" id="adminIntegratedMessage">Consultando a base pública.</p>
             <div class="admin-integrated-actions">
               <button class="btn" id="adminRefreshStatusButton" type="button">Verificar atualização</button>
-              <a class="btn" href="${repoUrl('/actions/workflows/AtualizacaoRemotaDaBase.yml')}" target="_blank" rel="noopener">Acompanhar processamento</a>
+              <a class="btn primary" href="${workflowUrl}" target="_blank" rel="noopener">Executar ou acompanhar</a>
             </div>
           </article>
 
@@ -176,7 +180,6 @@
             </div>
 
             <div class="admin-remote-step"><b>2</b><div><strong>Entre como ${OWNER}</strong><p>Abra o envio seguro pelo botão abaixo.</p></div></div>
-
             <div class="admin-remote-step"><b>3</b><div><strong>Preencha o título e a descrição</strong><p>Não coloque a base dentro da descrição.</p></div></div>
 
             <div class="admin-remote-warning">
@@ -185,12 +188,13 @@
               <p>Essa caixa aceita apenas anexos de até 25 MB.</p>
             </div>
 
-            <div class="admin-remote-step"><b>4</b><div><strong>Role para a caixa de arquivos binários</strong><p>Procure a área chamada <strong>Attach binaries by dropping them here or selecting them</strong>. Solte o CSV, XLS ou XLSM somente nessa caixa. Ela aceita arquivos abaixo de 2 GiB.</p></div></div>
-
+            <div class="admin-remote-step"><b>4</b><div><strong>Role para a caixa de arquivos binários</strong><p>Procure <strong>Attach binaries by dropping them here or selecting them</strong>. Solte o CSV, XLS ou XLSM somente nessa caixa.</p></div></div>
             <div class="admin-remote-step"><b>5</b><div><strong>Salve como rascunho</strong><p>Clique em <strong>Save draft</strong>, não em Publish release.</p></div></div>
+            <div class="admin-remote-step admin-remote-action"><b>6</b><div><strong>Execute a atualização</strong><p>Abra o GitHub Actions, clique em <strong>Run workflow</strong> e confirme no botão verde. Sem essa etapa, o rascunho pode permanecer aguardando.</p></div></div>
 
             <div class="admin-integrated-actions">
-              <a class="btn primary" href="${repoUrl('/releases/new')}" target="_blank" rel="noopener">Entrar e enviar arquivos</a>
+              <a class="btn" href="${repoUrl('/releases/new')}" target="_blank" rel="noopener">1. Entrar e enviar arquivos</a>
+              <a class="btn primary" href="${workflowUrl}" target="_blank" rel="noopener">2. Executar atualização agora</a>
               <a class="btn" href="${repoUrl('/releases')}" target="_blank" rel="noopener">Ver meus envios</a>
             </div>
 
