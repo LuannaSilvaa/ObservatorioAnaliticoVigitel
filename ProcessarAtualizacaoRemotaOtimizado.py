@@ -63,6 +63,48 @@ def indices_necessarios(cabecalho: list[str]) -> list[int]:
     return selecionados
 
 
+def numero_ponderacao(serie: pd.Series) -> pd.Series:
+    """Converte pesos com ponto ou vírgula decimal para valores numéricos."""
+    if pd.api.types.is_numeric_dtype(serie):
+        return pd.to_numeric(serie, errors="coerce")
+
+    texto = serie.astype("string").str.strip()
+    possui_virgula = texto.str.contains(",", regex=False, na=False)
+    texto.loc[possui_virgula] = (
+        texto.loc[possui_virgula]
+        .str.replace(".", "", regex=False)
+        .str.replace(",", ".", regex=False)
+    )
+    return pd.to_numeric(texto, errors="coerce")
+
+
+def harmonizar_pesos(frame: pd.DataFrame) -> pd.DataFrame:
+    """Usa o peso novo quando válido e completa suas ausências com o peso legado."""
+    frame = processador.normalize_frame(frame.copy())
+
+    possui_novo = "pesorake2025" in frame.columns
+    possui_legado = "pesorake" in frame.columns
+
+    if possui_novo:
+        novo = numero_ponderacao(frame["pesorake2025"])
+    else:
+        novo = pd.Series(float("nan"), index=frame.index, dtype="float64")
+
+    if possui_legado:
+        legado = numero_ponderacao(frame["pesorake"])
+    else:
+        legado = pd.Series(float("nan"), index=frame.index, dtype="float64")
+
+    peso_harmonizado = novo.where(novo.notna() & novo.gt(0), legado)
+    if not peso_harmonizado.notna().any():
+        raise ValueError("O bloco não possui pesos positivos em pesorake2025 nem em pesorake.")
+
+    frame["pesorake2025"] = peso_harmonizado
+    if not possui_legado:
+        frame["pesorake"] = peso_harmonizado
+    return frame
+
+
 def ler_csv_em_blocos(fonte: Path, gravador: processador.AnnualWriter) -> None:
     """Lê apenas as colunas necessárias, em blocos pequenos, sem carregar o CSV inteiro."""
     codificacao, separador, cabecalho = detectar_formato(fonte)
@@ -110,6 +152,18 @@ def imprimir_relatorios_de_validacao() -> None:
         print(caminho.read_text(encoding="utf-8", errors="replace"), file=sys.stderr, flush=True)
 
 
+_escrita_anual_original = processador.AnnualWriter.write
+
+
+def escrever_anualmente_com_peso_harmonizado(
+    gravador: processador.AnnualWriter,
+    frame: pd.DataFrame,
+) -> None:
+    """Harmoniza o peso antes de delegar a separação anual ao processador principal."""
+    _escrita_anual_original(gravador, harmonizar_pesos(frame))
+
+
+processador.AnnualWriter.write = escrever_anualmente_com_peso_harmonizado
 processador.read_csv_chunks = ler_csv_em_blocos
 
 if __name__ == "__main__":
