@@ -22,14 +22,15 @@ jobs:
         id: pedido
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EVENTO: ${{ github.event_name }}
         shell: bash
         run: |
           set -euo pipefail
           gh api "repos/$GITHUB_REPOSITORY/releases?per_page=100" > /tmp/releases.json
-          jq '[.[]
+          jq --arg evento "$EVENTO" '[.[]
             | select(.draft == true)
             | select(.author.login == "LuannaSilvaa")
-            | select((((.body // "") | contains("vigitel-status:erro"))) | not)
+            | select(($evento == "workflow_dispatch") or (((.body // "") | contains("vigitel-status:erro")) | not))
           ] | sort_by(.created_at) | reverse | .[0] // empty' /tmp/releases.json > /tmp/pedido.json
 
           if [ ! -s /tmp/pedido.json ]; then
@@ -123,31 +124,46 @@ jobs:
           git commit -m "Registra início da atualização remota do Vigitel" || true
           git push origin HEAD:main
 
-          set +e
-          python ProcessarAtualizacaoRemota.py --base "$BASE_FILE" --source-name "$BASE_NAME"
-          CODE=$?
-          if [ "$CODE" -eq 0 ]; then python ValidacaoDaBaseCompleta.py; CODE=$?; fi
-          if [ "$CODE" -eq 0 ]; then node TesteDosIndicadoresEGraficos.js; CODE=$?; fi
-          if [ "$CODE" -eq 0 ]; then python ValidacaoDaPublicacaoNoGitHub.py; CODE=$?; fi
+          LOG="RelatorioDaUltimaAtualizacaoRemota.txt"
+          : > "$LOG"
+          printf 'ATUALIZAÇÃO REMOTA DO OBSERVATÓRIO VIGITEL\nArquivo: %s\nInício: %s\n\n' "$BASE_NAME" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$LOG"
+
+          executar() {
+            printf '\n===== %s =====\n' "$1" >> "$LOG"
+            shift
+            "$@" >> "$LOG" 2>&1
+          }
+
+          CODE=0
+          executar "Preparação e recálculo" python ProcessarAtualizacaoRemota.py --base "$BASE_FILE" --source-name "$BASE_NAME" || CODE=$?
+          if [ "$CODE" -eq 0 ]; then executar "Validação da base completa" python ValidacaoDaBaseCompleta.py || CODE=$?; fi
+          if [ "$CODE" -eq 0 ]; then executar "Teste dos indicadores e gráficos" node TesteDosIndicadoresEGraficos.js || CODE=$?; fi
+          if [ "$CODE" -eq 0 ]; then executar "Validação da publicação" python ValidacaoDaPublicacaoNoGitHub.py || CODE=$?; fi
 
           if [ "$CODE" -ne 0 ]; then
+            cp "$LOG" /tmp/RelatorioDaUltimaAtualizacaoRemota.txt
             git reset --hard HEAD
             git clean -fd
+            cp /tmp/RelatorioDaUltimaAtualizacaoRemota.txt "$LOG"
             python - <<'PY'
           import json, os
           from datetime import datetime, timezone
-          state={"status":"error","updatedAt":datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00","Z"),"message":"A atualização foi recusada por uma validação. A base pública anterior foi preservada.","sourceFile":os.environ["BASE_NAME"],"requestId":os.environ["RELEASE_ID"]}
+          from pathlib import Path
+          lines=[line.strip() for line in Path("RelatorioDaUltimaAtualizacaoRemota.txt").read_text(encoding="utf-8",errors="replace").splitlines() if line.strip()]
+          detail=(lines[-1] if lines else "Falha sem detalhe registrado")[:500]
+          state={"status":"error","updatedAt":datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00","Z"),"message":f"A atualização foi recusada: {detail}. A base pública anterior foi preservada.","sourceFile":os.environ["BASE_NAME"],"requestId":os.environ["RELEASE_ID"]}
           open("EstadoDaAtualizacao.json","w",encoding="utf-8").write(json.dumps(state,ensure_ascii=False,indent=2)+"\n")
           PY
-            git add EstadoDaAtualizacao.json
-            git commit -m "Registra falha na atualização remota do Vigitel" || true
+            git add EstadoDaAtualizacao.json "$LOG"
+            git commit -m "Registra detalhes da falha na atualização remota do Vigitel" || true
             git push origin HEAD:main
             gh api -X POST "repos/$GITHUB_REPOSITORY/pages/builds" >/dev/null || true
             NOME=$(jq -r '.name // "Atualização do Vigitel"' /tmp/pedido.json)
-            CORPO=$(jq -r '.body // ""' /tmp/pedido.json)
-            MENSAGEM=$(printf '%s\n\n%s\n%s\n' "$CORPO" '<!-- vigitel-status:erro -->' 'A base foi recusada. A versão pública anterior foi mantida. Consulte a execução em Actions.')
+            CORPO=$(jq -r '.body // ""' /tmp/pedido.json | sed '/<!-- vigitel-status:erro -->/,$d')
+            DETALHE=$(tail -n 1 "$LOG" | cut -c1-500)
+            MENSAGEM=$(printf '%s\n\n%s\n%s\n%s\n' "$CORPO" '<!-- vigitel-status:erro -->' 'A base foi recusada e a versão pública anterior foi mantida.' "$DETALHE")
             gh api -X PATCH "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID" -f name="[ERRO] $NOME" -f body="$MENSAGEM"
-            exit 1
+            exit "$CODE"
           fi
 
           if [ -n "${DICTIONARY_FILE:-}" ] && [ -f "$DICTIONARY_FILE" ]; then
@@ -165,8 +181,9 @@ jobs:
           state={"status":"success","updatedAt":datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00","Z"),"message":"Base recalculada, validada e publicada para todos os usuários.","sourceFile":os.environ["BASE_NAME"],"requestId":os.environ["RELEASE_ID"],"years":data["dims"]["years"]}
           open("EstadoDaAtualizacao.json","w",encoding="utf-8").write(json.dumps(state,ensure_ascii=False,indent=2)+"\n")
           PY
+          printf '\nConcluído: %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$LOG"
 
-          ARQUIVOS=(BaseAnaliticaDoVigitel.js CatalogoDeIdadeDetalhada.js MetodologiaDosIndicadores.js DadosIdadeDetalhadaTabagismo.js DadosIdadeDetalhadaAlcool.js DadosIdadeDetalhadaEstadoNutricional.js DadosIdadeDetalhadaAlimentacao.js DadosIdadeDetalhadaAtividadeFisica.js DadosIdadeDetalhadaAutoavaliacaoDeSaude.js DadosIdadeDetalhadaPrevencaoDoCancer.js DadosIdadeDetalhadaMorbidades.js DadosIdadeDetalhadaConducaoETransito.js EstadoDaAtualizacao.json RelatorioDaValidacaoDaBase.txt RelatorioDosIndicadoresEGraficos.txt RelatorioDeValidacaoDosIndicadores.txt)
+          ARQUIVOS=(BaseAnaliticaDoVigitel.js CatalogoDeIdadeDetalhada.js MetodologiaDosIndicadores.js DadosIdadeDetalhadaTabagismo.js DadosIdadeDetalhadaAlcool.js DadosIdadeDetalhadaEstadoNutricional.js DadosIdadeDetalhadaAlimentacao.js DadosIdadeDetalhadaAtividadeFisica.js DadosIdadeDetalhadaAutoavaliacaoDeSaude.js DadosIdadeDetalhadaPrevencaoDoCancer.js DadosIdadeDetalhadaMorbidades.js DadosIdadeDetalhadaConducaoETransito.js EstadoDaAtualizacao.json RelatorioDaUltimaAtualizacaoRemota.txt RelatorioDaValidacaoDaBase.txt RelatorioDosIndicadoresEGraficos.txt RelatorioDeValidacaoDosIndicadores.txt)
           for arquivo in "${ARQUIVOS[@]}"; do [ -e "$arquivo" ] && git add "$arquivo"; done
           for arquivo in DicionarioDosDadosDoVigitel.csv DicionarioDosDadosDoVigitel.xls DicionarioDosDadosDoVigitel.xlsm; do [ -e "$arquivo" ] && git add "$arquivo"; git add -u "$arquivo" 2>/dev/null || true; done
           git commit -m "Publica atualização remota da base do Vigitel"
