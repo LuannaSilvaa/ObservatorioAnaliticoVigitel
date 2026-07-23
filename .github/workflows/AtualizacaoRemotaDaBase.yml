@@ -1,0 +1,157 @@
+name: Atualização remota da base do Vigitel
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: atualizacao-remota-vigitel
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Baixar o repositório
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Preparar dependências
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar bibliotecas
+        run: python -m pip install --upgrade pip pandas numpy openpyxl xlrd
+
+      - name: Localizar e baixar envio administrativo
+        id: pedido
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api "repos/$GITHUB_REPOSITORY/releases?per_page=100" > /tmp/releases.json
+          jq '[.[]
+            | select(.draft == true)
+            | select(.author.login == "LuannaSilvaa")
+            | select(.tag_name | startswith("atualizacao-vigitel-"))
+            | select((((.body // "") | contains("vigitel-status:erro"))) | not)
+          ] | sort_by(.created_at) | .[0] // empty' /tmp/releases.json > /tmp/pedido.json
+
+          if [ ! -s /tmp/pedido.json ]; then
+            echo "found=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          BASES=$(jq '[.assets[] | select(.name | test("\\.(csv|xls|xlsm)$"; "i")) | select((.name | ascii_downcase | test("dicion[aá]rio|dictionary")) | not)] | length' /tmp/pedido.json)
+          DICIONARIOS=$(jq '[.assets[] | select(.name | test("\\.(csv|xls|xlsm)$"; "i")) | select(.name | ascii_downcase | test("dicion[aá]rio|dictionary"))] | length' /tmp/pedido.json)
+          ID=$(jq -r .id /tmp/pedido.json)
+
+          if [ "$BASES" -ne 1 ] || [ "$DICIONARIOS" -gt 1 ]; then
+            NOME=$(jq -r '.name // "Atualização do Vigitel"' /tmp/pedido.json)
+            CORPO=$(jq -r '.body // ""' /tmp/pedido.json)
+            MENSAGEM=$(printf '%s\n\n%s\n%s\n' "$CORPO" '<!-- vigitel-status:erro -->' 'Anexe exatamente uma base CSV, XLS ou XLSM e, opcionalmente, um único dicionário.')
+            gh api -X PATCH "repos/$GITHUB_REPOSITORY/releases/$ID" -f name="[ERRO] $NOME" -f body="$MENSAGEM"
+            echo "found=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          mkdir -p /tmp/vigitel
+          BASE_URL=$(jq -r '.assets[] | select(.name | test("\\.(csv|xls|xlsm)$"; "i")) | select((.name | ascii_downcase | test("dicion[aá]rio|dictionary")) | not) | .url' /tmp/pedido.json)
+          BASE_NOME=$(jq -r '.assets[] | select(.name | test("\\.(csv|xls|xlsm)$"; "i")) | select((.name | ascii_downcase | test("dicion[aá]rio|dictionary")) | not) | .name' /tmp/pedido.json)
+          gh api -H "Accept: application/octet-stream" "$BASE_URL" > "/tmp/vigitel/$BASE_NOME"
+
+          DIC_URL=$(jq -r '[.assets[] | select(.name | test("\\.(csv|xls|xlsm)$"; "i")) | select(.name | ascii_downcase | test("dicion[aá]rio|dictionary"))][0].url // ""' /tmp/pedido.json)
+          DIC_NOME=$(jq -r '[.assets[] | select(.name | test("\\.(csv|xls|xlsm)$"; "i")) | select(.name | ascii_downcase | test("dicion[aá]rio|dictionary"))][0].name // ""' /tmp/pedido.json)
+          if [ -n "$DIC_URL" ]; then
+            gh api -H "Accept: application/octet-stream" "$DIC_URL" > "/tmp/vigitel/$DIC_NOME"
+          fi
+
+          echo "found=true" >> "$GITHUB_OUTPUT"
+          echo "release_id=$ID" >> "$GITHUB_OUTPUT"
+          echo "tag=$(jq -r .tag_name /tmp/pedido.json)" >> "$GITHUB_OUTPUT"
+          echo "base=/tmp/vigitel/$BASE_NOME" >> "$GITHUB_OUTPUT"
+          echo "base_name=$BASE_NOME" >> "$GITHUB_OUTPUT"
+          if [ -n "$DIC_NOME" ]; then echo "dictionary=/tmp/vigitel/$DIC_NOME" >> "$GITHUB_OUTPUT"; else echo "dictionary=" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Processar, validar e publicar para todos
+        if: steps.pedido.outputs.found == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BASE_FILE: ${{ steps.pedido.outputs.base }}
+          BASE_NAME: ${{ steps.pedido.outputs.base_name }}
+          DICTIONARY_FILE: ${{ steps.pedido.outputs.dictionary }}
+          RELEASE_ID: ${{ steps.pedido.outputs.release_id }}
+          RELEASE_TAG: ${{ steps.pedido.outputs.tag }}
+        shell: bash
+        run: |
+          set -u
+          git config user.name "Observatório Vigitel - Administração remota"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          python - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          state={"status":"processing","updatedAt":datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00","Z"),"message":"A base enviada pela Administração está sendo recalculada e validada.","sourceFile":os.environ["BASE_NAME"],"requestId":os.environ["RELEASE_ID"]}
+          open("EstadoDaAtualizacao.json","w",encoding="utf-8").write(json.dumps(state,ensure_ascii=False,indent=2)+"\n")
+          PY
+          git add EstadoDaAtualizacao.json
+          git commit -m "Registra início da atualização remota do Vigitel" || true
+          git push origin HEAD:main
+
+          set +e
+          python ProcessarAtualizacaoRemota.py --base "$BASE_FILE" --source-name "$BASE_NAME"
+          CODE=$?
+          if [ "$CODE" -eq 0 ]; then python ValidacaoDaBaseCompleta.py; CODE=$?; fi
+          if [ "$CODE" -eq 0 ]; then node TesteDosIndicadoresEGraficos.js; CODE=$?; fi
+          if [ "$CODE" -eq 0 ]; then python ValidacaoDaPublicacaoNoGitHub.py; CODE=$?; fi
+
+          if [ "$CODE" -ne 0 ]; then
+            git reset --hard HEAD
+            git clean -fd
+            python - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          state={"status":"error","updatedAt":datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00","Z"),"message":"A atualização foi recusada por uma validação. A base pública anterior foi preservada.","sourceFile":os.environ["BASE_NAME"],"requestId":os.environ["RELEASE_ID"]}
+          open("EstadoDaAtualizacao.json","w",encoding="utf-8").write(json.dumps(state,ensure_ascii=False,indent=2)+"\n")
+          PY
+            git add EstadoDaAtualizacao.json
+            git commit -m "Registra falha na atualização remota do Vigitel" || true
+            git push origin HEAD:main
+            NOME=$(jq -r '.name // "Atualização do Vigitel"' /tmp/pedido.json)
+            CORPO=$(jq -r '.body // ""' /tmp/pedido.json)
+            MENSAGEM=$(printf '%s\n\n%s\n%s\n' "$CORPO" '<!-- vigitel-status:erro -->' 'A base foi recusada. A versão pública anterior foi mantida. Consulte a execução em Actions.')
+            gh api -X PATCH "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID" -f name="[ERRO] $NOME" -f body="$MENSAGEM"
+            exit 1
+          fi
+
+          if [ -n "${DICTIONARY_FILE:-}" ] && [ -f "$DICTIONARY_FILE" ]; then
+            rm -f DicionarioDosDadosDoVigitel.csv DicionarioDosDadosDoVigitel.xls DicionarioDosDadosDoVigitel.xlsm
+            EXT=$(printf '%s' "${DICTIONARY_FILE##*.}" | tr '[:upper:]' '[:lower:]')
+            cp "$DICTIONARY_FILE" "DicionarioDosDadosDoVigitel.$EXT"
+          fi
+          rm -rf Microdados
+
+          python - <<'PY'
+          import json, os, re
+          from datetime import datetime, timezone
+          text=open("BaseAnaliticaDoVigitel.js",encoding="utf-8").read()
+          data=json.loads(re.search(r"const DATA = (\{.*?\});\s*const \$",text,re.S).group(1))
+          state={"status":"success","updatedAt":datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00","Z"),"message":"Base recalculada, validada e publicada para todos os usuários.","sourceFile":os.environ["BASE_NAME"],"requestId":os.environ["RELEASE_ID"],"years":data["dims"]["years"]}
+          open("EstadoDaAtualizacao.json","w",encoding="utf-8").write(json.dumps(state,ensure_ascii=False,indent=2)+"\n")
+          PY
+
+          git add BaseAnaliticaDoVigitel.js CatalogoDeIdadeDetalhada.js MetodologiaDosIndicadores.js DadosIdadeDetalhada*.js EstadoDaAtualizacao.json RelatorioDaValidacaoDaBase.txt RelatorioDosIndicadoresEGraficos.txt RelatorioDeValidacaoDosIndicadores.txt 2>/dev/null || true
+          for arquivo in DicionarioDosDadosDoVigitel.csv DicionarioDosDadosDoVigitel.xls DicionarioDosDadosDoVigitel.xlsm; do [ -e "$arquivo" ] && git add "$arquivo"; git add -u "$arquivo" 2>/dev/null || true; done
+          git commit -m "Publica atualização remota da base do Vigitel"
+          git push origin HEAD:main
+          gh api -X DELETE "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID"
+          gh api -X DELETE "repos/$GITHUB_REPOSITORY/git/refs/tags/$RELEASE_TAG" >/dev/null 2>&1 || true
