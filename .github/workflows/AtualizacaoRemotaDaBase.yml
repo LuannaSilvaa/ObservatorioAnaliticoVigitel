@@ -16,7 +16,7 @@ permissions:
 jobs:
   atualizar:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 360
     steps:
       - name: Localizar e baixar envio administrativo
         id: pedido
@@ -46,6 +46,19 @@ jobs:
             NOME=$(jq -r '.name // "Atualização do Vigitel"' /tmp/pedido.json)
             CORPO=$(jq -r '.body // ""' /tmp/pedido.json)
             MENSAGEM=$(printf '%s\n\n%s\n%s\n' "$CORPO" '<!-- vigitel-status:erro -->' 'Anexe exatamente uma base CSV, XLS ou XLSM e, opcionalmente, um único dicionário.')
+            gh api -X PATCH "repos/$GITHUB_REPOSITORY/releases/$ID" -f name="[ERRO] $NOME" -f body="$MENSAGEM"
+            echo "found=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          LIMITE_BYTES=2147483648
+          BASE_TAMANHO=$(jq -r '.assets[] | select(.name | test("\\.(csv|xls|xlsm)$"; "i")) | select((.name | ascii_downcase | test("dicion[aá]rio|dictionary")) | not) | .size' /tmp/pedido.json)
+          DIC_TAMANHO=$(jq -r '[.assets[] | select(.name | test("\\.(csv|xls|xlsm)$"; "i")) | select(.name | ascii_downcase | test("dicion[aá]rio|dictionary"))][0].size // 0' /tmp/pedido.json)
+
+          if [ "$BASE_TAMANHO" -ge "$LIMITE_BYTES" ] || [ "$DIC_TAMANHO" -ge "$LIMITE_BYTES" ]; then
+            NOME=$(jq -r '.name // "Atualização do Vigitel"' /tmp/pedido.json)
+            CORPO=$(jq -r '.body // ""' /tmp/pedido.json)
+            MENSAGEM=$(printf '%s\n\n%s\n%s\n' "$CORPO" '<!-- vigitel-status:erro -->' 'Cada arquivo deve ter menos de 2 GiB. Para bases próximas do limite, use CSV.')
             gh api -X PATCH "repos/$GITHUB_REPOSITORY/releases/$ID" -f name="[ERRO] $NOME" -f body="$MENSAGEM"
             echo "found=false" >> "$GITHUB_OUTPUT"
             exit 0
