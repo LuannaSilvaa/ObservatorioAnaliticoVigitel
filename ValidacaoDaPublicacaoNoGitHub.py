@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import os
 import re
+import subprocess
 import sys
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
@@ -13,6 +14,7 @@ REMOTE_MODE = os.environ.get("GITHUB_ACTIONS", "").lower() == "true"
 MAXIMUM_FILE_SIZE = (99 if REMOTE_MODE else 25) * 1024 * 1024
 MAXIMUM_BROWSER_FILES = 100
 IGNORED_OPERATIONAL_DIRECTORIES = {".git", ".github", "Microdados", "__pycache__"}
+AUDIT_FILE = "AuditoriaDasContagensDoVigitel.json"
 
 
 def local_reference(value: str) -> Path | None:
@@ -24,6 +26,44 @@ def local_reference(value: str) -> Path | None:
     return REPOSITORY / path.lstrip("/") if path else None
 
 
+def registrar_auditoria_no_historico_tecnico() -> None:
+    """Inclui a auditoria no histórico local antes da promoção atômica."""
+    if not REMOTE_MODE:
+        return
+    resultado = subprocess.run(
+        ["git", "status", "--porcelain", "--", AUDIT_FILE],
+        cwd=REPOSITORY,
+        check=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        capture_output=True,
+    )
+    if not resultado.stdout.strip():
+        return
+    subprocess.run(
+        ["git", "config", "user.name", "Observatório Vigitel - Administração remota"],
+        cwd=REPOSITORY,
+        check=True,
+    )
+    subprocess.run(
+        [
+            "git",
+            "config",
+            "user.email",
+            "41898282+github-actions[bot]@users.noreply.github.com",
+        ],
+        cwd=REPOSITORY,
+        check=True,
+    )
+    subprocess.run(["git", "add", "--", AUDIT_FILE], cwd=REPOSITORY, check=True)
+    subprocess.run(
+        ["git", "commit", "-m", "Atualiza a auditoria permanente das contagens do Vigitel"],
+        cwd=REPOSITORY,
+        check=True,
+    )
+
+
 def main() -> int:
     """Sincroniza os derivados e valida arquivos essenciais, referências e limites."""
     errors: list[str] = []
@@ -33,7 +73,7 @@ def main() -> int:
         "IdentidadeVisualDoObservatorio.css", "SistemaAnaliticoDoVigitel.js",
         "InicializacaoDoObservatorio.js", "BaseAnaliticaDoVigitel.js",
         "MetodologiaDosIndicadores.js", "CatalogoDeIdadeDetalhada.js",
-        "AuditoriaDasContagensDoVigitel.json", "PreservarAuditoriaDasContagens.py",
+        AUDIT_FILE, "PreservarAuditoriaDasContagens.py",
     ]
     for name in required:
         if not (REPOSITORY / name).is_file():
@@ -103,6 +143,7 @@ def main() -> int:
     print("Preservando ou restaurando a auditoria das contagens diretas.")
     if preservar_contagens() != 0:
         return 1
+    registrar_auditoria_no_historico_tecnico()
 
     print("Executando a validação obrigatória dos arquivos sincronizados.")
     if validar_sincronizacao() != 0:
