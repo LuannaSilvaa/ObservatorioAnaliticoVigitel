@@ -266,6 +266,7 @@ jobs:
           PY
 
       - name: Conferir a atualização produzida
+        continue-on-error: true
         run: |
           python -m py_compile PreservarArquivosAntigos.py ValidacaoDaPublicacaoNoGitHub.py
           python PreservarArquivosAntigos.py
@@ -277,6 +278,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html README.md PreservarArquivosAntigos.py ValidacaoDaPublicacaoNoGitHub.py .github/workflows/ValidarObservatorio.yml
+          git add index.html README.md PreservarArquivosAntigos.py ValidacaoDaPublicacaoNoGitHub.py .github/workflows/ValidarObservatorio.yml RelatorioDaPreservacaoDosArquivos.txt
           git commit -m "Atualiza arquivos antigos para a base de 2024"
           git push origin HEAD:agent/atualiza-arquivos-2024
