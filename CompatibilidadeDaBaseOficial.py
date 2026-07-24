@@ -39,7 +39,7 @@ def duracao_atividade_oficial(df: pd.DataFrame) -> tuple[pd.Series, pd.Series]:
 
 
 def _gravar_metadados_de_disponibilidade(calculador: Any, data: dict) -> None:
-    """Registra por que determinadas séries não foram calculadas."""
+    """Registra indisponibilidades sem anunciar idade detalhada onde não existem dados."""
     data.setdefault("meta", {})["unsupportedIndicators"] = INDICADORES_INDISPONIVEIS
     for item in data.get("indicators", []):
         motivo = INDICADORES_INDISPONIVEIS.get(item.get("id"))
@@ -64,10 +64,18 @@ def _gravar_metadados_de_disponibilidade(calculador: Any, data: dict) -> None:
         prefixo = "window.VIGITEL_AGE_DETAIL="
         inicio_catalogo = conteudo.index(prefixo) + len(prefixo)
         objeto, usado_catalogo = json.JSONDecoder().raw_decode(conteudo[inicio_catalogo:])
-        objeto.setdefault("meta", {})["unsupportedIndicators"] = INDICADORES_INDISPONIVEIS
+        meta_catalogo = objeto.setdefault("meta", {})
+        meta_catalogo["unsupportedIndicators"] = INDICADORES_INDISPONIVEIS
+        meta_catalogo["supportedIndicators"] = [
+            indicador
+            for indicador in meta_catalogo.get("supportedIndicators", [])
+            if indicador not in INDICADORES_INDISPONIVEIS
+        ]
         codificado_catalogo = json.dumps(objeto, ensure_ascii=False, separators=(",", ":"))
         catalogo.write_text(
-            conteudo[:inicio_catalogo] + codificado_catalogo + conteudo[inicio_catalogo + usado_catalogo :],
+            conteudo[:inicio_catalogo]
+            + codificado_catalogo
+            + conteudo[inicio_catalogo + usado_catalogo :],
             encoding="utf-8",
         )
 
