@@ -75,6 +75,7 @@ def _gravar_metadados_de_disponibilidade(calculador: Any, data: dict) -> None:
 def _criar_validador(calculador: Any):
     """Cria validação equivalente à original, tolerando somente ausências comprovadas."""
     def validar(data: dict, indicators: list[dict]) -> None:
+        """Valida séries disponíveis e documenta ausências comprovadas."""
         linhas = [
             "RELATÓRIO DE VALIDAÇÃO DOS INDICADORES — BASE OFICIAL 2006-2024",
             "=" * 72,
@@ -156,8 +157,26 @@ def _criar_validador(calculador: Any):
     return validar
 
 
+def _instalar_sincronizacao(calculador: Any) -> None:
+    """Executa a sincronização completa uma única vez após o recálculo aprovado."""
+    if getattr(calculador, "_sincronizacao_automatica_instalada", False):
+        return
+    original_main = calculador.main
+
+    def main_sincronizado() -> None:
+        """Recalcula os indicadores e sincroniza todos os arquivos derivados."""
+        original_main()
+        from SincronizarArquivosDoObservatorio import synchronize
+
+        resumo = synchronize()
+        print("Sincronização automática concluída: " + json.dumps(resumo, ensure_ascii=False))
+
+    calculador.main = main_sincronizado
+    calculador._sincronizacao_automatica_instalada = True
+
+
 def aplicar_compatibilidade(calculador: Any) -> None:
-    """Troca regras estáveis e instala validação consciente da disponibilidade."""
+    """Troca regras estáveis, instala validação e sincronização automática."""
     calculador.RULES["AF02"].update(
         {
             "cols": ["q42", "freq"],
@@ -175,3 +194,4 @@ def aplicar_compatibilidade(calculador: Any) -> None:
         }
     )
     calculador.validate = _criar_validador(calculador)
+    _instalar_sincronizacao(calculador)
