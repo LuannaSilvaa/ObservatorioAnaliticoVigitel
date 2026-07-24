@@ -84,4 +84,4 @@ jobs:
           git push origin HEAD:main
           gh api -X POST "repos/$GITHUB_REPOSITORY/pages/builds" >/dev/null
 
-# Segunda execução após o ajuste do validador textual.
+# Auditoria final: regenerar manifesto após a correção do publicador atômico.
