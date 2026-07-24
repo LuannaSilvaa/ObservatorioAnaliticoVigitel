@@ -1,0 +1,90 @@
+name: Validar Observatório
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Baixar o repositório
+        uses: actions/checkout@v4
+
+      - name: Preparar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Preparar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Instalar bibliotecas de validação
+        run: python -m pip install --upgrade pip pandas numpy openpyxl xlrd pyyaml
+
+      - name: Conferir sintaxe dos módulos Python
+        run: |
+          python -m py_compile \
+            HarmonizacaoPeloDicionarioOficial.py \
+            CompatibilidadeDaBaseOficial.py \
+            ProcessarAtualizacaoRemota.py \
+            ProcessarAtualizacaoRemotaOtimizado.py \
+            PrepararPublicacaoEmPartes.py \
+            ValidacaoDaPublicacaoNoGitHub.py
+
+      - name: Conferir sintaxe dos módulos JavaScript
+        run: |
+          node --check InicializacaoDoObservatorio.js
+          node --check SistemaAnaliticoDoVigitel.js
+          node --check AdministracaoIntegradaAoIndex.js
+
+      - name: Conferir estrutura dos workflows
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import yaml
+
+          for caminho in Path('.github/workflows').glob('*.yml'):
+              with caminho.open(encoding='utf-8') as arquivo:
+                  documento = yaml.safe_load(arquivo)
+              if not isinstance(documento, dict) or 'jobs' not in documento:
+                  raise RuntimeError(f'Workflow inválido: {caminho}')
+              print(f'Workflow válido: {caminho}')
+          PY
+
+      - name: Testar leitura do dicionário publicado
+        run: |
+          python - <<'PY'
+          import HarmonizacaoPeloDicionarioOficial as harmonizacao
+
+          mapas = harmonizacao.carregar_mapeamentos()
+          verificacoes = {
+              ('cidade', 'natal'): 15,
+              ('q7', 'feminino'): 2,
+              ('q29', 'todos_os_dias'): 4,
+              ('q46', '45_a_59'): 6,
+              ('q74', 'regular'): 3,
+          }
+          for (variavel, rotulo), esperado in verificacoes.items():
+              obtido = mapas.get(variavel, {}).get(rotulo)
+              if obtido != esperado:
+                  raise AssertionError(
+                      f'{variavel}/{rotulo}: esperado {esperado}, obtido {obtido}'
+                  )
+          print(f'Dicionário validado: {len(mapas)} variáveis mapeadas.')
+          PY
+
+      - name: Validar a base publicada
+        run: python ValidacaoDaBaseCompleta.py
+
+      - name: Testar indicadores e gráficos
+        run: node TesteDosIndicadoresEGraficos.js
