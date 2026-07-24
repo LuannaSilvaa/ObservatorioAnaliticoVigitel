@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - ".github/workflows/ExtrairDicionarioOficial.yml"
+      - "ExtrairResumoDoDicionarioOficial.py"
   workflow_dispatch:
 
 permissions:
@@ -43,6 +44,6 @@ jobs:
           git config user.name "Observatório Vigitel - Dicionário oficial"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -f ResumoDoDicionarioOficial.txt
-          git commit -m "Registra resumo do dicionário oficial do Vigitel" || exit 0
+          git commit -m "Registra codificações das regras pendentes" || exit 0
           git pull --rebase origin main
           git push origin HEAD:main
