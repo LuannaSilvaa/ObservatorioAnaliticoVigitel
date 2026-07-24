@@ -41,49 +41,45 @@ jobs:
       - name: Testar indicadores e gráficos
         run: node TesteDosIndicadoresEGraficos.js
 
-      - name: Validar sincronização, manifesto e publicação
+      - name: Validar, promover e publicar atomicamente
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python ValidacaoDaPublicacaoNoGitHub.py
 
-      - name: Publicar histórico sincronizado na main
-        shell: bash
-        run: |
-          set -euo pipefail
-          git config user.name "Observatório Vigitel - Sincronização automática"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git push origin HEAD:main
-
-      - name: Atualizar estado e solicitar reconstrução do Pages
+      - name: Confirmar a versão pública promovida
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
         run: |
           set -euo pipefail
-          git pull --rebase origin main
+
+          LOCAL_SHA=$(git rev-parse HEAD)
+          REMOTE_SHA=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq '.object.sha')
+
+          if [ "$LOCAL_SHA" != "$REMOTE_SHA" ]; then
+            echo "A main aponta para $REMOTE_SHA, mas o conjunto validado é $LOCAL_SHA."
+            exit 1
+          fi
+
+          gh api \
+            -H "Accept: application/vnd.github.raw+json" \
+            "repos/$GITHUB_REPOSITORY/contents/EstadoDaAtualizacao.json?ref=main" \
+            > /tmp/estado-da-atualizacao.json
+
           python - <<'PY'
           import json
-          from datetime import datetime, timezone
           from pathlib import Path
 
-          base = Path("BaseAnaliticaDoVigitel.js").read_text(encoding="utf-8")
-          marker = "const DATA = "
-          start = base.index(marker) + len(marker)
-          data, _ = json.JSONDecoder().raw_decode(base[start:])
-          state_path = Path("EstadoDaAtualizacao.json")
-          state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {}
-          state.update({
-              "status": "success",
-              "updatedAt": datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
-              "message": "Base, arquivos derivados, documentação, auditoria e manifesto sincronizados e validados.",
-              "sourceFile": data.get("meta", {}).get("lastUpdateSourceFile", "Não informado"),
-              "years": data["dims"]["years"],
-          })
-          state_path.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+          estado = json.loads(Path("/tmp/estado-da-atualizacao.json").read_text(encoding="utf-8"))
+          if estado.get("status") != "success":
+              raise SystemExit("O estado público não está marcado como success.")
+          anos = [str(ano) for ano in estado.get("years", [])]
+          if "2024" not in anos:
+              raise SystemExit("O ano de 2024 não consta no estado público.")
+          if estado.get("sourceFile") != "vigitel-2006-2024-peso-rake.csv":
+              raise SystemExit("O estado público não corresponde ao arquivo validado.")
+          print("Publicação confirmada na main com estado success e ano de 2024.")
           PY
-          git add EstadoDaAtualizacao.json
-          git commit -m "Confirma sincronização completa dos arquivos do Observatório"
-          git push origin HEAD:main
-          gh api -X POST "repos/$GITHUB_REPOSITORY/pages/builds" >/dev/null
 
-# Auditoria final: preservar contagens diretas e validar a promoção automática.
+# A publicação, a atualização do estado, a remoção do rascunho e o Pages são
+# concluídos por PrepararPublicacaoEmPartes.py após todas as validações passarem.
