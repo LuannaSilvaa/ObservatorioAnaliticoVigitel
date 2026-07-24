@@ -28,6 +28,7 @@ BASE_PATH = ROOT / "BaseAnaliticaDoVigitel.js"
 DICIONARIOS_CANONICOS = (
     "DicionarioDosDadosDoVigitel.csv",
     "DicionarioDosDadosDoVigitel.xls",
+    "DicionarioDosDadosDoVigitel.xlsx",
     "DicionarioDosDadosDoVigitel.xlsm",
 )
 
@@ -51,8 +52,11 @@ ARQUIVOS = (
     "MetadadosDoProcessamento.csv",
     "README.md",
     "ManifestoDosArquivos.csv",
+    "AuditoriaDasContagensDoVigitel.json",
+    "RelatorioDeValidacaoDosIndicadores.txt",
     "RelatorioDaValidacaoDaBase.txt",
     "RelatorioDosIndicadoresEGraficos.txt",
+    "RelatorioDaUltimaAtualizacaoRemota.txt",
     "EstadoDaAtualizacao.json",
     *DICIONARIOS_CANONICOS,
 )
@@ -143,7 +147,7 @@ def preparar_dicionario() -> None:
     if not origem.is_file():
         raise FileNotFoundError(f"Dicionário informado não foi encontrado: {origem}")
     extensao = origem.suffix.lower()
-    if extensao not in {".csv", ".xls", ".xlsm"}:
+    if extensao not in {".csv", ".xls", ".xlsx", ".xlsm"}:
         raise RuntimeError(f"Formato de dicionário não aceito: {extensao}")
     destino = ROOT / f"DicionarioDosDadosDoVigitel{extensao}"
     for nome in DICIONARIOS_CANONICOS:

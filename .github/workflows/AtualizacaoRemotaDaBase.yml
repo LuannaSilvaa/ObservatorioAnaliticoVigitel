@@ -32,6 +32,7 @@ jobs:
           jq --arg evento "$EVENTO" '[.[]
             | select(.draft == true)
             | select(.author.login == "LuannaSilvaa")
+            | select(.tag_name | startswith("atualizacao-vigitel-"))
             | select(($evento == "workflow_dispatch") or (((.body // "") | contains("vigitel-status:erro")) | not))
           ] | sort_by(.created_at) | reverse | .[0] // empty' /tmp/releases.json > /tmp/pedido.json
 
@@ -45,7 +46,7 @@ jobs:
             | select((.name | ascii_downcase | test("dicion[aá]rio|dictionary")) | not)
           ] | length' /tmp/pedido.json)
           DICIONARIOS=$(jq '[.assets[]
-            | select(.name | test("\\.(csv|xls|xlsm)$"; "i"))
+            | select(.name | test("\\.(csv|xls|xlsx|xlsm)$"; "i"))
             | select(.name | ascii_downcase | test("dicion[aá]rio|dictionary"))
           ] | length' /tmp/pedido.json)
           ID=$(jq -r .id /tmp/pedido.json)
@@ -53,7 +54,7 @@ jobs:
           if [ "$BASES" -ne 1 ] || [ "$DICIONARIOS" -gt 1 ]; then
             NOME=$(jq -r '.name // "Atualização do Vigitel"' /tmp/pedido.json)
             CORPO=$(jq -r '.body // ""' /tmp/pedido.json | sed '/<!-- vigitel-status:erro -->/,$d')
-            MENSAGEM=$(printf '%s\n\n%s\n%s\n' "$CORPO" '<!-- vigitel-status:erro -->' 'Anexe exatamente uma base CSV, XLS ou XLSM e, opcionalmente, um único dicionário.')
+            MENSAGEM=$(printf '%s\n\n%s\n%s\n' "$CORPO" '<!-- vigitel-status:erro -->' 'Anexe exatamente uma base CSV, XLS ou XLSM e, opcionalmente, um dicionário CSV, XLS, XLSX ou XLSM.')
             gh api -X PATCH "repos/$GITHUB_REPOSITORY/releases/$ID" -f name="[ERRO] $NOME" -f body="$MENSAGEM"
             echo "found=false" >> "$GITHUB_OUTPUT"
             exit 0
@@ -65,7 +66,7 @@ jobs:
             | select((.name | ascii_downcase | test("dicion[aá]rio|dictionary")) | not)
             | .size' /tmp/pedido.json)
           DIC_TAMANHO=$(jq -r '[.assets[]
-            | select(.name | test("\\.(csv|xls|xlsm)$"; "i"))
+            | select(.name | test("\\.(csv|xls|xlsx|xlsm)$"; "i"))
             | select(.name | ascii_downcase | test("dicion[aá]rio|dictionary"))
           ][0].size // 0' /tmp/pedido.json)
 
@@ -90,11 +91,11 @@ jobs:
           gh api -H "Accept: application/octet-stream" "$BASE_URL" > "/tmp/vigitel/$BASE_NOME"
 
           DIC_URL=$(jq -r '[.assets[]
-            | select(.name | test("\\.(csv|xls|xlsm)$"; "i"))
+            | select(.name | test("\\.(csv|xls|xlsx|xlsm)$"; "i"))
             | select(.name | ascii_downcase | test("dicion[aá]rio|dictionary"))
           ][0].url // ""' /tmp/pedido.json)
           DIC_NOME=$(jq -r '[.assets[]
-            | select(.name | test("\\.(csv|xls|xlsm)$"; "i"))
+            | select(.name | test("\\.(csv|xls|xlsx|xlsm)$"; "i"))
             | select(.name | ascii_downcase | test("dicion[aá]rio|dictionary"))
           ][0].name // ""' /tmp/pedido.json)
           if [ -n "$DIC_URL" ]; then
@@ -206,85 +207,6 @@ jobs:
           executar "Preparação e recálculo" python ProcessarAtualizacaoRemotaOtimizado.py --base "$BASE_FILE" --source-name "$BASE_NAME" || falhar $? "Falha na preparação ou no recálculo."
           executar "Validação da base completa" python ValidacaoDaBaseCompleta.py || falhar $? "Falha na validação da base completa."
           executar "Teste dos indicadores e gráficos" node TesteDosIndicadoresEGraficos.js || falhar $? "Falha no teste dos indicadores e gráficos."
-          executar "Validação da publicação" python ValidacaoDaPublicacaoNoGitHub.py || falhar $? "Falha na validação da publicação."
+          executar "Validação e publicação atômica" python ValidacaoDaPublicacaoNoGitHub.py || falhar $? "Falha na validação ou na publicação atômica."
 
-          if [ -n "${DICTIONARY_FILE:-}" ] && [ -f "$DICTIONARY_FILE" ]; then
-            rm -f DicionarioDosDadosDoVigitel.csv DicionarioDosDadosDoVigitel.xls DicionarioDosDadosDoVigitel.xlsm
-            EXT=$(printf '%s' "${DICTIONARY_FILE##*.}" | tr '[:upper:]' '[:lower:]')
-            cp "$DICTIONARY_FILE" "DicionarioDosDadosDoVigitel.$EXT"
-          fi
-          rm -rf Microdados
-
-          ARQUIVOS=(
-            BaseAnaliticaDoVigitel.js
-            CatalogoDeIdadeDetalhada.js
-            MetodologiaDosIndicadores.js
-            DadosIdadeDetalhadaTabagismo.js
-            DadosIdadeDetalhadaAlcool.js
-            DadosIdadeDetalhadaEstadoNutricional.js
-            DadosIdadeDetalhadaAlimentacao.js
-            DadosIdadeDetalhadaAtividadeFisica.js
-            DadosIdadeDetalhadaAutoavaliacaoDeSaude.js
-            DadosIdadeDetalhadaPrevencaoDoCancer.js
-            DadosIdadeDetalhadaMorbidades.js
-            DadosIdadeDetalhadaConducaoETransito.js
-            RelatorioDaValidacaoDaBase.txt
-            RelatorioDosIndicadoresEGraficos.txt
-            RelatorioDeValidacaoDosIndicadores.txt
-          )
-
-          printf '\n===== TAMANHOS DOS ARQUIVOS GERADOS =====\n' >> "$LOG"
-          GRANDES=""
-          for ARQUIVO in "${ARQUIVOS[@]}"; do
-            if [ -f "$ARQUIVO" ]; then
-              TAMANHO=$(stat -c%s "$ARQUIVO")
-              printf '%12s bytes  %s\n' "$TAMANHO" "$ARQUIVO" >> "$LOG"
-              if [ "$TAMANHO" -ge 99000000 ]; then
-                GRANDES="$GRANDES $ARQUIVO"
-              fi
-            fi
-          done
-          if [ -n "$GRANDES" ]; then
-            falhar 90 "Arquivos gerados excedem o limite do GitHub:$GRANDES"
-          fi
-
-          ANOS=$(python - <<'PY'
-          import json
-          texto = open("BaseAnaliticaDoVigitel.js", encoding="utf-8").read()
-          marcador = "const DATA = "
-          inicio = texto.index(marcador) + len(marcador)
-          dados, _ = json.JSONDecoder().raw_decode(texto[inicio:])
-          print(json.dumps(dados["dims"]["years"], ensure_ascii=False))
-          PY
-          ) || falhar $? "Não foi possível ler os anos da base processada."
-
-          STATUS="success" MENSAGEM="Base recalculada, validada e publicada para todos os usuários." ANOS="$ANOS" python - <<'PY'
-          import json, os
-          from datetime import datetime, timezone
-          estado = {
-              "status": os.environ["STATUS"],
-              "updatedAt": datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
-              "message": os.environ["MENSAGEM"],
-              "sourceFile": os.environ["BASE_NAME"],
-              "requestId": os.environ["RELEASE_ID"],
-              "years": json.loads(os.environ["ANOS"]),
-          }
-          open("EstadoDaAtualizacao.json", "w", encoding="utf-8").write(json.dumps(estado, ensure_ascii=False, indent=2) + "\n")
-          PY
-          printf '\nConcluído: %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$LOG"
-
-          ARQUIVOS+=(EstadoDaAtualizacao.json RelatorioDaUltimaAtualizacaoRemota.txt)
-          for ARQUIVO in "${ARQUIVOS[@]}"; do
-            [ -e "$ARQUIVO" ] && git add "$ARQUIVO"
-          done
-          for ARQUIVO in DicionarioDosDadosDoVigitel.csv DicionarioDosDadosDoVigitel.xls DicionarioDosDadosDoVigitel.xlsm; do
-            [ -e "$ARQUIVO" ] && git add "$ARQUIVO"
-            git add -u "$ARQUIVO" 2>/dev/null || true
-          done
-
-          git commit -m "Publica atualização remota da base do Vigitel" >> "$LOG" 2>&1 || falhar $? "Não foi possível criar o commit da atualização."
-          git push origin HEAD:main >> "$LOG" 2>&1 || falhar $? "O GitHub recusou o envio dos arquivos processados."
-
-          gh api -X DELETE "repos/$GITHUB_REPOSITORY/releases/$RELEASE_ID" >/dev/null 2>&1 || true
-          gh api -X DELETE "repos/$GITHUB_REPOSITORY/git/refs/tags/$RELEASE_TAG" >/dev/null 2>&1 || true
-          gh api -X POST "repos/$GITHUB_REPOSITORY/pages/builds" >/dev/null 2>&1 || true
+          echo "Atualização concluída e promovida para a branch main."

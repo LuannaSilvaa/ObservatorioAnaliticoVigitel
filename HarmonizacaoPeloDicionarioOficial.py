@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""Converte rótulos do CSV oficial do Vigitel para os códigos do dicionário."""
+"""Converte rótulos do Vigitel para os códigos previstos no dicionário usado na atualização."""
 from __future__ import annotations
 
+import os
 import re
 import subprocess
 import unicodedata
@@ -9,12 +10,15 @@ from pathlib import Path
 
 import pandas as pd
 
+ROOT = Path(__file__).resolve().parent
 URL_DICIONARIO = (
     "https://svs.aids.gov.br/daent/cgdnt/vigitel/"
     "dicionario-vigitel-2006-2024.xlsx"
 )
 CAMINHO_DICIONARIO = Path("/tmp/dicionario-vigitel-2006-2024.xlsx")
+EXTENSOES_DICIONARIO = (".xlsx", ".xls", ".xlsm", ".csv")
 _MAPEAMENTOS: dict[str, dict[str, float | int]] | None = None
+_FONTE_DICIONARIO: Path | None = None
 
 # O CSV consolidado usa, em algumas colunas, rótulos resumidos em relação ao
 # texto do dicionário. As equivalências abaixo foram confirmadas diretamente
@@ -54,6 +58,8 @@ ALIASES_MANUAIS: dict[str, dict[str, float | int]] = {
         "10_a_19": 2,
         "20_a_29": 3,
         "30_a_39": 4,
+        "40_a_44": 5,
+        "45_a_59": 6,
         "60_ou_mais": 7,
     },
     "q60": {
@@ -95,9 +101,39 @@ def normalizar_variavel(valor: object) -> str:
     return re.sub(r"_+", "_", texto).strip("_")
 
 
+def localizar_dicionario_fornecido() -> Path | None:
+    """Prioriza o dicionário anexado à atualização e depois uma cópia do repositório."""
+    for nome_variavel in ("VIGITEL_DICTIONARY_FILE", "DICTIONARY_FILE"):
+        informado = os.environ.get(nome_variavel, "").strip()
+        if not informado:
+            continue
+        caminho = Path(informado).expanduser().resolve()
+        if not caminho.is_file():
+            raise FileNotFoundError(f"O dicionário informado em {nome_variavel} não foi encontrado: {caminho}")
+        if caminho.suffix.lower() not in EXTENSOES_DICIONARIO:
+            raise ValueError(f"Formato de dicionário não aceito: {caminho.suffix}. Use CSV, XLS, XLSM ou XLSX.")
+        return caminho
+
+    for extensao in EXTENSOES_DICIONARIO:
+        candidato = ROOT / f"DicionarioDosDadosDoVigitel{extensao}"
+        if candidato.is_file() and candidato.stat().st_size > 0:
+            return candidato
+    return None
+
+
 def baixar_dicionario() -> Path:
-    """Obtém a planilha oficial diretamente do Ministério da Saúde."""
+    """Obtém a fonte de categorias, respeitando primeiro o arquivo enviado pela administração."""
+    global _FONTE_DICIONARIO
+    if _FONTE_DICIONARIO is not None:
+        return _FONTE_DICIONARIO
+
+    fornecido = localizar_dicionario_fornecido()
+    if fornecido is not None:
+        _FONTE_DICIONARIO = fornecido
+        return fornecido
+
     if CAMINHO_DICIONARIO.is_file() and CAMINHO_DICIONARIO.stat().st_size > 10_000:
+        _FONTE_DICIONARIO = CAMINHO_DICIONARIO
         return CAMINHO_DICIONARIO
 
     subprocess.run(
@@ -107,6 +143,7 @@ def baixar_dicionario() -> Path:
         ],
         check=True,
     )
+    _FONTE_DICIONARIO = CAMINHO_DICIONARIO
     return CAMINHO_DICIONARIO
 
 
@@ -115,31 +152,75 @@ def codigo_numerico(valor: object) -> float | int | None:
     if pd.isna(valor):
         return None
     try:
-        numero = float(str(valor).replace(",", "."))
+        numero = float(str(valor).strip().replace(",", "."))
     except ValueError:
         return None
     return int(numero) if numero.is_integer() else numero
 
 
+def ler_csv_sem_cabecalho(caminho: Path) -> pd.DataFrame:
+    """Lê dicionários CSV em UTF-8 ou Latin-1 sem perder as linhas iniciais."""
+    ultimo_erro: Exception | None = None
+    for codificacao in ("utf-8-sig", "utf-8", "latin1"):
+        try:
+            return pd.read_csv(caminho, header=None, dtype=object, encoding=codificacao)
+        except UnicodeDecodeError as erro:
+            ultimo_erro = erro
+    if ultimo_erro is not None:
+        raise ultimo_erro
+    raise RuntimeError(f"Não foi possível ler o dicionário {caminho.name}.")
+
+
+def quadros_do_dicionario(caminho: Path) -> list[pd.DataFrame]:
+    """Transforma CSV ou planilhas Excel em quadros brutos com a mesma estrutura de leitura."""
+    if caminho.suffix.lower() == ".csv":
+        return [ler_csv_sem_cabecalho(caminho)]
+
+    motor = "xlrd" if caminho.suffix.lower() == ".xls" else "openpyxl"
+    livro = pd.ExcelFile(caminho, engine=motor)
+    return [pd.read_excel(livro, sheet_name=planilha, header=None, dtype=object) for planilha in livro.sheet_names]
+
+
+def localizar_colunas(bruto: pd.DataFrame) -> tuple[int, int, int, int] | None:
+    """Localiza variável, código e rótulo mesmo quando o cabeçalho muda de linha."""
+    if bruto.shape[1] < 3:
+        return None
+
+    limite = min(20, len(bruto))
+    for indice in range(limite):
+        chaves = [normalizar_texto(valor) if pd.notna(valor) else "" for valor in bruto.iloc[indice].tolist()]
+        coluna_codigo = next((i for i, chave in enumerate(chaves) if chave in {"codigo", "code", "value"}), None)
+        coluna_rotulo = next((i for i, chave in enumerate(chaves) if chave in {"label", "rotulo", "categoria"}), None)
+        coluna_variavel = next(
+            (i for i, chave in enumerate(chaves) if chave in {"variable_name", "variavel", "nome_da_variavel", "variable"}),
+            None,
+        )
+        if coluna_codigo is not None and coluna_rotulo is not None:
+            return indice + 1, coluna_variavel if coluna_variavel is not None else 0, coluna_codigo, coluna_rotulo
+
+    if bruto.shape[1] >= 7:
+        return 3, 0, 5, 6
+    return None
+
+
 def carregar_mapeamentos() -> dict[str, dict[str, float | int]]:
-    """Lê as planilhas e relaciona cada rótulo ao respectivo código."""
+    """Lê o dicionário efetivamente escolhido e relaciona cada rótulo ao código."""
     global _MAPEAMENTOS
     if _MAPEAMENTOS is not None:
         return _MAPEAMENTOS
 
     caminho = baixar_dicionario()
-    livro = pd.ExcelFile(caminho)
     mapas: dict[str, dict[str, float | int]] = {}
 
-    for planilha in livro.sheet_names:
-        bruto = pd.read_excel(livro, sheet_name=planilha, header=None, dtype=object)
-        if bruto.shape[1] < 7 or len(bruto) <= 3:
+    for bruto in quadros_do_dicionario(caminho):
+        colunas = localizar_colunas(bruto)
+        if colunas is None:
             continue
-
-        dados = bruto.iloc[3:, :7].copy()
-        variaveis = dados.iloc[:, 0].ffill()
-        codigos = dados.iloc[:, 5]
-        rotulos = dados.iloc[:, 6]
+        inicio, coluna_variavel, coluna_codigo, coluna_rotulo = colunas
+        dados = bruto.iloc[inicio:].copy()
+        variaveis = dados.iloc[:, coluna_variavel].ffill()
+        codigos = dados.iloc[:, coluna_codigo]
+        rotulos = dados.iloc[:, coluna_rotulo]
 
         for variavel, codigo, rotulo in zip(variaveis, codigos, rotulos):
             if pd.isna(variavel) or pd.isna(rotulo):
@@ -158,13 +239,19 @@ def carregar_mapeamentos() -> dict[str, dict[str, float | int]]:
         mapas.setdefault(nome, {}).update(aliases)
 
     # Variáveis derivadas binárias costumam usar apenas Sim/Não.
-    for nome, mapa in mapas.items():
+    for mapa in mapas.values():
         if 0 in mapa.values() and 1 in mapa.values():
             mapa.setdefault("nao", 0)
             mapa.setdefault("sim", 1)
 
+    if not mapas:
+        raise RuntimeError(f"Nenhuma categoria válida foi localizada no dicionário {caminho.name}.")
+
     _MAPEAMENTOS = mapas
-    print(f"Dicionário oficial carregado: {len(mapas)} variáveis com categorias.", flush=True)
+    print(
+        f"Dicionário carregado de {caminho.name}: {len(mapas)} variáveis com categorias.",
+        flush=True,
+    )
     return mapas
 
 
