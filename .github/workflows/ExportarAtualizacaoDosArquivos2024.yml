@@ -40,7 +40,6 @@ jobs:
 
       - name: Gerar pacote dos arquivos atualizados
         run: |
-          python -m py_compile PreservarArquivosAntigos.py ValidacaoDaPublicacaoNoGitHub.py
           zip -9 atualizacao-arquivos-2024.zip \
             index.html \
             README.md \
