@@ -15,6 +15,8 @@ MAXIMUM_FILE_SIZE = (99 if REMOTE_MODE else 25) * 1024 * 1024
 MAXIMUM_BROWSER_FILES = 100
 IGNORED_OPERATIONAL_DIRECTORIES = {".git", ".github", "Microdados", "__pycache__"}
 AUDIT_FILE = "AuditoriaDasContagensDoVigitel.json"
+AGE_AUDIT_SCRIPT = "AuditarIdadeDetalhada.py"
+AGE_AUDIT_REPORT = "RelatorioDaAuditoriaDaIdadeDetalhada.txt"
 
 
 def local_reference(value: str) -> Path | None:
@@ -73,7 +75,7 @@ def main() -> int:
         "IdentidadeVisualDoObservatorio.css", "SistemaAnaliticoDoVigitel.js",
         "InicializacaoDoObservatorio.js", "BaseAnaliticaDoVigitel.js",
         "MetodologiaDosIndicadores.js", "CatalogoDeIdadeDetalhada.js",
-        AUDIT_FILE, "PreservarAuditoriaDasContagens.py",
+        AUDIT_FILE, "PreservarAuditoriaDasContagens.py", AGE_AUDIT_SCRIPT,
     ]
     for name in required:
         if not (REPOSITORY / name).is_file():
@@ -132,11 +134,23 @@ def main() -> int:
     if errors:
         return 1
 
+    from AuditarIdadeDetalhada import main as auditar_idade_detalhada
     from PreservarAuditoriaDasContagens import main as preservar_contagens
     from SincronizarArquivosDoObservatorio import synchronize
     from ValidarSincronizacaoDoObservatorio import main as validar_sincronizacao
 
-    print("Sincronizando todos os arquivos derivados após a gravação dos metadados da base.")
+    print("Executando a auditoria integral da idade detalhada antes da sincronização.")
+    if auditar_idade_detalhada() != 0:
+        print(
+            "A publicação foi interrompida porque a idade detalhada não reproduz "
+            "integralmente a base principal."
+        )
+        return 1
+    if not (REPOSITORY / AGE_AUDIT_REPORT).is_file():
+        print("A auditoria terminou sem produzir o relatório obrigatório.")
+        return 1
+
+    print("Sincronizando todos os arquivos derivados após a auditoria da idade detalhada.")
     resumo = synchronize()
     print("Resumo da sincronização:", resumo)
 
@@ -149,13 +163,14 @@ def main() -> int:
     if validar_sincronizacao() != 0:
         return 1
 
-    print("Pacote e arquivos derivados aprovados para publicação na raiz do GitHub Pages.")
+    print("Pacote, idade detalhada e arquivos derivados aprovados para publicação no GitHub Pages.")
 
     if REMOTE_MODE:
         from PrepararPublicacaoEmPartes import main as preparar_publicacao
 
         print("Iniciando o pré-envio dos arquivos grandes em partes.")
-        preparar_publicacao()
+        if preparar_publicacao() != 0:
+            return 1
 
     return 0
 
