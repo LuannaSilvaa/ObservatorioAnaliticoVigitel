@@ -1,7 +1,7 @@
 {
-  "status": "error",
-  "updatedAt": "2026-07-24T00:00:43Z",
-  "message": "A atualização foi recusada: Processado: MicrodadosAno2019.csv Processado: MicrodadosAno2020.csv Processado: MicrodadosAno2021.csv Processado: MicrodadosAno2023.csv Processado: MicrodadosAno2024.csv Traceback (most recent call last):   File \"/home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py\", line 310, in <module>     raise SystemExit(processador.main())                      ^^^^^^^^^^^^^^^^^^   File \"/home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemota.py\", line 236, in main     engine.main()   File \"/home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/ProcessarAtualizacaoRemotaOtimizado.py\", line 301, in calcular_com_diagnostico     _calculo_original()   File \"/home/runner/work/ObservatorioAnaliticoVigitel/ObservatorioAnaliticoVigitel/RecalculoDosIndicadores.py\", line 728, in ma. A base pública anterior foi preservada.",
+  "status": "processing",
+  "updatedAt": "2026-07-24T00:17:17Z",
+  "message": "A base foi recebida e está sendo preparada para recálculo.",
   "sourceFile": "vigitel-2006-2024-peso-rake.csv",
   "requestId": "358930099"
 }
