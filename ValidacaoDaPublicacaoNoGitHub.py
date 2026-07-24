@@ -33,6 +33,7 @@ def main() -> int:
         "IdentidadeVisualDoObservatorio.css", "SistemaAnaliticoDoVigitel.js",
         "InicializacaoDoObservatorio.js", "BaseAnaliticaDoVigitel.js",
         "MetodologiaDosIndicadores.js", "CatalogoDeIdadeDetalhada.js",
+        "AuditoriaDasContagensDoVigitel.json", "PreservarAuditoriaDasContagens.py",
     ]
     for name in required:
         if not (REPOSITORY / name).is_file():
@@ -91,12 +92,17 @@ def main() -> int:
     if errors:
         return 1
 
+    from PreservarAuditoriaDasContagens import main as preservar_contagens
     from SincronizarArquivosDoObservatorio import synchronize
     from ValidarSincronizacaoDoObservatorio import main as validar_sincronizacao
 
     print("Sincronizando todos os arquivos derivados após a gravação dos metadados da base.")
     resumo = synchronize()
     print("Resumo da sincronização:", resumo)
+
+    print("Preservando ou restaurando a auditoria das contagens diretas.")
+    if preservar_contagens() != 0:
+        return 1
 
     print("Executando a validação obrigatória dos arquivos sincronizados.")
     if validar_sincronizacao() != 0:
