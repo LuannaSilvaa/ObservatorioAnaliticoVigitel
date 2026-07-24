@@ -1,12 +1,14 @@
-VALIDAÇÃO COMPLETA DA BASE — V13.0 UNIFICADO
+VALIDAÇÃO COMPLETA DA BASE OFICIAL — V13.0
 ==============================================================
-Indicadores: 63
-Linhas agregadas: 262,565
-Linhas de idade detalhada: 2,651,417
-Comparações principal × idade detalhada: 879
+Indicadores cadastrados: 63
+Indicadores indisponíveis nesta base: 8
+Linhas agregadas: 241,281
+Linhas de idade detalhada: 2,468,052
+Comparações principal × idade detalhada: 811
 Métodos documentados: 63
+Anos: 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2023, 2024
 Erros: 0
-Avisos: 1
+Avisos: 8
 
 ERROS
 ------
@@ -14,4 +16,11 @@ Nenhum erro encontrado.
 
 AVISOS
 ------
-A base incluída ainda usa pesos legados; o atualizador oficial está incluído no pacote.
+ALC07: A variável derivada direcao não está presente no arquivo consolidado enviado.
+MR05: A variável derivada asma não está presente no arquivo consolidado enviado.
+CT02: A variável derivada direcao_alc não está presente no arquivo consolidado enviado.
+CT04: As variáveis r153 e r137a do fluxo de blitz não estão presentes no arquivo consolidado enviado.
+CT05: As variáveis r137a e r154 do fluxo do bafômetro não estão presentes no arquivo consolidado enviado.
+CT06: As variáveis r154 e r155 do fluxo do bafômetro não estão presentes no arquivo consolidado enviado.
+CT07: As variáveis r155 e r156 do resultado do bafômetro não estão presentes no arquivo consolidado enviado.
+CT08: A variável r178 sobre uso de celular na condução não está presente no arquivo consolidado enviado.
