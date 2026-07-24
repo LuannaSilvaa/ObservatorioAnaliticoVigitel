@@ -1,7 +1,7 @@
 /**
- * Executa verificações de consistência sobre dados, indicadores ou recursos gráficos.
- * Ao acrescentar uma regra, inclua um caso de teste que represente o comportamento esperado.
- * Arquivo: TesteDosIndicadoresEGraficos.js
+ * Executa verificações de consistência sobre dados, indicadores e gráficos.
+ * Indicadores sem variável na base consolidada são aceitos somente quando a
+ * indisponibilidade estiver documentada nos metadados públicos.
  */
 
 const fs = require('fs');
@@ -14,6 +14,7 @@ const dataSource = fs.readFileSync(path.join(root, 'BaseAnaliticaDoVigitel.js'),
 const match = dataSource.match(/const DATA = (\{.*?\});[\s\S]*?const \$\s*=/s);
 if (!match) throw new Error('Não foi possível carregar DATA.');
 const DATA = JSON.parse(match[1]);
+const unsupported = DATA.meta?.unsupportedIndicators || {};
 const start = appSource.indexOf('function displayCategory');
 const end = appSource.indexOf('function currentBaseRowsForExport');
 if (start < 0 || end < 0) throw new Error('Bloco de renderização não localizado.');
@@ -32,9 +33,6 @@ const defaults = {
   lineWidth:'4',pointSize:'5',donutHole:'45',customTitle:'',customSubtitle:'',sourceText:'',xAxisTitle:'',yAxisTitle:'',legendSearchInput:''
 };
 const checked = new Set(['showValues','showGrid','showLegend','showSource','showBorder','showXAxisTitle','showYAxisTitle','showAxisLabels','showPoints','showTreemapLabels']);
-/**
- * Lê um campo da interface sem interromper o fluxo quando o elemento não existe.
- */
 const field = id => ({ value: defaults[id] ?? '', checked: checked.has(id) });
 const C = {year:0,region:1,uf:2,sex:3,age:4,pop:5,ind:6,num:7,den:8,n:9,cases:10,w2:11};
 const context = {
@@ -47,9 +45,6 @@ const context = {
 vm.createContext(context);
 vm.runInContext(rendererSource, context, {timeout:30000});
 
-/**
- * Agrega a série nacional de um indicador para conferir sua renderização em cada tipo de gráfico.
- */
 function nationalSeries(indicatorIndex) {
   const totals = new Map();
   for (const row of DATA.rows) {
@@ -68,11 +63,19 @@ function nationalSeries(indicatorIndex) {
 
 const chartTypes=['line','area','bar','horizontal','ranking','lollipop','pareto','pie','donut','radar','kpi','gauge','treemap'];
 const failures=[];
+const unavailable=[];
 let rendered=0;
 for (let indicatorIndex=0; indicatorIndex<DATA.indicators.length; indicatorIndex++) {
   const indicator=DATA.indicators[indicatorIndex];
   const series=nationalSeries(indicatorIndex);
-  if (!series.length) { failures.push(`${indicator.id}: sem Dados nacionais`); continue; }
+  if (!series.length) {
+    if (unsupported[indicator.id]) {
+      unavailable.push(`${indicator.id}: ${unsupported[indicator.id]}`);
+      continue;
+    }
+    failures.push(`${indicator.id}: sem dados nacionais e sem justificativa de indisponibilidade`);
+    continue;
+  }
   context.S.indicator=indicator;
   context.S.graphMeta={title:indicator.label,subtitle:'Teste automatizado',source:'Vigitel'};
   for (const type of chartTypes) {
@@ -87,14 +90,21 @@ for (let indicatorIndex=0; indicatorIndex<DATA.indicators.length; indicatorIndex
     }
   }
 }
+
 const report=[
-  'TESTE DE TODOS OS INDICADORES EM TODOS OS GRÁFICOS — V13.0 UNIFICADO',
+  'TESTE DOS INDICADORES DISPONÍVEIS EM TODOS OS GRÁFICOS — V13.0',
   '='.repeat(66),
-  `Indicadores: ${DATA.indicators.length}`,
+  `Indicadores cadastrados: ${DATA.indicators.length}`,
+  `Indicadores indisponíveis documentados: ${unavailable.length}`,
+  `Indicadores testados: ${DATA.indicators.length - unavailable.length}`,
   `Tipos de gráfico: ${chartTypes.length}`,
   `Combinações renderizadas: ${rendered}`,
   `Falhas: ${failures.length}`,
   '',
+  'INDISPONIBILIDADES DOCUMENTADAS',
+  ...(unavailable.length ? unavailable : ['Nenhuma.']),
+  '',
+  'FALHAS',
   ...(failures.length ? failures : ['Nenhuma falha encontrada.'])
 ].join('\n')+'\n';
 fs.writeFileSync(path.join(__dirname,'RelatorioDosIndicadoresEGraficos.txt'),report,'utf8');
