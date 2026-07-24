@@ -105,7 +105,7 @@ jobs:
         if: always()
         run: node TesteDosIndicadoresEGraficos.js
 
-      - name: Confirmar preservação dos arquivos antigos
+      - name: Validar arquivos antigos atualizados e o ano de 2024
         if: always()
         run: python PreservarArquivosAntigos.py
 

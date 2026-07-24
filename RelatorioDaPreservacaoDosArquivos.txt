@@ -1,0 +1,16 @@
+VALIDAÇÃO DOS ARQUIVOS ATUALIZADOS DO OBSERVATÓRIO
+============================================================
+Regra: arquivos antigos podem ser atualizados, mas devem continuar funcionais.
+Ano 2024 na base principal: sim
+Ano 2024 na idade detalhada: sim
+Referências da interface conferidas: 7
+Erros: 0
+Avisos: 0
+
+ERROS
+------
+Nenhum. Os arquivos atualizados permanecem funcionais.
+
+AVISOS
+------
+Nenhum.

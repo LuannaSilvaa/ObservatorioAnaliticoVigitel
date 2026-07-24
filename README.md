@@ -69,7 +69,7 @@ Todos os arquivos ficam no mesmo nível. Os principais são:
 
 ## Atualização dos dados
 
-O arquivo recebido pela Administração é a única entrada necessária. Não é preciso editar manualmente a lista de anos, o README, os metadados ou as bases CSV derivadas.
+O arquivo recebido pela Administração é a única entrada necessária para recalcular os dados. Os arquivos antigos da interface também podem ser atualizados quando necessário; antes da publicação, a automação confirma o funcionamento do painel e a presença do ano de 2024.
 
 Para uma atualização ser publicada, o fluxo precisa sincronizar e validar:
 

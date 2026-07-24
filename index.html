@@ -10,15 +10,15 @@
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>Observatório Analítico de Indicadores do Vigitel</title>
 <meta content="#F7FAFD" id="themeColorMeta" name="theme-color"/>
-<meta content="Plataforma acadêmica para análise, comparação e visualização de indicadores do Vigitel." name="description"/>
+<meta content="Plataforma acadêmica para análise, comparação e visualização dos indicadores do Vigitel de 2006 a 2024." name="description"/>
 <meta content="Luanna Morais Alves da Silva" name="author"/>
 <meta content="index, follow" name="robots"/>
 <meta content="website" property="og:type"/>
 <meta content="Observatório Analítico de Indicadores do Vigitel" property="og:title"/>
-<meta content="Painel acadêmico para análise e visualização de indicadores de saúde pública do Vigitel." property="og:description"/>
+<meta content="Painel acadêmico para análise e visualização dos indicadores de saúde pública do Vigitel de 2006 a 2024." property="og:description"/>
 <link href="IdentidadeVisualDoObservatorio.svg" rel="icon" type="image/svg+xml"/>
-<link href="IdentidadeVisualDoObservatorio.css?edicao=consolidada" rel="stylesheet"/>
-<script src="ConfiguracaoDoTema.js?edicao=consolidada"></script>
+<link href="IdentidadeVisualDoObservatorio.css?edicao=2024" rel="stylesheet"/>
+<script src="ConfiguracaoDoTema.js?edicao=2024"></script>
 
 <style id="administracaoIntegradaStyles">
 #administracao[hidden],#administracaoNav[hidden]{display:none!important}
@@ -94,7 +94,7 @@
 </nav>
 </div>
 </header>
-<section aria-live="polite" class="base-version-banner" id="baseVersionBanner"><div><strong id="baseVersionName">Base incorporada v13.0</strong><span id="baseVersionDetails">Edições 2006–2021 e 2023; pesos originais das edições. A atualização harmonizada 2006–2024 deve ser feita na pasta de reprodução.</span></div></section>
+<section aria-live="polite" class="base-version-banner" id="baseVersionBanner"><div><strong id="baseVersionName">Base oficial 2006–2024</strong><span id="baseVersionDetails">Edições de 2006 a 2024, exceto 2022; dados, pesos e metadados da versão publicada.</span></div></section>
 <button aria-controls="mobileFilterDrawer" aria-expanded="false" class="mobile-filter-button" id="mobileFilterButton" type="button">Filtros</button>
 <div class="mobile-filter-overlay" hidden="" id="mobileFilterOverlay"></div>
 <main class="workspace" id="painel">
@@ -274,94 +274,21 @@
 </div>
 </section>
 
-<section class="info-section" hidden id="administracao">
+<section class="info-section" id="administracao">
   <div class="admin-integrated-shell">
     <div class="admin-integrated-hero">
       <div>
-        <span class="eyebrow">Acesso local protegido</span>
+        <span class="eyebrow">Acesso administrativo remoto</span>
         <h2>Administração do Observatório</h2>
-        <p class="panel-subtitle">Atualize a base, o dicionário, os indicadores e a relação de anos disponíveis sem sair da página principal.</p>
+        <p class="panel-subtitle">Carregando a área segura de atualização da base pública de 2006 a 2024.</p>
       </div>
-      <span class="admin-integrated-badge">● Funciona somente neste computador</span>
+      <span class="admin-integrated-badge" data-status="idle" id="adminRemoteStatusBadge">Carregando</span>
     </div>
-
-    <article class="admin-integrated-card" id="adminIntegratedAccess">
-      <h3 id="adminIntegratedAccessTitle">Entrar na administração</h3>
-      <form class="admin-access-form" id="adminIntegratedAccessForm">
-        <label>Login
-          <input autocomplete="username" id="adminIntegratedUsername" minlength="3" required type="text"/>
-        </label>
-        <label>Senha
-          <input autocomplete="current-password" id="adminIntegratedPassword" minlength="10" required type="password"/>
-        </label>
-        <div hidden id="adminIntegratedSetupFields">
-          <label>Confirme a senha
-            <input autocomplete="new-password" id="adminIntegratedPasswordConfirmation" minlength="10" type="password"/>
-          </label>
-        </div>
-        <div hidden id="adminIntegratedLoginFields"></div>
-        <div class="admin-integrated-actions">
-          <button class="btn primary" id="adminIntegratedAccessButton" type="submit">Entrar</button>
-        </div>
-      </form>
+    <article class="admin-integrated-card">
+      <p class="admin-integrated-message" id="adminIntegratedMessage">Preparando a administração remota pelo GitHub.</p>
     </article>
-
-    <div hidden id="adminIntegratedPanel">
-      <div class="admin-session-row">
-        <strong id="adminIntegratedSessionUser">Sessão administrativa</strong>
-        <button class="btn" id="adminIntegratedLogout" type="button">Sair da administração</button>
-      </div>
-
-      <div class="admin-integrated-grid">
-        <article class="admin-integrated-card">
-          <h3>Base atualmente carregada</h3>
-          <div class="admin-summary-grid">
-            <div class="admin-summary-item"><span>Período disponível</span><strong id="adminYearsSummary">Identificando...</strong></div>
-            <div class="admin-summary-item"><span>Última atualização</span><strong id="adminLastUpdateSummary">Identificando...</strong></div>
-            <div class="admin-summary-item"><span>Formatos aceitos</span><strong>CSV, XLS e XLSM</strong></div>
-          </div>
-          <h4>Anos disponíveis no painel</h4>
-          <div class="admin-year-list" id="adminAvailableYears"><em>Identificando...</em></div>
-        </article>
-
-        <article class="admin-integrated-card">
-          <h3>Nova atualização</h3>
-          <div class="admin-file-grid">
-            <label class="admin-file-drop">Base completa ou arquivo anual do Vigitel
-              <input accept=".csv,.xls,.xlsm,text/csv,application/vnd.ms-excel,application/vnd.ms-excel.sheet.macroEnabled.12" id="adminIntegratedBaseFile" type="file"/>
-              <span class="admin-file-name" id="adminBaseFileName">Nenhum arquivo selecionado</span>
-            </label>
-            <label class="admin-file-drop">Dicionário correspondente (opcional)
-              <input accept=".csv,.xls,.xlsm,text/csv,application/vnd.ms-excel,application/vnd.ms-excel.sheet.macroEnabled.12" id="adminIntegratedDictionaryFile" type="file"/>
-              <span class="admin-file-name" id="adminDictionaryFileName">Nenhum arquivo selecionado</span>
-            </label>
-          </div>
-          <div class="admin-checkboxes">
-            <label><input checked id="adminMakeDelta" type="checkbox"/> Gerar pacote somente com os arquivos atualizados</label>
-            <label><input checked id="adminMakeFull" type="checkbox"/> Gerar cópia completa do projeto</label>
-          </div>
-          <div class="admin-integrated-actions">
-            <button class="btn primary" id="adminIntegratedUpdateButton" type="button">Atualizar, validar e aplicar</button>
-            <button class="btn" id="adminRefreshStatusButton" type="button">Atualizar andamento</button>
-            <button class="btn" hidden id="adminReloadPanelButton" type="button">Recarregar painel agora</button>
-          </div>
-          <p aria-live="polite" class="admin-integrated-message" data-type="info" id="adminIntegratedMessage">Selecione a base para iniciar.</p>
-        </article>
-      </div>
-
-      <article class="admin-integrated-card">
-        <h3>Processamento e validação</h3>
-        <div class="admin-progress-wrap">
-          <div class="admin-progress-head"><span id="adminIntegratedStage">Aguardando atualização</span><span id="adminIntegratedProgressValue">0%</span></div>
-          <div class="admin-progress-track"><div class="admin-progress-bar" id="adminIntegratedProgressBar"></div></div>
-        </div>
-        <pre class="admin-log" id="adminIntegratedLog">Nenhum registro de processamento.</pre>
-        <div class="admin-package-links" id="adminIntegratedPackages"></div>
-      </article>
-    </div>
   </div>
 </section>
-
 <section class="info-section" id="Microdados">
 <h2>Microdados e arquivos para download</h2>
 <p class="panel-subtitle">Esta seção reúne os arquivos disponíveis para consulta e download. O acesso aos Microdados e às bases tratadas permite maior transparência, conferência dos ResultadosProcessados e desenvolvimento de análises próprias fora do painel.</p>
@@ -378,14 +305,14 @@
 <label class="dialog-search"><span>Buscar indicador</span><input id="glossarySearch" placeholder="Digite o nome ou código" type="search"/></label>
 <div class="glossary-layout"><nav aria-label="Lista de indicadores" class="glossary-list" id="glossaryList"></nav><article class="glossary-content" id="glossaryContent"><p>Selecione um indicador para ver definição, fórmula, população analisada e cuidados de interpretação.</p></article></div>
 </dialog>
-<script defer="" src="BaseAnaliticaDoVigitel.js?edicao=consolidada"></script>
-<script defer="" src="CatalogoDeIdadeDetalhada.js?edicao=consolidada"></script>
-<script defer="" src="MetodologiaDosIndicadores.js?edicao=consolidada"></script>
-<script defer="" src="SistemaAnaliticoDoVigitel.js?edicao=consolidada"></script>
-<script defer="" src="GlossarioMetodologico.js?edicao=consolidada"></script>
-<script defer="" src="InterfaceResponsiva.js?edicao=consolidada"></script>
-<script defer="" src="AdministracaoIntegradaAoIndex.js?edicao=local-integrada"></script>
-<script defer="" src="InicializacaoDoObservatorio.js?edicao=consolidada"></script>
+<script defer="" src="BaseAnaliticaDoVigitel.js?edicao=2024"></script>
+<script defer="" src="CatalogoDeIdadeDetalhada.js?edicao=2024"></script>
+<script defer="" src="MetodologiaDosIndicadores.js?edicao=2024"></script>
+<script defer="" src="SistemaAnaliticoDoVigitel.js?edicao=2024"></script>
+<script defer="" src="GlossarioMetodologico.js?edicao=2024"></script>
+<script defer="" src="InterfaceResponsiva.js?edicao=2024"></script>
+<script defer="" src="AdministracaoIntegradaAoIndex.js?edicao=remota-2024"></script>
+<script defer="" src="InicializacaoDoObservatorio.js?edicao=2024"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   try {
@@ -431,55 +358,6 @@ document.addEventListener("DOMContentLoaded", function () {
     console.warn("Não foi possível atualizar automaticamente o período exibido.", erro);
   }
 });
-</script>
-<script>
-(function () {
-  "use strict";
-
-  function manterBotaoAdministracaoVisivel() {
-    const botao = document.getElementById("administracaoNav");
-    if (!botao) return;
-
-    botao.removeAttribute("hidden");
-
-    const observador = new MutationObserver(function () {
-      if (botao.hasAttribute("hidden")) {
-        botao.removeAttribute("hidden");
-      }
-    });
-
-    observador.observe(botao, {
-      attributes: true,
-      attributeFilter: ["hidden"]
-    });
-
-    botao.addEventListener("click", function (evento) {
-      const acessoLocal =
-        location.hostname === "127.0.0.1" ||
-        location.hostname === "localhost";
-
-      if (acessoLocal) return;
-
-      evento.preventDefault();
-
-      alert(
-        "A Administração funciona somente no aplicativo local.\n\n" +
-        "Para acessá-la, abra o arquivo " +
-        "\"IniciarObservatorioComAdministracao.bat\" no computador " +
-        "onde está a pasta completa do projeto."
-      );
-    });
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener(
-      "DOMContentLoaded",
-      manterBotaoAdministracaoVisivel
-    );
-  } else {
-    manterBotaoAdministracaoVisivel();
-  }
-})();
 </script>
 </body>
 </html>
