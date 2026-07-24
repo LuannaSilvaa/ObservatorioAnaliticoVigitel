@@ -114,8 +114,27 @@ def main() -> None:
     else:
         age_meta = json.loads(index_match.group(1))
 
-    if set(age_meta.get("meta", {}).get("supportedIndicators", [])) != set(ids):
-        errors.append("A idade detalhada não declara exatamente os 63 indicadores.")
+    age_supported = set(age_meta.get("meta", {}).get("supportedIndicators", []))
+    expected_supported = set(ids) - unsupported
+    missing_age_supported = expected_supported - age_supported
+    unexpected_age_supported = age_supported - expected_supported
+    if missing_age_supported:
+        errors.append(
+            "Indicadores disponíveis ausentes da idade detalhada: "
+            + ", ".join(sorted(missing_age_supported))
+        )
+    if unexpected_age_supported - unsupported:
+        errors.append(
+            "A idade detalhada declara indicadores desconhecidos como suportados: "
+            + ", ".join(sorted(unexpected_age_supported - unsupported))
+        )
+    if unexpected_age_supported & unsupported:
+        warnings.append(
+            "O catálogo legado ainda lista indicadores indisponíveis como suportados; "
+            "a interface remove esses itens antes da inicialização: "
+            + ", ".join(sorted(unexpected_age_supported & unsupported))
+        )
+
     age_unsupported = set(age_meta.get("meta", {}).get("unsupportedIndicators", {}))
     if age_unsupported != unsupported:
         errors.append("A indisponibilidade da idade detalhada diverge da base principal.")
@@ -137,6 +156,10 @@ def main() -> None:
             continue
         age_rows = json.loads(match.group(1))
         exact_count += len(age_rows)
+        if indicator_id in expected_supported and not age_rows:
+            errors.append(f"{indicator_id}: idade detalhada vazia apesar de o indicador possuir dados.")
+        if indicator_id in unsupported and age_rows:
+            errors.append(f"{indicator_id}: idade detalhada possui linhas para indicador indisponível.")
         for row_index, row in enumerate(age_rows):
             if len(row) != 10:
                 errors.append(f"{indicator_id}, linha {row_index}: {len(row)} campos; esperado 10.")
@@ -150,6 +173,9 @@ def main() -> None:
 
     comparisons = 0
     for key, main_values in totals.items():
+        indicator_id = ids[key[0]]
+        if indicator_id in unsupported:
+            continue
         exact = exact_totals.get(key)
         if not exact:
             errors.append(f"Sem idade detalhada para a combinação {key}.")
@@ -193,8 +219,6 @@ def main() -> None:
     if af2023 is None or not 10.0 <= af2023 <= 18.0:
         errors.append(f"AF08/2023 fora da faixa plausível; encontrado {af2023}.")
 
-    # As faixas anteriores foram calculadas com pesos legados. Com a base oficial
-    # harmonizada, diferenças pequenas são registradas como aviso, não como erro.
     tab07_2023 = national["TAB07"].get("2023")
     tab08_2023 = national["TAB08"].get("2023")
     if tab07_2023 is None or not 7.0 <= tab07_2023 <= 11.0:
@@ -202,7 +226,6 @@ def main() -> None:
     if tab08_2023 is None or not 7.0 <= tab08_2023 <= 12.0:
         warnings.append(f"TAB08/2023 fora da faixa histórica ampliada: {tab08_2023}.")
 
-    # O fluxo de trânsito só é validado quando as variáveis estão disponíveis.
     traffic_ids = ("CT04", "CT05", "CT06", "CT07")
     if not set(traffic_ids) <= unsupported:
         traffic = {indicator_id: ids.index(indicator_id) for indicator_id in traffic_ids}
@@ -225,6 +248,7 @@ def main() -> None:
         "VALIDAÇÃO COMPLETA DA BASE OFICIAL — V13.0",
         "=" * 62,
         f"Indicadores cadastrados: {len(ids)}",
+        f"Indicadores disponíveis com idade detalhada: {len(expected_supported)}",
         f"Indicadores indisponíveis nesta base: {len(unsupported)}",
         f"Linhas agregadas: {len(rows):,}",
         f"Linhas de idade detalhada: {exact_count:,}",
