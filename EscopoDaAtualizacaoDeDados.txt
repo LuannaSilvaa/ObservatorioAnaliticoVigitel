@@ -1,3 +1,0 @@
-A atualização automática preserva a aplicação antiga e modifica somente os arquivos necessários para incorporar novos dados e idade detalhada.
-
-Arquivos de interface, estilos, filtros, gráficos e administração não podem ser substituídos pelo processamento da base.
