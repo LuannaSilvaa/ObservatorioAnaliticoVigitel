@@ -31,7 +31,9 @@ UF_REGION = {
     "SP": "Sudeste", "TO": "Norte",
 }
 
-MAIN_NUMERIC_TOLERANCE = 0.12
+NUM_DEN_ABSOLUTE_TOLERANCE = 0.02
+W2_ABSOLUTE_TOLERANCE = 16.0
+W2_RELATIVE_TOLERANCE = 1e-12
 PERCENTAGE_TOLERANCE = 0.02
 
 
@@ -140,7 +142,7 @@ def main() -> int:
     extra_supported = declared_supported - expected_supported
     if extra_supported:
         warnings.append(
-            "O catálogo ainda lista indicadores sem dados como suportados; a interface os bloqueia: "
+            "O catálogo mantém indicadores sem dados na lista estrutural, mas a interface os bloqueia pela indisponibilidade documentada: "
             + ", ".join(sorted(extra_supported))
         )
     if declared_unsupported != unsupported:
@@ -289,18 +291,25 @@ def main() -> int:
             continue
 
         percentage_difference = abs(percentage(main_values) - percentage(exact_values))
-        numeric_differences = [
-            abs(main_values[position] - exact_values[position])
-            for position in (0, 1, 4)
-        ]
+        num_difference = abs(main_values[0] - exact_values[0])
+        den_difference = abs(main_values[1] - exact_values[1])
+        w2_difference = abs(main_values[4] - exact_values[4])
+        w2_matches = math.isclose(
+            main_values[4],
+            exact_values[4],
+            rel_tol=W2_RELATIVE_TOLERANCE,
+            abs_tol=W2_ABSOLUTE_TOLERANCE,
+        )
         if (
             percentage_difference > PERCENTAGE_TOLERANCE
-            or max(numeric_differences) > MAIN_NUMERIC_TOLERANCE
+            or num_difference > NUM_DEN_ABSOLUTE_TOLERANCE
+            or den_difference > NUM_DEN_ABSOLUTE_TOLERANCE
+            or not w2_matches
         ):
             errors.append(
                 f"{indicator_id} {key[:6]}: principal × detalhada diverge; "
                 f"percentual {percentage(main_values):.5f}% × {percentage(exact_values):.5f}%, "
-                f"diferenças num/den/w2={numeric_differences}."
+                f"diferenças num/den/w2={[num_difference, den_difference, w2_difference]}."
             )
             divergent += 1
 
