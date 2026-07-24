@@ -1,27 +1,7 @@
 {
-  "status": "success",
-  "updatedAt": "2026-07-24T06:32:06Z",
-  "message": "Base recebida, recalculada, sincronizada e validada. Todos os arquivos derivados foram promovidos para a versão pública.",
+  "status": "processing",
+  "updatedAt": "2026-07-24T07:10:56Z",
+  "message": "A base foi recebida e está sendo preparada para recálculo.",
   "sourceFile": "vigitel-2006-2024-peso-rake.csv",
-  "years": [
-    "2006",
-    "2007",
-    "2008",
-    "2009",
-    "2010",
-    "2011",
-    "2012",
-    "2013",
-    "2014",
-    "2015",
-    "2016",
-    "2017",
-    "2018",
-    "2019",
-    "2020",
-    "2021",
-    "2023",
-    "2024"
-  ],
   "requestId": "359081579"
 }
