@@ -1,5 +1,7 @@
-"""Confere se o pacote plano pode ser publicado no GitHub Pages pelo navegador."""
+"""Confere se o pacote pode ser publicado no GitHub Pages."""
 from __future__ import annotations
+
+import os
 import re
 import sys
 from pathlib import Path
@@ -7,8 +9,10 @@ from urllib.parse import unquote, urlsplit
 
 REPOSITORY = Path(__file__).resolve().parent
 INDEX = REPOSITORY / "index.html"
-MAXIMUM_BROWSER_FILE_SIZE = 25 * 1024 * 1024
+REMOTE_MODE = os.environ.get("GITHUB_ACTIONS", "").lower() == "true"
+MAXIMUM_FILE_SIZE = (99 if REMOTE_MODE else 25) * 1024 * 1024
 MAXIMUM_BROWSER_FILES = 100
+IGNORED_OPERATIONAL_DIRECTORIES = {".git", ".github", "Microdados", "__pycache__"}
 
 
 def local_reference(value: str) -> Path | None:
@@ -23,6 +27,7 @@ def local_reference(value: str) -> Path | None:
 def main() -> int:
     """Valida arquivos essenciais, referências, quantidade e tamanhos."""
     errors: list[str] = []
+    warnings: list[str] = []
     required = [
         "index.html", "IdentidadeVisualDoObservatorio.svg", "robots.txt", ".nojekyll",
         "IdentidadeVisualDoObservatorio.css", "SistemaAnaliticoDoVigitel.js",
@@ -35,9 +40,14 @@ def main() -> int:
 
     files = sorted(path for path in REPOSITORY.iterdir() if path.is_file())
     directories = sorted(path.name for path in REPOSITORY.iterdir() if path.is_dir())
-    if directories:
-        errors.append("O pacote deveria estar sem pastas, mas contém: " + ", ".join(directories))
-    if len(files) > MAXIMUM_BROWSER_FILES:
+    unexpected_directories = [
+        name for name in directories
+        if not (REMOTE_MODE and name in IGNORED_OPERATIONAL_DIRECTORIES)
+    ]
+    if unexpected_directories:
+        errors.append("O pacote público contém pastas inesperadas: " + ", ".join(unexpected_directories))
+
+    if not REMOTE_MODE and len(files) > MAXIMUM_BROWSER_FILES:
         errors.append(f"Há {len(files)} arquivos; o envio único pelo navegador aceita até {MAXIMUM_BROWSER_FILES}.")
 
     bundles = sorted(REPOSITORY.glob("DadosIdadeDetalhada*.js"))
@@ -55,21 +65,32 @@ def main() -> int:
 
     largest = max(files, key=lambda path: path.stat().st_size, default=None)
     for path in files:
-        if path.stat().st_size > MAXIMUM_BROWSER_FILE_SIZE:
-            errors.append(f"Arquivo acima de 25 MiB para upload pelo navegador: {path.name}")
+        if path.stat().st_size >= MAXIMUM_FILE_SIZE:
+            errors.append(
+                f"Arquivo acima do limite de {MAXIMUM_FILE_SIZE / 1024 / 1024:.0f} MiB: {path.name}"
+            )
+        elif REMOTE_MODE and path.stat().st_size > 25 * 1024 * 1024:
+            warnings.append(
+                f"{path.name} possui {path.stat().st_size / 1024 / 1024:.2f} MiB; "
+                "aceito no envio remoto, mas não no editor de arquivos do navegador."
+            )
 
-    print("VALIDAÇÃO DO PACOTE PLANO PARA GITHUB PAGES")
-    print("=" * 48)
+    mode = "GITHUB ACTIONS" if REMOTE_MODE else "ENVIO PELO NAVEGADOR"
+    print(f"VALIDAÇÃO DO PACOTE PARA PUBLICAÇÃO — {mode}")
+    print("=" * 58)
     print(f"Arquivos na raiz: {len(files)}")
     print(f"Arquivos temáticos de idade detalhada: {len(bundles)}")
     if largest:
         print(f"Maior arquivo: {largest.name} ({largest.stat().st_size / 1024 / 1024:.2f} MiB)")
     print(f"Erros: {len(errors)}")
+    print(f"Avisos: {len(warnings)}")
     for error in errors:
         print("ERRO: " + error)
+    for warning in warnings:
+        print("AVISO: " + warning)
     if errors:
         return 1
-    print("Pacote aprovado para envio pelo navegador e publicação na raiz.")
+    print("Pacote aprovado para publicação na raiz do GitHub Pages.")
     return 0
 
 
