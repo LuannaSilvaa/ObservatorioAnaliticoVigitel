@@ -75,7 +75,7 @@ jobs:
           state.update({
               "status": "success",
               "updatedAt": datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
-              "message": "Base, arquivos derivados, documentação e manifesto sincronizados e validados.",
+              "message": "Base, arquivos derivados, documentação, auditoria e manifesto sincronizados e validados.",
               "sourceFile": data.get("meta", {}).get("lastUpdateSourceFile", "Não informado"),
               "years": data["dims"]["years"],
           })
@@ -86,4 +86,4 @@ jobs:
           git push origin HEAD:main
           gh api -X POST "repos/$GITHUB_REPOSITORY/pages/builds" >/dev/null
 
-# Auditoria final: token liberado para a promoção atômica e revalidação do manifesto.
+# Auditoria final: preservar contagens diretas e validar a promoção automática.
