@@ -27,4 +27,4 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             "repos/$GITHUB_REPOSITORY/actions/workflows/AtualizacaoRemotaDaBase.yml/dispatches" \
             -f ref=main
-          echo "Processamento solicitado com variáveis derivadas incluídas e indisponibilidades documentadas."
+          echo "Processamento solicitado com validação completa compatível com a base oficial 2006-2024."
