@@ -1,18 +1,19 @@
-"ano","total_entrevistas"
-2006,54369
-2007,54251
-2008,54353
-2009,54367
-2010,54339
-2011,54144
-2012,45448
-2013,52929
-2014,40853
-2015,54174
-2016,53210
-2017,53034
-2018,104791
-2019,52443
-2020,27077
-2021,27093
-2023,21690
+﻿ano,linhas_recebidas,entrevistas_validas_utilizadas,metodo_contagem
+2006,54369,54369,maior denominador não ponderado entre os indicadores publicados
+2007,54251,54251,maior denominador não ponderado entre os indicadores publicados
+2008,54353,54353,maior denominador não ponderado entre os indicadores publicados
+2009,54367,54367,maior denominador não ponderado entre os indicadores publicados
+2010,54339,54339,maior denominador não ponderado entre os indicadores publicados
+2011,54144,54144,maior denominador não ponderado entre os indicadores publicados
+2012,45448,45448,maior denominador não ponderado entre os indicadores publicados
+2013,52929,52929,maior denominador não ponderado entre os indicadores publicados
+2014,40853,40853,maior denominador não ponderado entre os indicadores publicados
+2015,54174,54174,maior denominador não ponderado entre os indicadores publicados
+2016,53210,53210,maior denominador não ponderado entre os indicadores publicados
+2017,53034,53034,maior denominador não ponderado entre os indicadores publicados
+2018,52395,52395,maior denominador não ponderado entre os indicadores publicados
+2019,52443,52443,maior denominador não ponderado entre os indicadores publicados
+2020,27077,27077,maior denominador não ponderado entre os indicadores publicados
+2021,27093,27093,maior denominador não ponderado entre os indicadores publicados
+2023,21690,21690,maior denominador não ponderado entre os indicadores publicados
+2024,27048,27048,maior denominador não ponderado entre os indicadores publicados
