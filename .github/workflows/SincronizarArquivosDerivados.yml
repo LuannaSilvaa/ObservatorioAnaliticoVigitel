@@ -42,6 +42,8 @@ jobs:
         run: node TesteDosIndicadoresEGraficos.js
 
       - name: Validar sincronização, manifesto e publicação
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python ValidacaoDaPublicacaoNoGitHub.py
 
       - name: Publicar histórico sincronizado na main
@@ -84,4 +86,4 @@ jobs:
           git push origin HEAD:main
           gh api -X POST "repos/$GITHUB_REPOSITORY/pages/builds" >/dev/null
 
-# Auditoria final: regenerar manifesto após a correção do publicador atômico.
+# Auditoria final: token liberado para a promoção atômica e revalidação do manifesto.
