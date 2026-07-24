@@ -1,24 +1,4 @@
 ATUALIZAÇÃO REMOTA DO OBSERVATÓRIO VIGITEL
 Arquivo: vigitel-2006-2024-peso-rake.csv
-Início: 2026-07-24T01:43:23Z
+Início: 2026-07-24T04:35:03Z
 
-===== SINCRONIZAÇÃO AUTOMÁTICA =====
-Executada em: 2026-07-24T03:31:37Z
-Arquivo de origem: vigitel-2006-2024-peso-rake.csv
-Período publicado: 2006 a 2024 (exceto 2022)
-Linhas recebidas: 833,217
-Entrevistas válidas utilizadas: 833,217
-Método da contagem: maior denominador não ponderado entre os indicadores publicados
-Linhas agregadas: 241,281
-Indicadores cadastrados: 63
-Indicadores com dados: 55
-Indicadores indisponíveis documentados: 8
-Arquivos sincronizados:
-  - BaseAgregadaCompletaDosIndicadoresParteUm.csv
-  - BaseAgregadaCompletaDosIndicadoresParteDois.csv
-  - BaseAgregadaCompletaDosIndicadoresParteTres.csv
-  - EntrevistasPorAno.csv
-  - MetadadosDoProcessamento.csv
-  - README.md
-  - ManifestoDosArquivos.csv
-As validações estrutural, metodológica, gráfica e de sincronização são executadas depois deste resumo.
