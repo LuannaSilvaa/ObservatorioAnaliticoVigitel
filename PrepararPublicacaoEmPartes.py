@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Prepara os arquivos grandes da atualização remota para o envio final.
+"""Prepara todos os arquivos sincronizados da atualização remota para o envio final.
 
-O GitHub Actions gera vários arquivos JavaScript grandes. Enviá-los todos em um
-único ``git push`` pode encerrar o processo antes que o estado de erro seja
-gravado. Esta rotina cria um commit por arquivo e envia cada um para uma branch
-técnica. O workflow principal continua no mesmo histórico e, no fim, atualiza a
-``main`` enviando somente o commit pequeno de conclusão.
+O GitHub Actions gera vários arquivos grandes. Enviá-los todos em um único
+``git push`` pode encerrar o processo antes que o estado de erro seja gravado.
+Esta rotina cria um commit por arquivo e envia cada um para uma branch técnica.
+A ``main`` só é atualizada depois que base, derivados e documentação chegaram ao
+GitHub no mesmo histórico.
 """
 from __future__ import annotations
 
@@ -29,6 +29,14 @@ ARQUIVOS = (
     "DadosIdadeDetalhadaPrevencaoDoCancer.js",
     "DadosIdadeDetalhadaMorbidades.js",
     "DadosIdadeDetalhadaConducaoETransito.js",
+    "BaseAgregadaCompletaDosIndicadoresParteUm.csv",
+    "BaseAgregadaCompletaDosIndicadoresParteDois.csv",
+    "BaseAgregadaCompletaDosIndicadoresParteTres.csv",
+    "EntrevistasPorAno.csv",
+    "MetadadosDoProcessamento.csv",
+    "README.md",
+    "ManifestoDosArquivos.csv",
+    "RelatorioDaUltimaAtualizacaoRemota.txt",
     "RelatorioDaValidacaoDaBase.txt",
     "RelatorioDosIndicadoresEGraficos.txt",
     "RelatorioDeValidacaoDosIndicadores.txt",
@@ -65,7 +73,7 @@ def enviar_estado_atual() -> None:
 
 
 def main() -> int:
-    """Cria e envia um commit por arquivo grande antes da publicação final."""
+    """Cria e envia um commit por arquivo sincronizado antes da publicação final."""
     if os.environ.get("GITHUB_ACTIONS", "").lower() != "true":
         print("Preparação em partes ignorada fora do GitHub Actions.")
         return 0
@@ -92,18 +100,18 @@ def main() -> int:
 
         print(f"Preparando {nome} ({tamanho / 1024 / 1024:.2f} MiB)...", flush=True)
         executar("git", "add", "--", nome)
-        executar("git", "commit", "-m", f"Prepara {nome} para publicação remota")
+        executar("git", "commit", "-m", f"Sincroniza {nome} na publicação remota")
         enviar_estado_atual()
         enviados += 1
 
     if enviados:
         sha = executar("git", "rev-parse", "HEAD", capturar=True).stdout.strip()
         print(
-            f"Publicação em partes preparada: {enviados} arquivos; commit final {sha}.",
+            f"Publicação sincronizada em partes: {enviados} arquivos; commit final {sha}.",
             flush=True,
         )
     else:
-        print("Nenhum arquivo grande novo precisou ser preparado.", flush=True)
+        print("Nenhum arquivo sincronizado novo precisou ser preparado.", flush=True)
 
     return 0
 
