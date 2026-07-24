@@ -25,7 +25,7 @@ def local_reference(value: str) -> Path | None:
 
 
 def main() -> int:
-    """Valida sincronização, arquivos essenciais, referências, quantidade e tamanhos."""
+    """Sincroniza os derivados e valida arquivos essenciais, referências e limites."""
     errors: list[str] = []
     warnings: list[str] = []
     required = [
@@ -33,11 +33,6 @@ def main() -> int:
         "IdentidadeVisualDoObservatorio.css", "SistemaAnaliticoDoVigitel.js",
         "InicializacaoDoObservatorio.js", "BaseAnaliticaDoVigitel.js",
         "MetodologiaDosIndicadores.js", "CatalogoDeIdadeDetalhada.js",
-        "BaseAgregadaCompletaDosIndicadoresParteUm.csv",
-        "BaseAgregadaCompletaDosIndicadoresParteDois.csv",
-        "BaseAgregadaCompletaDosIndicadoresParteTres.csv",
-        "EntrevistasPorAno.csv", "MetadadosDoProcessamento.csv",
-        "ManifestoDosArquivos.csv", "README.md",
     ]
     for name in required:
         if not (REPOSITORY / name).is_file():
@@ -96,7 +91,12 @@ def main() -> int:
     if errors:
         return 1
 
+    from SincronizarArquivosDoObservatorio import synchronize
     from ValidarSincronizacaoDoObservatorio import main as validar_sincronizacao
+
+    print("Sincronizando todos os arquivos derivados após a gravação dos metadados da base.")
+    resumo = synchronize()
+    print("Resumo da sincronização:", resumo)
 
     print("Executando a validação obrigatória dos arquivos sincronizados.")
     if validar_sincronizacao() != 0:
