@@ -8,8 +8,8 @@ branch ``main`` é avançada por fast-forward para o commit final. O rascunho j�
 processado é removido e uma nova construção do GitHub Pages é solicitada.
 
 A publicação só é chamada depois das validações estrutural, metodológica,
-gráfica e de sincronização. Portanto, a versão pública anterior permanece
-intacta caso qualquer validação anterior falhe.
+gráfica, da idade detalhada e de sincronização. Portanto, a versão pública
+anterior permanece intacta caso qualquer validação anterior falhe.
 """
 from __future__ import annotations
 
@@ -55,6 +55,7 @@ ARQUIVOS = (
     "AuditoriaDasContagensDoVigitel.json",
     "RelatorioDeValidacaoDosIndicadores.txt",
     "RelatorioDaValidacaoDaBase.txt",
+    "RelatorioDaAuditoriaDaIdadeDetalhada.txt",
     "RelatorioDosIndicadoresEGraficos.txt",
     "RelatorioDaUltimaAtualizacaoRemota.txt",
     "EstadoDaAtualizacao.json",
@@ -124,8 +125,9 @@ def escrever_estado_sucesso() -> None:
         .isoformat()
         .replace("+00:00", "Z"),
         "message": (
-            "Base recebida, recalculada, sincronizada e validada. "
-            "Todos os arquivos derivados foram promovidos para a versão pública."
+            "Base recebida, recalculada, sincronizada e validada, incluindo "
+            "a equivalência integral da idade detalhada. Todos os arquivos "
+            "derivados foram promovidos para a versão pública."
         ),
         "sourceFile": arquivo_origem,
         "years": [str(ano) for ano in dados["dims"]["years"]],
