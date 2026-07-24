@@ -82,7 +82,7 @@ Para uma atualização ser publicada, o fluxo precisa sincronizar e validar:
 
 ## Cobertura e limitações
 
-A base publicada reúne **2006 a 2024 (exceto 2022)**, com **833,217 entrevistas válidas utilizadas** e **241,281 linhas agregadas**. A atualização atual foi produzida a partir de `vigitel-2006-2024-peso-rake.csv` e registrada em `2026-07-24T01:48:55Z`.
+A base publicada reúne **2006 a 2024 (exceto 2022)**, com **833,217 entrevistas válidas utilizadas** e **241,281 linhas agregadas**. A atualização atual foi produzida a partir de `vigitel-2006-2024-peso-rake.csv` e registrada em `2026-07-24T04:54:13Z`.
 
 Dos 63 indicadores cadastrados, 55 possuem dados na base consolidada atual. Os demais permanecem identificados como indisponíveis, sem valores inventados:
 
