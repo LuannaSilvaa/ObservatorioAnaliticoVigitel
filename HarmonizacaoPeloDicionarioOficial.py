@@ -16,6 +16,70 @@ URL_DICIONARIO = (
 CAMINHO_DICIONARIO = Path("/tmp/dicionario-vigitel-2006-2024.xlsx")
 _MAPEAMENTOS: dict[str, dict[str, float | int]] | None = None
 
+# O CSV consolidado usa, em algumas colunas, rótulos resumidos em relação ao
+# texto do dicionário. As equivalências abaixo foram confirmadas diretamente
+# nas frequências da base de 833.217 registros.
+ALIASES_MANUAIS: dict[str, dict[str, float | int]] = {
+    "q29": {
+        "1_a_2_dias": 1,
+        "3_a_4_dias": 2,
+        "5_a_6_dias": 3,
+        "todos_os_dias": 4,
+        "quase_nunca": 5,
+        "nunca": 6,
+    },
+    "q35": {
+        "sim": 1,
+        "sim_mas_nao_ultimo_mes": 2,
+        "sim_mas_nao_no_ultimo_mes": 2,
+        "nao_consumo": 3,
+        "nunca_consumi": 4,
+    },
+    "q36": {
+        "1_a_2_dias": 1,
+        "3_a_4_dias": 2,
+        "5_a_6_dias": 3,
+        "todos_os_dias": 4,
+        "quase_nunca": 5,
+        "nunca": 6,
+    },
+    "q45": {
+        "1_a_2": 1,
+        "3_a_4": 2,
+        "5_a_6": 3,
+        "todos_os_dias": 4,
+    },
+    "q46": {
+        "menos_de_10": 1,
+        "10_a_19": 2,
+        "20_a_29": 3,
+        "30_a_39": 4,
+        "60_ou_mais": 7,
+    },
+    "q60": {
+        "sim_diariamente": 1,
+        "sim_ocasionalmente": 2,
+        "sim_mas_nao_diariamente": 2,
+        "nao": 3,
+    },
+    "q64": {
+        "sim": 1,
+        "nao": 3,
+    },
+    "q74": {
+        "excelente": 1,
+        "muito_bom": 1,
+        "bom": 2,
+        "regular": 3,
+        "ruim": 4,
+        "muito_ruim": 5,
+        "nao_sabe": 777,
+        "nao_quis_informar": 888,
+    },
+    "refri5": {"nao": 0, "sim": 1},
+    "refritl5": {"nao": 0, "sim": 1},
+}
+
 
 def normalizar_texto(valor: object) -> str:
     """Produz uma chave estável para comparar rótulos com e sem acentuação."""
@@ -58,7 +122,7 @@ def codigo_numerico(valor: object) -> float | int | None:
 
 
 def carregar_mapeamentos() -> dict[str, dict[str, float | int]]:
-    """Lê as duas planilhas e relaciona cada rótulo ao respectivo código."""
+    """Lê as planilhas e relaciona cada rótulo ao respectivo código."""
     global _MAPEAMENTOS
     if _MAPEAMENTOS is not None:
         return _MAPEAMENTOS
@@ -90,11 +154,13 @@ def carregar_mapeamentos() -> dict[str, dict[str, float | int]]:
                 continue
             mapas.setdefault(nome, {})[chave] = codigo_convertido
 
-    # Rótulos recorrentes que podem aparecer com pequenas variações no CSV.
+    for nome, aliases in ALIASES_MANUAIS.items():
+        mapas.setdefault(nome, {}).update(aliases)
+
+    # Variáveis derivadas binárias costumam usar apenas Sim/Não.
     for nome, mapa in mapas.items():
         if 0 in mapa.values() and 1 in mapa.values():
             mapa.setdefault("nao", 0)
-            mapa.setdefault("não", 0)
             mapa.setdefault("sim", 1)
 
     _MAPEAMENTOS = mapas
