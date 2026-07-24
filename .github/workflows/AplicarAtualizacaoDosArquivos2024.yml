@@ -1,16 +1,20 @@
 name: Aplicar atualização funcional dos arquivos de 2024
 
 on:
-  push:
+  pull_request:
     branches:
-      - agent/atualiza-arquivos-2024
+      - main
+    types:
+      - opened
+      - reopened
+      - synchronize
 
 permissions:
   contents: write
 
 jobs:
   atualizar:
-    if: github.actor != 'github-actions[bot]'
+    if: github.actor != 'github-actions[bot]' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
