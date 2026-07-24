@@ -1,7 +1,7 @@
 {
-  "status": "processing",
-  "updatedAt": "2026-07-24T04:35:03Z",
-  "message": "A base foi recebida e está sendo preparada para recálculo.",
+  "status": "error",
+  "updatedAt": "2026-07-24T04:39:58Z",
+  "message": "A atualização falhou: atualizar\tProcessar, validar e publicar para todos\t2026-07-24T04:39:42.6479789Z Traceback (most recent call last): atualizar\tProcessar, validar e publicar para todos\t2026-07-24T04:39:42.6489459Z UnicodeEncodeError: 'utf-8' codec can't encode character '\\udcc3' in position 981: surrogates not allowed atualizar\tProcessar, validar e publicar para todos\t2026-07-24T04:39:42.6517925Z ##[error]Process completed with exit code 1.  A base pública anterior foi preservada.",
   "sourceFile": "vigitel-2006-2024-peso-rake.csv",
   "requestId": "359080186"
 }
