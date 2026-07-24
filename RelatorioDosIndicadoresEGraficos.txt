@@ -1,8 +1,21 @@
-TESTE DE TODOS OS INDICADORES EM TODOS OS GRÁFICOS — V13.0 UNIFICADO
+TESTE DOS INDICADORES DISPONÍVEIS EM TODOS OS GRÁFICOS — V13.0
 ==================================================================
-Indicadores: 63
+Indicadores cadastrados: 63
+Indicadores indisponíveis documentados: 8
+Indicadores testados: 55
 Tipos de gráfico: 13
-Combinações renderizadas: 819
+Combinações renderizadas: 715
 Falhas: 0
 
+INDISPONIBILIDADES DOCUMENTADAS
+ALC07: A variável derivada direcao não está presente no arquivo consolidado enviado.
+MR05: A variável derivada asma não está presente no arquivo consolidado enviado.
+CT02: A variável derivada direcao_alc não está presente no arquivo consolidado enviado.
+CT04: As variáveis r153 e r137a do fluxo de blitz não estão presentes no arquivo consolidado enviado.
+CT05: As variáveis r137a e r154 do fluxo do bafômetro não estão presentes no arquivo consolidado enviado.
+CT06: As variáveis r154 e r155 do fluxo do bafômetro não estão presentes no arquivo consolidado enviado.
+CT07: As variáveis r155 e r156 do resultado do bafômetro não estão presentes no arquivo consolidado enviado.
+CT08: A variável r178 sobre uso de celular na condução não está presente no arquivo consolidado enviado.
+
+FALHAS
 Nenhuma falha encontrada.
