@@ -1,0 +1,3 @@
+VALIDAÇÃO DOS ARQUIVOS ATUALIZADOS DO OBSERVATÓRIO
+============================================================
+O conteúdo será atualizado automaticamente pela validação da interface e da cobertura de 2024.
