@@ -1,0 +1,57 @@
+name: Exportar atualização dos arquivos de 2024
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+permissions:
+  contents: read
+
+jobs:
+  exportar:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Baixar a branch de atualização
+        uses: actions/checkout@v4
+        with:
+          ref: agent/atualiza-arquivos-2024
+
+      - name: Executar a transformação preparada
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import textwrap
+
+          workflow = Path('.github/workflows/AplicarAtualizacaoDosArquivos2024.yml').read_text(encoding='utf-8')
+          marcador_inicio = "          python - <<'PY'\n"
+          inicio = workflow.index(marcador_inicio) + len(marcador_inicio)
+          fim = workflow.index("\n          PY", inicio)
+          codigo = textwrap.dedent(workflow[inicio:fim])
+          exec(compile(codigo, 'AtualizacaoDosArquivos2024.py', 'exec'), {})
+          PY
+
+      - name: Gerar pacote dos arquivos atualizados
+        run: |
+          python -m py_compile PreservarArquivosAntigos.py ValidacaoDaPublicacaoNoGitHub.py
+          zip -9 atualizacao-arquivos-2024.zip \
+            index.html \
+            README.md \
+            PreservarArquivosAntigos.py \
+            ValidacaoDaPublicacaoNoGitHub.py \
+            .github/workflows/ValidarObservatorio.yml \
+            RelatorioDaPreservacaoDosArquivos.txt
+
+      - name: Disponibilizar pacote atualizado
+        uses: actions/upload-artifact@v4
+        with:
+          name: atualizacao-arquivos-2024
+          path: atualizacao-arquivos-2024.zip
+          retention-days: 2
