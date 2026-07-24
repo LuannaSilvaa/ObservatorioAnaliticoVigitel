@@ -19,6 +19,7 @@ import shutil
 import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parent
 BRANCH_REMOTA = "publicacao-vigitel-em-preparo"
@@ -76,21 +77,43 @@ def arquivo_alterado(caminho: Path) -> bool:
     return bool(resultado.stdout.strip())
 
 
-def carregar_anos_publicados() -> list[str]:
-    """Lê a relação de anos diretamente da base canônica já validada."""
+def carregar_base_publicada() -> dict[str, Any]:
+    """Lê o objeto canônico DATA da base já validada."""
     texto = BASE_PATH.read_text(encoding="utf-8")
     marcador = "const DATA = "
     inicio = texto.index(marcador) + len(marcador)
     dados, _ = json.JSONDecoder().raw_decode(texto[inicio:])
-    anos = [str(ano) for ano in dados["dims"]["years"]]
-    if not anos:
+    if not dados.get("dims", {}).get("years"):
         raise RuntimeError("A base validada não contém anos publicados.")
-    return anos
+    return dados
+
+
+def carregar_estado_anterior() -> dict[str, Any]:
+    """Lê o estado anterior para preservar a identificação em sincronizações técnicas."""
+    if not ESTADO_PATH.is_file():
+        return {}
+    try:
+        return json.loads(ESTADO_PATH.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
 
 
 def escrever_estado_sucesso() -> None:
     """Grava o estado final antes da promoção da branch técnica."""
-    estado = {
+    dados = carregar_base_publicada()
+    anterior = carregar_estado_anterior()
+    meta = dados.get("meta", {})
+    arquivo_origem = (
+        os.environ.get("BASE_NAME", "").strip()
+        or str(meta.get("lastUpdateSourceFile", "")).strip()
+        or str(anterior.get("sourceFile", "")).strip()
+        or "Não informado"
+    )
+    identificador = (
+        os.environ.get("RELEASE_ID", "").strip()
+        or str(anterior.get("requestId", "")).strip()
+    )
+    estado: dict[str, Any] = {
         "status": "success",
         "updatedAt": datetime.now(timezone.utc)
         .replace(microsecond=0)
@@ -100,10 +123,11 @@ def escrever_estado_sucesso() -> None:
             "Base recebida, recalculada, sincronizada e validada. "
             "Todos os arquivos derivados foram promovidos para a versão pública."
         ),
-        "sourceFile": os.environ.get("BASE_NAME", "Não informado"),
-        "requestId": os.environ.get("RELEASE_ID", "Não informado"),
-        "years": carregar_anos_publicados(),
+        "sourceFile": arquivo_origem,
+        "years": [str(ano) for ano in dados["dims"]["years"]],
     }
+    if identificador:
+        estado["requestId"] = identificador
     ESTADO_PATH.write_text(
         json.dumps(estado, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
@@ -252,7 +276,6 @@ def main() -> int:
 
     sha_final = executar("git", "rev-parse", "HEAD", capturar=True).stdout.strip()
     if enviados == 0:
-        # Ainda cria a referência técnica para validar e promover o estado corrente.
         enviar_estado_atual()
     confirmar_branch_remota(sha_final)
     promover_para_main(sha_final)
