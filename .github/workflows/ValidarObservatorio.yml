@@ -39,13 +39,15 @@ jobs:
             ProcessarAtualizacaoRemota.py \
             ProcessarAtualizacaoRemotaOtimizado.py \
             PrepararPublicacaoEmPartes.py \
-            ValidacaoDaPublicacaoNoGitHub.py
+            ValidacaoDaPublicacaoNoGitHub.py \
+            AuditarIdadeDetalhada.py
 
       - name: Conferir sintaxe dos módulos JavaScript
         run: |
           node --check InicializacaoDoObservatorio.js
           node --check SistemaAnaliticoDoVigitel.js
           node --check AdministracaoIntegradaAoIndex.js
+          node --check TesteDosIndicadoresEGraficos.js
 
       - name: Conferir estrutura dos workflows
         run: |
@@ -86,5 +88,31 @@ jobs:
       - name: Validar a base publicada
         run: python ValidacaoDaBaseCompleta.py
 
+      - name: Auditar toda a idade detalhada
+        run: |
+          set +e
+          python AuditarIdadeDetalhada.py > auditoria-console.txt 2>&1
+          CODIGO=$?
+          if [ "$CODIGO" -ne 0 ]; then
+            echo "A auditoria falhou. Últimas 220 linhas:"
+            tail -n 220 auditoria-console.txt
+            exit "$CODIGO"
+          fi
+          cat auditoria-console.txt
+
       - name: Testar indicadores e gráficos
+        if: always()
         run: node TesteDosIndicadoresEGraficos.js
+
+      - name: Guardar relatórios de validação
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorios-validacao-observatorio
+          path: |
+            RelatorioDaValidacaoDaBase.txt
+            RelatorioDaAuditoriaDaIdadeDetalhada.txt
+            RelatorioDosIndicadoresEGraficos.txt
+            auditoria-console.txt
+          if-no-files-found: warn
+          retention-days: 14
