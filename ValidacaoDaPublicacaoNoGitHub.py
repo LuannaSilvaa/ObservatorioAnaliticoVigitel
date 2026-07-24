@@ -1,4 +1,4 @@
-"""Confere se o pacote pode ser publicado no GitHub Pages."""
+"""Confere se o pacote pode ser publicado no GitHub Pages sem substituir a aplicação existente."""
 from __future__ import annotations
 
 import os
@@ -15,8 +15,6 @@ MAXIMUM_FILE_SIZE = (99 if REMOTE_MODE else 25) * 1024 * 1024
 MAXIMUM_BROWSER_FILES = 100
 IGNORED_OPERATIONAL_DIRECTORIES = {".git", ".github", "Microdados", "__pycache__"}
 AUDIT_FILE = "AuditoriaDasContagensDoVigitel.json"
-AGE_AUDIT_SCRIPT = "AuditarIdadeDetalhada.py"
-AGE_AUDIT_REPORT = "RelatorioDaAuditoriaDaIdadeDetalhada.txt"
 
 
 def local_reference(value: str) -> Path | None:
@@ -67,7 +65,7 @@ def registrar_auditoria_no_historico_tecnico() -> None:
 
 
 def main() -> int:
-    """Sincroniza os derivados e valida arquivos essenciais, referências e limites."""
+    """Sincroniza somente dados derivados e valida o pacote antes da publicação."""
     errors: list[str] = []
     warnings: list[str] = []
     required = [
@@ -75,7 +73,8 @@ def main() -> int:
         "IdentidadeVisualDoObservatorio.css", "SistemaAnaliticoDoVigitel.js",
         "InicializacaoDoObservatorio.js", "BaseAnaliticaDoVigitel.js",
         "MetodologiaDosIndicadores.js", "CatalogoDeIdadeDetalhada.js",
-        AUDIT_FILE, "PreservarAuditoriaDasContagens.py", AGE_AUDIT_SCRIPT,
+        AUDIT_FILE, "PreservarAuditoriaDasContagens.py",
+        "AuditarIdadeDetalhada.py", "PreservarArquivosAntigos.py",
     ]
     for name in required:
         if not (REPOSITORY / name).is_file():
@@ -135,24 +134,18 @@ def main() -> int:
         return 1
 
     from AuditarIdadeDetalhada import main as auditar_idade_detalhada
+    from PreservarArquivosAntigos import main as preservar_arquivos_antigos
     from PreservarAuditoriaDasContagens import main as preservar_contagens
     from SincronizarArquivosDoObservatorio import synchronize
     from ValidarSincronizacaoDoObservatorio import main as validar_sincronizacao
 
-    print("Executando a auditoria integral da idade detalhada antes da sincronização.")
-    if auditar_idade_detalhada() != 0:
-        print(
-            "A publicação foi interrompida porque a idade detalhada não reproduz "
-            "integralmente a base principal."
-        )
-        return 1
-    if not (REPOSITORY / AGE_AUDIT_REPORT).is_file():
-        print("A auditoria terminou sem produzir o relatório obrigatório.")
-        return 1
-
-    print("Sincronizando todos os arquivos derivados após a auditoria da idade detalhada.")
+    print("Sincronizando somente os arquivos derivados da base de dados.")
     resumo = synchronize()
     print("Resumo da sincronização:", resumo)
+
+    print("Restaurando o README antigo e conferindo se a aplicação permaneceu intacta.")
+    if preservar_arquivos_antigos() != 0:
+        return 1
 
     print("Preservando ou restaurando a auditoria das contagens diretas.")
     if preservar_contagens() != 0:
@@ -163,14 +156,17 @@ def main() -> int:
     if validar_sincronizacao() != 0:
         return 1
 
-    print("Pacote, idade detalhada e arquivos derivados aprovados para publicação no GitHub Pages.")
+    print("Auditando a equivalência integral da idade detalhada.")
+    if auditar_idade_detalhada() != 0:
+        return 1
+
+    print("Aplicação antiga preservada; dados e idade detalhada aprovados para publicação.")
 
     if REMOTE_MODE:
         from PrepararPublicacaoEmPartes import main as preparar_publicacao
 
-        print("Iniciando o pré-envio dos arquivos grandes em partes.")
-        if preparar_publicacao() != 0:
-            return 1
+        print("Iniciando o pré-envio dos arquivos de dados em partes.")
+        preparar_publicacao()
 
     return 0
 
