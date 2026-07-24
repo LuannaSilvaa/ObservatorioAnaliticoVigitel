@@ -1,7 +1,18 @@
-"campo","descricao"
-"Fonte dos dados","Ministerio da Saude"
-"Pesquisa","Vigitel"
-"Peso amostral","pesorake; para Populacao Negra, usa pesorake_cor quando disponivel"
-"Populacao alvo","Adultos com 18 anos ou mais nas capitais brasileiras e Distrito Federal"
-"Periodo","2006 a 2021 e 2023; sem microdados de 2022 no projeto"
-"Observacoes","Indicadores calculados por prevalencia ponderada conforme regras do dicionario"
+﻿campo,descricao
+Fonte dos dados,Vigitel | Ministério da Saúde
+Pesquisa,Vigitel
+Arquivo recebido,vigitel-2006-2024-peso-rake.csv
+Período,2006 a 2024 (exceto 2022)
+Anos disponíveis,"2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2023, 2024"
+Anos ausentes,2022
+Data da atualização,2026-07-24T01:48:55Z
+Linhas recebidas,833217
+Entrevistas válidas utilizadas,833217
+Método da contagem anual,maior denominador não ponderado entre os indicadores publicados
+Linhas agregadas publicadas,241281
+Indicadores cadastrados,63
+Indicadores com dados,55
+Indicadores indisponíveis,8
+Pesos amostrais utilizados,pesorake2025
+Precisão amostral,"IC95% e CV aproximados no navegador pelo tamanho efetivo de Kish, usando soma dos pesos e soma dos pesos ao quadrado; não substituem análise completa do desenho amostral."
+Versão da base,v13.0 - atualização remota validada
