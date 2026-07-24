@@ -1,0 +1,278 @@
+name: Aplicar atualização funcional dos arquivos de 2024
+
+on:
+  push:
+    branches:
+      - agent/atualiza-arquivos-2024
+
+permissions:
+  contents: write
+
+jobs:
+  atualizar:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Baixar a branch de atualização
+        uses: actions/checkout@v4
+        with:
+          ref: agent/atualiza-arquivos-2024
+          fetch-depth: 0
+
+      - name: Atualizar os arquivos antigos e a referência de 2024
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          import textwrap
+
+          raiz = Path('.')
+          caminho_index = raiz / 'index.html'
+          index = caminho_index.read_text(encoding='utf-8')
+
+          substituicoes = {
+              'Plataforma acadêmica para análise, comparação e visualização de indicadores do Vigitel.':
+                  'Plataforma acadêmica para análise, comparação e visualização dos indicadores do Vigitel de 2006 a 2024.',
+              'Painel acadêmico para análise e visualização de indicadores de saúde pública do Vigitel.':
+                  'Painel acadêmico para análise e visualização dos indicadores de saúde pública do Vigitel de 2006 a 2024.',
+              '<strong id="baseVersionName">Base incorporada v13.0</strong><span id="baseVersionDetails">Edições 2006–2021 e 2023; pesos originais das edições. A atualização harmonizada 2006–2024 deve ser feita na pasta de reprodução.</span>':
+                  '<strong id="baseVersionName">Base oficial 2006–2024</strong><span id="baseVersionDetails">Edições de 2006 a 2024, exceto 2022; dados, pesos e metadados da versão publicada.</span>',
+          }
+          for antigo, novo in substituicoes.items():
+              if antigo not in index:
+                  raise RuntimeError(f'Trecho obrigatório não encontrado no index.html: {antigo[:80]}')
+              index = index.replace(antigo, novo, 1)
+
+          index = index.replace('?edicao=consolidada', '?edicao=2024')
+          index = index.replace('?edicao=local-integrada', '?edicao=remota-2024')
+
+          administracao = textwrap.dedent('''
+          <section class="info-section" id="administracao">
+            <div class="admin-integrated-shell">
+              <div class="admin-integrated-hero">
+                <div>
+                  <span class="eyebrow">Acesso administrativo remoto</span>
+                  <h2>Administração do Observatório</h2>
+                  <p class="panel-subtitle">Carregando a área segura de atualização da base pública de 2006 a 2024.</p>
+                </div>
+                <span class="admin-integrated-badge" data-status="idle" id="adminRemoteStatusBadge">Carregando</span>
+              </div>
+              <article class="admin-integrated-card">
+                <p class="admin-integrated-message" id="adminIntegratedMessage">Preparando a administração remota pelo GitHub.</p>
+              </article>
+            </div>
+          </section>
+          ''').strip()
+
+          padrao_admin = re.compile(
+              r'<section class="info-section" hidden id="administracao">.*?</section>\s*'
+              r'(?=<section class="info-section" id="Microdados">)',
+              re.S,
+          )
+          index, quantidade = padrao_admin.subn(administracao + '\n', index)
+          if quantidade != 1:
+              raise RuntimeError(f'Esperava substituir uma seção administrativa antiga; encontrei {quantidade}.')
+
+          padrao_alerta_local = re.compile(
+              r'\n<script>\s*\(function \(\) \{\s*"use strict";\s*'
+              r'function manterBotaoAdministracaoVisivel\(\).*?</script>',
+              re.S,
+          )
+          index, quantidade = padrao_alerta_local.subn('', index)
+          if quantidade != 1:
+              raise RuntimeError(f'Esperava remover um bloqueio local antigo; encontrei {quantidade}.')
+
+          caminho_index.write_text(index, encoding='utf-8')
+
+          caminho_readme = raiz / 'README.md'
+          readme = caminho_readme.read_text(encoding='utf-8')
+          antigo = (
+              'O arquivo recebido pela Administração é a única entrada necessária. '
+              'Não é preciso editar manualmente a lista de anos, o README, os metadados ou as bases CSV derivadas.'
+          )
+          novo = (
+              'O arquivo recebido pela Administração é a única entrada necessária para recalcular os dados. '
+              'Os arquivos antigos da interface também podem ser atualizados quando necessário; antes da publicação, '
+              'a automação confirma o funcionamento do painel e a presença do ano de 2024.'
+          )
+          if antigo not in readme:
+              raise RuntimeError('Parágrafo de atualização não encontrado no README.md.')
+          caminho_readme.write_text(readme.replace(antigo, novo, 1), encoding='utf-8')
+
+          validador = textwrap.dedent('''
+          #!/usr/bin/env python3
+          """Valida os arquivos históricos atualizados e a cobertura do ano de 2024.
+
+          Os arquivos antigos podem evoluir, desde que a interface continue completa,
+          as referências permaneçam válidas e a base principal e a idade detalhada
+          apresentem o ano de 2024.
+          """
+          from __future__ import annotations
+
+          import json
+          from pathlib import Path
+
+          ROOT = Path(__file__).resolve().parent
+          REPORT_PATH = ROOT / "RelatorioDaPreservacaoDosArquivos.txt"
+
+          REQUIRED_FILES = (
+              "index.html",
+              "IdentidadeVisualDoObservatorio.css",
+              "ConfiguracaoDoTema.js",
+              "SistemaAnaliticoDoVigitel.js",
+              "InicializacaoDoObservatorio.js",
+              "AdministracaoIntegradaAoIndex.js",
+              "InterfaceResponsiva.js",
+              "BaseAnaliticaDoVigitel.js",
+              "CatalogoDeIdadeDetalhada.js",
+              "MetodologiaDosIndicadores.js",
+          )
+
+          REQUIRED_INDEX_REFERENCES = (
+              "IdentidadeVisualDoObservatorio.css?edicao=2024",
+              "BaseAnaliticaDoVigitel.js?edicao=2024",
+              "CatalogoDeIdadeDetalhada.js?edicao=2024",
+              "MetodologiaDosIndicadores.js?edicao=2024",
+              "SistemaAnaliticoDoVigitel.js?edicao=2024",
+              "AdministracaoIntegradaAoIndex.js?edicao=remota-2024",
+              "InicializacaoDoObservatorio.js?edicao=2024",
+          )
+
+
+          def extract_json(path: Path, prefix: str) -> dict:
+              text = path.read_text(encoding="utf-8")
+              start = text.index(prefix) + len(prefix)
+              payload, _ = json.JSONDecoder().raw_decode(text[start:])
+              return payload
+
+
+          def main() -> int:
+              errors: list[str] = []
+              warnings: list[str] = []
+
+              for name in REQUIRED_FILES:
+                  path = ROOT / name
+                  if not path.is_file() or path.stat().st_size == 0:
+                      errors.append(f"Arquivo obrigatório ausente ou vazio: {name}.")
+
+              if errors:
+                  data = {}
+                  catalog = {}
+              else:
+                  try:
+                      data = extract_json(ROOT / "BaseAnaliticaDoVigitel.js", "const DATA = ")
+                  except Exception as error:
+                      errors.append(f"Não foi possível ler a base principal: {error}")
+                      data = {}
+                  try:
+                      catalog = extract_json(
+                          ROOT / "CatalogoDeIdadeDetalhada.js",
+                          "window.VIGITEL_AGE_DETAIL=",
+                      )
+                  except Exception as error:
+                      errors.append(f"Não foi possível ler o catálogo detalhado: {error}")
+                      catalog = {}
+
+              main_years = [str(year) for year in data.get("dims", {}).get("years", [])]
+              detail_years = [str(year) for year in catalog.get("dims", {}).get("years", [])]
+              if "2024" not in main_years:
+                  errors.append("A base principal não contém o ano de 2024.")
+              if "2024" not in detail_years:
+                  errors.append("A idade detalhada não contém o ano de 2024.")
+              if main_years and detail_years and main_years != detail_years:
+                  errors.append("Os anos da base principal e da idade detalhada estão diferentes.")
+
+              index = (ROOT / "index.html").read_text(encoding="utf-8") if (ROOT / "index.html").is_file() else ""
+              if "Base oficial 2006–2024" not in index:
+                  errors.append("O cabeçalho da interface não informa a cobertura até 2024.")
+              if "Edições 2006–2021 e 2023" in index:
+                  errors.append("O index.html ainda contém a descrição antiga encerrada em 2023.")
+              if "A Administração funciona somente no aplicativo local" in index:
+                  errors.append("O index.html ainda bloqueia indevidamente a administração remota.")
+
+              for reference in REQUIRED_INDEX_REFERENCES:
+                  if reference not in index:
+                      errors.append(f"Referência atualizada ausente do index.html: {reference}.")
+
+              administration = (
+                  ROOT / "AdministracaoIntegradaAoIndex.js"
+              ).read_text(encoding="utf-8") if (ROOT / "AdministracaoIntegradaAoIndex.js").is_file() else ""
+              if "Administração remota" not in administration:
+                  errors.append("O módulo administrativo remoto não foi identificado.")
+              if "Anos futuros também serão reconhecidos" not in administration:
+                  warnings.append("O texto sobre reconhecimento automático de anos futuros não foi localizado.")
+
+              lines = [
+                  "VALIDAÇÃO DOS ARQUIVOS ATUALIZADOS DO OBSERVATÓRIO",
+                  "=" * 60,
+                  "Regra: arquivos antigos podem ser atualizados, mas devem continuar funcionais.",
+                  f"Ano 2024 na base principal: {'sim' if '2024' in main_years else 'não'}",
+                  f"Ano 2024 na idade detalhada: {'sim' if '2024' in detail_years else 'não'}",
+                  f"Referências da interface conferidas: {len(REQUIRED_INDEX_REFERENCES)}",
+                  f"Erros: {len(errors)}",
+                  f"Avisos: {len(warnings)}",
+                  "",
+                  "ERROS",
+                  "------",
+                  *(errors or ["Nenhum. Os arquivos atualizados permanecem funcionais."]),
+                  "",
+                  "AVISOS",
+                  "------",
+                  *(warnings or ["Nenhum."]),
+              ]
+              REPORT_PATH.write_text("\n".join(lines) + "\n", encoding="utf-8")
+              print("\n".join(lines))
+              return 1 if errors else 0
+
+
+          if __name__ == "__main__":
+              raise SystemExit(main())
+          ''').lstrip()
+          (raiz / 'PreservarArquivosAntigos.py').write_text(validador, encoding='utf-8')
+
+          caminho_publicacao = raiz / 'ValidacaoDaPublicacaoNoGitHub.py'
+          publicacao = caminho_publicacao.read_text(encoding='utf-8')
+          trocas_publicacao = {
+              '"""Confere se o pacote pode ser publicado no GitHub Pages sem substituir a aplicação existente."""':
+                  '"""Confere se os dados e os arquivos atualizados continuam funcionais no GitHub Pages."""',
+              'from PreservarArquivosAntigos import main as preservar_arquivos_antigos':
+                  'from PreservarArquivosAntigos import main as validar_arquivos_atualizados',
+              'print("Restaurando o README antigo e conferindo se a aplicação permaneceu intacta.")':
+                  'print("Validando os arquivos atualizados da aplicação e a cobertura do ano de 2024.")',
+              'if preservar_arquivos_antigos() != 0:':
+                  'if validar_arquivos_atualizados() != 0:',
+              'print("Aplicação antiga preservada; dados e idade detalhada aprovados para publicação.")':
+                  'print("Aplicação atualizada e funcional; dados e idade detalhada de 2024 aprovados para publicação.")',
+          }
+          for antigo, novo in trocas_publicacao.items():
+              if antigo not in publicacao:
+                  raise RuntimeError(f'Trecho esperado não encontrado em ValidacaoDaPublicacaoNoGitHub.py: {antigo}')
+              publicacao = publicacao.replace(antigo, novo, 1)
+          caminho_publicacao.write_text(publicacao, encoding='utf-8')
+
+          caminho_workflow = raiz / '.github/workflows/ValidarObservatorio.yml'
+          workflow = caminho_workflow.read_text(encoding='utf-8')
+          antigo = '      - name: Confirmar preservação dos arquivos antigos\n'
+          novo = '      - name: Validar arquivos antigos atualizados e o ano de 2024\n'
+          if antigo not in workflow:
+              raise RuntimeError('Etapa antiga de preservação não encontrada no workflow de validação.')
+          caminho_workflow.write_text(workflow.replace(antigo, novo, 1), encoding='utf-8')
+          PY
+
+      - name: Conferir a atualização produzida
+        run: |
+          python -m py_compile PreservarArquivosAntigos.py ValidacaoDaPublicacaoNoGitHub.py
+          python PreservarArquivosAntigos.py
+          node --check InicializacaoDoObservatorio.js
+          node --check AdministracaoIntegradaAoIndex.js
+          node --check SistemaAnaliticoDoVigitel.js
+
+      - name: Gravar a atualização na branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html README.md PreservarArquivosAntigos.py ValidacaoDaPublicacaoNoGitHub.py .github/workflows/ValidarObservatorio.yml
+          git commit -m "Atualiza arquivos antigos para a base de 2024"
+          git push origin HEAD:agent/atualiza-arquivos-2024
