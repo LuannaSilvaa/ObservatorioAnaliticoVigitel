@@ -90,7 +90,15 @@ def main() -> int:
         print("AVISO: " + warning)
     if errors:
         return 1
+
     print("Pacote aprovado para publicação na raiz do GitHub Pages.")
+
+    if REMOTE_MODE:
+        from PrepararPublicacaoEmPartes import main as preparar_publicacao
+
+        print("Iniciando o pré-envio dos arquivos grandes em partes.")
+        preparar_publicacao()
+
     return 0
 
 
