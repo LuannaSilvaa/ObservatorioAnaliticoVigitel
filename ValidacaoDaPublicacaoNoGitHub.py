@@ -1,4 +1,4 @@
-"""Confere se o pacote pode ser publicado no GitHub Pages sem substituir a aplicação existente."""
+"""Confere se os dados e os arquivos atualizados continuam funcionais no GitHub Pages."""
 from __future__ import annotations
 
 import os
@@ -134,7 +134,7 @@ def main() -> int:
         return 1
 
     from AuditarIdadeDetalhada import main as auditar_idade_detalhada
-    from PreservarArquivosAntigos import main as preservar_arquivos_antigos
+    from PreservarArquivosAntigos import main as validar_arquivos_atualizados
     from PreservarAuditoriaDasContagens import main as preservar_contagens
     from SincronizarArquivosDoObservatorio import synchronize
     from ValidarSincronizacaoDoObservatorio import main as validar_sincronizacao
@@ -143,8 +143,8 @@ def main() -> int:
     resumo = synchronize()
     print("Resumo da sincronização:", resumo)
 
-    print("Restaurando o README antigo e conferindo se a aplicação permaneceu intacta.")
-    if preservar_arquivos_antigos() != 0:
+    print("Validando os arquivos atualizados da aplicação e a cobertura do ano de 2024.")
+    if validar_arquivos_atualizados() != 0:
         return 1
 
     print("Preservando ou restaurando a auditoria das contagens diretas.")
@@ -160,7 +160,7 @@ def main() -> int:
     if auditar_idade_detalhada() != 0:
         return 1
 
-    print("Aplicação antiga preservada; dados e idade detalhada aprovados para publicação.")
+    print("Aplicação atualizada e funcional; dados e idade detalhada de 2024 aprovados para publicação.")
 
     if REMOTE_MODE:
         from PrepararPublicacaoEmPartes import main as preparar_publicacao

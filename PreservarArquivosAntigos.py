@@ -1,121 +1,126 @@
 #!/usr/bin/env python3
-"""Impede a atualização de dados de substituir arquivos antigos que já funcionam.
+"""Valida os arquivos históricos atualizados e a cobertura do ano de 2024.
 
-A atualização remota deve alterar somente bases, arquivos de idade detalhada,
-metadados, auditorias e relatórios. Interface, estilos, gráficos, administração,
-manifesto do aplicativo e documentação manual permanecem exatamente como estão
-na versão pública anterior.
+Os arquivos antigos podem evoluir, desde que a interface continue completa,
+as referências permaneçam válidas e a base principal e a idade detalhada
+apresentem o ano de 2024.
 """
 from __future__ import annotations
 
-import fnmatch
-import subprocess
+import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 REPORT_PATH = ROOT / "RelatorioDaPreservacaoDosArquivos.txt"
 
-# Arquivos que podem ser recriados porque contêm dados ou resultados técnicos.
-ALLOWED_PATTERNS = (
+REQUIRED_FILES = (
+    "index.html",
+    "IdentidadeVisualDoObservatorio.css",
+    "ConfiguracaoDoTema.js",
+    "SistemaAnaliticoDoVigitel.js",
+    "InicializacaoDoObservatorio.js",
+    "AdministracaoIntegradaAoIndex.js",
+    "InterfaceResponsiva.js",
     "BaseAnaliticaDoVigitel.js",
     "CatalogoDeIdadeDetalhada.js",
-    "DadosIdadeDetalhada*.js",
     "MetodologiaDosIndicadores.js",
-    "BaseAgregadaCompletaDosIndicadoresParte*.csv",
-    "EntrevistasPorAno.csv",
-    "MetadadosDoProcessamento.csv",
-    "ManifestoDosArquivos.csv",
-    "AuditoriaDasContagensDoVigitel.json",
-    "EstadoDaAtualizacao.json",
-    "DicionarioDosDadosDoVigitel.*",
-    "DiagnosticoDasCodificacoesDaBase.txt",
-    "RelatorioDa*.txt",
-    "RelatorioDe*.txt",
-    "RelatorioDos*.txt",
-    "auditoria-console.txt",
 )
 
-# O sincronizador antigo atualiza uma linha informativa do README. Como o pedido
-# é manter o arquivo antigo, essa modificação é revertida automaticamente.
-RESTORE_AUTOMATICALLY = {"README.md"}
-IGNORED_PREFIXES = ("Microdados/", "__pycache__/", ".git/")
+REQUIRED_INDEX_REFERENCES = (
+    "IdentidadeVisualDoObservatorio.css?edicao=2024",
+    "BaseAnaliticaDoVigitel.js?edicao=2024",
+    "CatalogoDeIdadeDetalhada.js?edicao=2024",
+    "MetodologiaDosIndicadores.js?edicao=2024",
+    "SistemaAnaliticoDoVigitel.js?edicao=2024",
+    "AdministracaoIntegradaAoIndex.js?edicao=remota-2024",
+    "InicializacaoDoObservatorio.js?edicao=2024",
+)
 
 
-def run_git(*arguments: str) -> list[str]:
-    """Executa Git e devolve as linhas não vazias da saída."""
-    result = subprocess.run(
-        ["git", *arguments],
-        cwd=ROOT,
-        check=True,
-        text=True,
-        encoding="utf-8",
-        errors="replace",
-        capture_output=True,
-    )
-    return [line.strip() for line in result.stdout.splitlines() if line.strip()]
-
-
-def is_allowed(path: str) -> bool:
-    """Informa se o caminho pertence ao conjunto estritamente atualizável."""
-    normalized = path.replace("\\", "/")
-    if normalized.startswith(IGNORED_PREFIXES):
-        return True
-    return any(fnmatch.fnmatch(normalized, pattern) for pattern in ALLOWED_PATTERNS)
-
-
-def restore(path: str) -> None:
-    """Restaura do commit atual um arquivo antigo que não deve ser atualizado."""
-    subprocess.run(
-        ["git", "restore", "--source=HEAD", "--staged", "--worktree", "--", path],
-        cwd=ROOT,
-        check=True,
-    )
+def extract_json(path: Path, prefix: str) -> dict:
+    text = path.read_text(encoding="utf-8")
+    start = text.index(prefix) + len(prefix)
+    payload, _ = json.JSONDecoder().raw_decode(text[start:])
+    return payload
 
 
 def main() -> int:
-    """Preserva os arquivos antigos e recusa alterações fora do escopo de dados."""
-    tracked = set(run_git("diff", "HEAD", "--name-only"))
-    untracked = set(run_git("ls-files", "--others", "--exclude-standard"))
-    restored: list[str] = []
-    forbidden: list[str] = []
+    errors: list[str] = []
+    warnings: list[str] = []
 
-    for path in sorted(tracked):
-        if is_allowed(path):
-            continue
-        if path in RESTORE_AUTOMATICALLY:
-            restore(path)
-            restored.append(path)
-        else:
-            forbidden.append(path)
+    for name in REQUIRED_FILES:
+        path = ROOT / name
+        if not path.is_file() or path.stat().st_size == 0:
+            errors.append(f"Arquivo obrigatório ausente ou vazio: {name}.")
 
-    for path in sorted(untracked):
-        if not is_allowed(path):
-            forbidden.append(path)
+    if errors:
+        data = {}
+        catalog = {}
+    else:
+        try:
+            data = extract_json(ROOT / "BaseAnaliticaDoVigitel.js", "const DATA = ")
+        except Exception as error:
+            errors.append(f"Não foi possível ler a base principal: {error}")
+            data = {}
+        try:
+            catalog = extract_json(
+                ROOT / "CatalogoDeIdadeDetalhada.js",
+                "window.VIGITEL_AGE_DETAIL=",
+            )
+        except Exception as error:
+            errors.append(f"Não foi possível ler o catálogo detalhado: {error}")
+            catalog = {}
+
+    main_years = [str(year) for year in data.get("dims", {}).get("years", [])]
+    detail_years = [str(year) for year in catalog.get("dims", {}).get("years", [])]
+    if "2024" not in main_years:
+        errors.append("A base principal não contém o ano de 2024.")
+    if "2024" not in detail_years:
+        errors.append("A idade detalhada não contém o ano de 2024.")
+    if main_years and detail_years and main_years != detail_years:
+        errors.append("Os anos da base principal e da idade detalhada estão diferentes.")
+
+    index = (ROOT / "index.html").read_text(encoding="utf-8") if (ROOT / "index.html").is_file() else ""
+    if "Base oficial 2006–2024" not in index:
+        errors.append("O cabeçalho da interface não informa a cobertura até 2024.")
+    if "Edições 2006–2021 e 2023" in index:
+        errors.append("O index.html ainda contém a descrição antiga encerrada em 2023.")
+    if "A Administração funciona somente no aplicativo local" in index:
+        errors.append("O index.html ainda bloqueia indevidamente a administração remota.")
+
+    for reference in REQUIRED_INDEX_REFERENCES:
+        if reference not in index:
+            errors.append(f"Referência atualizada ausente do index.html: {reference}.")
+
+    administration = (
+        ROOT / "AdministracaoIntegradaAoIndex.js"
+    ).read_text(encoding="utf-8") if (ROOT / "AdministracaoIntegradaAoIndex.js").is_file() else ""
+    if "Administração remota" not in administration:
+        errors.append("O módulo administrativo remoto não foi identificado.")
+    if "Anos futuros também serão reconhecidos" not in administration:
+        warnings.append("O texto sobre reconhecimento automático de anos futuros não foi localizado.")
 
     lines = [
-        "PRESERVAÇÃO DOS ARQUIVOS ANTIGOS DO OBSERVATÓRIO",
-        "=" * 58,
-        "Regra: atualizar somente dados, idade detalhada, metadados e relatórios.",
-        f"Arquivos antigos restaurados automaticamente: {len(restored)}",
-        f"Alterações proibidas encontradas: {len(forbidden)}",
+        "VALIDAÇÃO DOS ARQUIVOS ATUALIZADOS DO OBSERVATÓRIO",
+        "=" * 60,
+        "Regra: arquivos antigos podem ser atualizados, mas devem continuar funcionais.",
+        f"Ano 2024 na base principal: {'sim' if '2024' in main_years else 'não'}",
+        f"Ano 2024 na idade detalhada: {'sim' if '2024' in detail_years else 'não'}",
+        f"Referências da interface conferidas: {len(REQUIRED_INDEX_REFERENCES)}",
+        f"Erros: {len(errors)}",
+        f"Avisos: {len(warnings)}",
         "",
-        "RESTAURADOS",
-        "-----------",
-        *(restored or ["Nenhum arquivo precisou ser restaurado."]),
+        "ERROS",
+        "------",
+        *(errors or ["Nenhum. Os arquivos atualizados permanecem funcionais."]),
         "",
-        "ALTERAÇÕES PROIBIDAS",
-        "--------------------",
-        *(forbidden or ["Nenhuma. A interface e os arquivos antigos foram preservados."]),
+        "AVISOS",
+        "------",
+        *(warnings or ["Nenhum."]),
     ]
     REPORT_PATH.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print("\n".join(lines))
-
-    if forbidden:
-        raise SystemExit(
-            "A atualização tentou modificar arquivos antigos fora do escopo permitido. "
-            "A versão pública anterior foi preservada."
-        )
-    return 0
+    return 1 if errors else 0
 
 
 if __name__ == "__main__":
