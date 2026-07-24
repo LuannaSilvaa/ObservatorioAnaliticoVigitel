@@ -27,4 +27,4 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             "repos/$GITHUB_REPOSITORY/actions/workflows/AtualizacaoRemotaDaBase.yml/dispatches" \
             -f ref=main
-          echo "Processamento solicitado com validação final adequada ao GitHub Actions e ao GitHub Pages."
+          echo "Processamento solicitado com pré-envio individual dos arquivos grandes e publicação final na main."
