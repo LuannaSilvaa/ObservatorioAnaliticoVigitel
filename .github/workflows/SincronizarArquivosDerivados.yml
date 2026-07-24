@@ -1,0 +1,85 @@
+name: Sincronizar arquivos derivados do Observatório
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/SincronizarArquivosDerivados.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: sincronizacao-arquivos-derivados-vigitel
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pages: write
+
+jobs:
+  sincronizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Baixar a versão pública atual
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Preparar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Sincronizar todos os arquivos derivados
+        run: python SincronizarArquivosDoObservatorio.py
+
+      - name: Validar estrutura e metodologia
+        run: python ValidacaoDaBaseCompleta.py
+
+      - name: Testar indicadores e gráficos
+        run: node TesteDosIndicadoresEGraficos.js
+
+      - name: Validar sincronização, manifesto e publicação
+        run: python ValidacaoDaPublicacaoNoGitHub.py
+
+      - name: Publicar histórico sincronizado na main
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "Observatório Vigitel - Sincronização automática"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git push origin HEAD:main
+
+      - name: Atualizar estado e solicitar reconstrução do Pages
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git pull --rebase origin main
+          python - <<'PY'
+          import json
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          base = Path("BaseAnaliticaDoVigitel.js").read_text(encoding="utf-8")
+          marker = "const DATA = "
+          start = base.index(marker) + len(marker)
+          data, _ = json.JSONDecoder().raw_decode(base[start:])
+          state_path = Path("EstadoDaAtualizacao.json")
+          state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.exists() else {}
+          state.update({
+              "status": "success",
+              "updatedAt": datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
+              "message": "Base, arquivos derivados, documentação e manifesto sincronizados e validados.",
+              "sourceFile": data.get("meta", {}).get("lastUpdateSourceFile", "Não informado"),
+              "years": data["dims"]["years"],
+          })
+          state_path.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+          PY
+          git add EstadoDaAtualizacao.json
+          git commit -m "Confirma sincronização completa dos arquivos do Observatório"
+          git push origin HEAD:main
+          gh api -X POST "repos/$GITHUB_REPOSITORY/pages/builds" >/dev/null
