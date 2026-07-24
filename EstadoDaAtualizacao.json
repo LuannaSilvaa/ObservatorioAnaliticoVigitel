@@ -1,7 +1,7 @@
 {
-  "status": "error",
-  "updatedAt": "2026-07-24T00:51:03Z",
-  "message": "A atualização foi recusada: CT05: As variáveis r137a e r154 do fluxo do bafômetro não estão presentes no arquivo consolidado enviado. CT06: As variáveis r154 e r155 do fluxo do bafômetro não estão presentes no arquivo consolidado enviado. CT07: As variáveis r155 e r156 do resultado do bafômetro não estão presentes no arquivo consolidado enviado. CT08: A variável r178 sobre uso de celular na condução não está presente no arquivo consolidado enviado.  FALHAS Nenhuma falha encontrada.   ===== Validação da publicação ===== VALIDAÇÃO DO PACOTE PLANO PARA GITHUB PAGES ================================================ Arquivos na raiz: 98 Arquivos temáticos de idade detalhada: 9 Maior arquivo: DadosIdadeDetalhadaAtividadeFisica.js (25.31 MiB) Erros: 2 ERRO: O pacote deveria estar sem pastas, mas contém: .git, .github, Microdados, __pycache__ ERRO: Arquivo acima de 25 MiB para upload pelo navegador:. A base pública anterior foi preservada.",
+  "status": "processing",
+  "updatedAt": "2026-07-24T00:52:52Z",
+  "message": "A base foi recebida e está sendo preparada para recálculo.",
   "sourceFile": "vigitel-2006-2024-peso-rake.csv",
   "requestId": "358930099"
 }
