@@ -1,4 +1,4 @@
-name: Executar atualização pendente agora
+name: Executar diagnóstico das codificações agora
 
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
   acionar:
     runs-on: ubuntu-latest
     steps:
-      - name: Iniciar o processamento da base enviada
+      - name: Iniciar o diagnóstico da base enviada
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
@@ -25,6 +25,6 @@ jobs:
           gh api \
             --method POST \
             -H "Accept: application/vnd.github+json" \
-            "repos/$GITHUB_REPOSITORY/actions/workflows/AtualizacaoRemotaDaBase.yml/dispatches" \
+            "repos/$GITHUB_REPOSITORY/actions/workflows/DiagnosticarCodificacoesDaBase.yml/dispatches" \
             -f ref=main
-          echo "Processamento solicitado com conversão automática pelo dicionário oficial do Vigitel."
+          echo "Diagnóstico das codificações solicitado."
