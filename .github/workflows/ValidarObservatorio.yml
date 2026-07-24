@@ -40,7 +40,8 @@ jobs:
             ProcessarAtualizacaoRemotaOtimizado.py \
             PrepararPublicacaoEmPartes.py \
             ValidacaoDaPublicacaoNoGitHub.py \
-            AuditarIdadeDetalhada.py
+            AuditarIdadeDetalhada.py \
+            PreservarArquivosAntigos.py
 
       - name: Conferir sintaxe dos módulos JavaScript
         run: |
@@ -104,6 +105,10 @@ jobs:
         if: always()
         run: node TesteDosIndicadoresEGraficos.js
 
+      - name: Confirmar preservação dos arquivos antigos
+        if: always()
+        run: python PreservarArquivosAntigos.py
+
       - name: Guardar relatórios de validação
         if: always()
         uses: actions/upload-artifact@v4
@@ -113,6 +118,7 @@ jobs:
             RelatorioDaValidacaoDaBase.txt
             RelatorioDaAuditoriaDaIdadeDetalhada.txt
             RelatorioDosIndicadoresEGraficos.txt
+            RelatorioDaPreservacaoDosArquivos.txt
             auditoria-console.txt
           if-no-files-found: warn
           retention-days: 14
