@@ -1,0 +1,7 @@
+PRESERVAÇÃO DOS ARQUIVOS ANTIGOS DO OBSERVATÓRIO
+==========================================================
+Regra permanente: atualizar somente dados, idade detalhada, metadados e relatórios.
+
+A interface, os estilos, os filtros, os gráficos, a administração integrada e os demais arquivos que já funcionam permanecem iguais à versão pública anterior.
+
+Este relatório será recriado automaticamente em cada atualização remota para registrar se algum arquivo antigo precisou ser restaurado ou se houve tentativa de alteração fora do escopo permitido.
