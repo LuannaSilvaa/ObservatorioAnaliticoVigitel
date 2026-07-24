@@ -2,7 +2,7 @@
 
 Plataforma acadêmica para análise, comparação e visualização de indicadores de saúde pública produzidos a partir dos dados do Vigitel.
 
-Esta é a **versão plana para GitHub**: todos os arquivos ficam diretamente na raiz do repositório. Os dados por idade detalhada foram reunidos em nove arquivos temáticos, preservando os 63 indicadores e mantendo o conjunto com menos de cem arquivos. Nenhum arquivo ultrapassa 25 MiB.
+Esta é a **versão plana para GitHub**: os arquivos públicos ficam na raiz do repositório e são recriados automaticamente após cada atualização administrativa aprovada. O fluxo remoto valida os limites do GitHub, envia arquivos grandes em partes e somente então altera a versão pública.
 
 ## Recursos principais
 
@@ -26,22 +26,17 @@ O painel é um site estático. Ele não depende de banco de dados nem de servido
 - `CatalogoDeIdadeDetalhada.js`;
 - os nove arquivos `DadosIdadeDetalhada...js`.
 
-## Publicação no GitHub Pages
+## Publicação e atualização no GitHub Pages
 
-1. Extraia o ZIP.
-2. No repositório `ObservatorioAnaliticoVigitel`, escolha **Add file → Upload files**.
-3. Selecione todos os arquivos extraídos, sem enviar o ZIP.
-4. Faça o commit na branch `main`.
-5. Abra **Settings → Pages**.
-6. Escolha **Deploy from a branch**, branch **main** e pasta **/(root)**.
+O site é publicado pela branch `main`. A atualização dos dados é feita pela área **Administração** do próprio Observatório:
 
-O endereço seguirá o formato:
+1. a pessoa administradora envia uma base CSV, XLS ou XLSM pelo rascunho privado indicado na página;
+2. o GitHub Actions lê e harmoniza a base;
+3. indicadores, idade detalhada, CSVs agregados, contagens, metadados, documentação e manifesto são recriados;
+4. todas as validações precisam ser aprovadas;
+5. somente depois disso os arquivos são promovidos para a `main` e o GitHub Pages é republicado.
 
-```text
-https://SEUUSUARIO.github.io/ObservatorioAnaliticoVigitel/
-```
-
-Consulte `GuiaDePublicacaoNoGitHub.md` para o passo a passo completo.
+Uma falha em qualquer etapa mantém a versão pública anterior.
 
 ## Execução local
 
@@ -74,20 +69,33 @@ Todos os arquivos ficam no mesmo nível. Os principais são:
 
 ## Atualização dos dados
 
-Os microdados não são publicados neste repositório. Para recalcular:
+O arquivo recebido pela Administração é a única entrada necessária. Não é preciso editar manualmente a lista de anos, o README, os metadados ou as bases CSV derivadas.
 
-1. crie localmente uma pasta chamada `Microdados` ao lado dos arquivos do projeto;
-2. coloque nela os CSVs oficiais do Vigitel;
-3. execute `python RecalculoDosIndicadores.py`;
-4. execute `python ValidacaoDaBaseCompleta.py`;
-5. execute `node TesteDosIndicadoresEGraficos.js`;
-6. execute `python ValidacaoDaPublicacaoNoGitHub.py`.
+Para uma atualização ser publicada, o fluxo precisa sincronizar e validar:
 
-O recálculo atualiza a base principal e recria os nove arquivos temáticos, mantendo a distribuição plana.
+- a base principal e os nove arquivos temáticos de idade detalhada;
+- as três partes CSV da base agregada;
+- `EntrevistasPorAno.csv`;
+- `MetadadosDoProcessamento.csv`;
+- a cobertura descrita neste README;
+- os relatórios de validação e o manifesto SHA-256.
 
 ## Cobertura e limitações
 
-A base incorporada reúne as edições disponíveis entre 2006 e 2023, sem 2022, e utiliza os pesos presentes nos arquivos empregados no projeto. Os intervalos de confiança e coeficientes de variação são aproximações baseadas no tamanho efetivo de Kish e não substituem uma análise completa do desenho amostral.
+A base publicada reúne **2006 a 2024 (exceto 2022)**, com **833,217 entrevistas válidas utilizadas** e **241,281 linhas agregadas**. A atualização atual foi produzida a partir de `vigitel-2006-2024-peso-rake.csv` e registrada em `2026-07-24T01:48:55Z`.
+
+Dos 63 indicadores cadastrados, 55 possuem dados na base consolidada atual. Os demais permanecem identificados como indisponíveis, sem valores inventados:
+
+- `ALC07`: A variável derivada direcao não está presente no arquivo consolidado enviado.
+- `MR05`: A variável derivada asma não está presente no arquivo consolidado enviado.
+- `CT02`: A variável derivada direcao_alc não está presente no arquivo consolidado enviado.
+- `CT04`: As variáveis r153 e r137a do fluxo de blitz não estão presentes no arquivo consolidado enviado.
+- `CT05`: As variáveis r137a e r154 do fluxo do bafômetro não estão presentes no arquivo consolidado enviado.
+- `CT06`: As variáveis r154 e r155 do fluxo do bafômetro não estão presentes no arquivo consolidado enviado.
+- `CT07`: As variáveis r155 e r156 do resultado do bafômetro não estão presentes no arquivo consolidado enviado.
+- `CT08`: A variável r178 sobre uso de celular na condução não está presente no arquivo consolidado enviado.
+
+Os intervalos de confiança e coeficientes de variação exibidos no painel são aproximações baseadas no tamanho efetivo de Kish e não substituem uma análise completa do desenho amostral. Anos ausentes no intervalo: 2022.
 
 ## Fonte
 
