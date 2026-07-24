@@ -214,6 +214,9 @@ def main() -> int:
     create_black_population_file()
 
     import RecalculoDosIndicadores as engine
+    from CompatibilidadeDaBaseOficial import aplicar_compatibilidade
+
+    aplicar_compatibilidade(engine)
 
     def load_existing_metadata_robust():
         text = (ROOT / "BaseAnaliticaDoVigitel.js").read_text(encoding="utf-8")
