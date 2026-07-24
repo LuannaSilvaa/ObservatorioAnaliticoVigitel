@@ -1,1 +1,0 @@
-Os arquivos antigos que já funcionam permanecem como base da aplicação. As atualizações automáticas acrescentam e recalculam somente os dados necessários.
