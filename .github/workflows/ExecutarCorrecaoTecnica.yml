@@ -1,0 +1,67 @@
+name: Executar correção técnica
+
+on:
+  issues:
+    types:
+      - opened
+
+permissions:
+  contents: write
+  issues: write
+  pages: write
+
+concurrency:
+  group: executar-correcao-tecnica
+  cancel-in-progress: false
+
+jobs:
+  corrigir:
+    if: >-
+      github.event.issue.user.login == 'LuannaSilvaa' &&
+      github.event.issue.title == '[MANUTENCAO] Corrigir inconsistencias tecnicas'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Baixar a main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Preparar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Preparar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Instalar validação de YAML
+        run: python -m pip install --quiet pyyaml
+
+      - name: Executar e validar todas as correções
+        run: python CorrigirInconsistenciasTecnicas.py
+
+      - name: Gravar resultado na main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "Observatório Vigitel - Correção técnica"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          rm -f CorrigirInconsistenciasTecnicas.py
+          rm -f .github/workflows/CorrigirInconsistenciasTecnicas.yml
+          rm -f .github/workflows/ExecutarCorrecaoTecnica.yml
+
+          git add -A
+          git commit -m "Corrige relatórios, catálogo e frequência da atualização"
+          git pull --rebase origin main
+          git push origin HEAD:main
+
+          gh api -X POST "repos/$GITHUB_REPOSITORY/pages/builds" >/dev/null 2>&1 || true
+          gh issue close "${{ github.event.issue.number }}" --repo "$GITHUB_REPOSITORY" --comment "Correção técnica concluída e validada na branch main."
