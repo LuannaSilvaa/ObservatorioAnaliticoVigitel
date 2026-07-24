@@ -9,3 +9,4 @@ Microdados/*.zip
 MicrodadosBackup/
 Relatorio*.txt
 !RelatorioDaUltimaAtualizacaoRemota.txt
+!RelatorioDaPreservacaoDosArquivos.txt
