@@ -39,7 +39,8 @@ jobs:
             ProcessarAtualizacaoRemota.py \
             ProcessarAtualizacaoRemotaOtimizado.py \
             PrepararPublicacaoEmPartes.py \
-            ValidacaoDaPublicacaoNoGitHub.py
+            ValidacaoDaPublicacaoNoGitHub.py \
+            AuditarIdadeDetalhada.py
 
       - name: Conferir sintaxe dos módulos JavaScript
         run: |
@@ -85,6 +86,9 @@ jobs:
 
       - name: Validar a base publicada
         run: python ValidacaoDaBaseCompleta.py
+
+      - name: Auditar toda a idade detalhada
+        run: python AuditarIdadeDetalhada.py
 
       - name: Testar indicadores e gráficos
         run: node TesteDosIndicadoresEGraficos.js
