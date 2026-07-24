@@ -13,6 +13,13 @@ from pathlib import Path
 
 import pandas as pd
 
+# A leitura seletiva consulta required_columns antes de iniciar os blocos do CSV.
+# Por isso, a compatibilidade precisa ser aplicada já na importação do módulo.
+import RecalculoDosIndicadores as _engine_bootstrap
+from CompatibilidadeDaBaseOficial import aplicar_compatibilidade as _aplicar_compatibilidade
+
+_aplicar_compatibilidade(_engine_bootstrap)
+
 ROOT = Path(__file__).resolve().parent
 MICRO = ROOT / "Microdados"
 ALIASES = {
@@ -48,9 +55,6 @@ def normalize(value: object) -> str:
 
 
 def normalize_frame(frame: pd.DataFrame) -> pd.DataFrame:
-    # O CSV oficial consolidado pode trazer categorias textuais. No GitHub
-    # Actions, convertemos esses rótulos para os códigos do dicionário antes
-    # de aplicar aliases e remover eventuais colunas duplicadas.
     if os.environ.get("GITHUB_ACTIONS", "").lower() == "true":
         from HarmonizacaoPeloDicionarioOficial import aplicar_mapeamentos
 
