@@ -1,9 +1,8 @@
 {
   "status": "success",
-  "updatedAt": "2026-07-24T05:04:48Z",
-  "message": "Base recebida, recalculada, sincronizada e validada. As contagens foram conferidas diretamente nos microdados anuais harmonizados.",
+  "updatedAt": "2026-07-24T05:49:25Z",
+  "message": "Base recebida, recalculada, sincronizada e validada. Todos os arquivos derivados foram promovidos para a versão pública.",
   "sourceFile": "vigitel-2006-2024-peso-rake.csv",
-  "requestId": "359081579",
   "years": [
     "2006",
     "2007",
@@ -23,5 +22,6 @@
     "2021",
     "2023",
     "2024"
-  ]
+  ],
+  "requestId": "359081579"
 }
