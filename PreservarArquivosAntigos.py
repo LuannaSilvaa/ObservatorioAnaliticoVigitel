@@ -32,6 +32,7 @@ ALLOWED_PATTERNS = (
     "RelatorioDa*.txt",
     "RelatorioDe*.txt",
     "RelatorioDos*.txt",
+    "auditoria-console.txt",
 )
 
 # O sincronizador antigo atualiza uma linha informativa do README. Como o pedido
