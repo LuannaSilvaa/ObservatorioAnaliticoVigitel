@@ -117,7 +117,7 @@ def validate_readme(data: dict[str, Any], errors: list[str]) -> None:
         data["meta"]["yearsLabel"],
         data["meta"]["lastUpdateSourceFile"],
         f"{int(data['meta']['respondentsProcessed']):,}",
-        "indicadores permanecem identificados como indisponíveis",
+        "permanecem identificados como indisponíveis",
     ]
     for fragment in required:
         if fragment not in text:
