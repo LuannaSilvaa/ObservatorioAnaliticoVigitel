@@ -1,7 +1,7 @@
 {
-  "status": "processing",
-  "updatedAt": "2026-07-24T00:29:01Z",
-  "message": "A base foi recebida e está sendo preparada para recálculo.",
+  "status": "error",
+  "updatedAt": "2026-07-24T00:34:35Z",
+  "message": "A atualização foi recusada: ERROS ------ ALC07: série nacional vazia. MR05: série nacional vazia. CT02: série nacional vazia. CT04: série nacional vazia. CT05: série nacional vazia. CT06: série nacional vazia. CT07: série nacional vazia. CT08: série nacional vazia. TAB07: anos inesperados ['2018', '2019', '2020', '2021', '2023', '2024']. TAB08: anos inesperados ['2018', '2019', '2020', '2021', '2023', '2024']. AF08/2023 deveria reproduzir aproximadamente 13,1%; encontrado 13.81883387742989. TAB08/2023 fora da faixa esperada com os pesos legados.  AVISOS ------ Nenhum aviso adicional.  FALHA: Falha na validação da base completa. . A base pública anterior foi preservada.",
   "sourceFile": "vigitel-2006-2024-peso-rake.csv",
   "requestId": "358930099"
 }
