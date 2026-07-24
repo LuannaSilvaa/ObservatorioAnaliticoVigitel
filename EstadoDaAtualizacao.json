@@ -1,7 +1,7 @@
 {
-  "status": "processing",
-  "updatedAt": "2026-07-24T00:37:12Z",
-  "message": "A base foi recebida e está sendo preparada para recálculo.",
+  "status": "error",
+  "updatedAt": "2026-07-24T00:42:56Z",
+  "message": "A atualização foi recusada:  ===== Teste dos indicadores e gráficos ===== TESTE DE TODOS OS INDICADORES EM TODOS OS GRÁFICOS — V13.0 UNIFICADO ================================================================== Indicadores: 63 Tipos de gráfico: 13 Combinações renderizadas: 715 Falhas: 8  ALC07: sem Dados nacionais MR05: sem Dados nacionais CT02: sem Dados nacionais CT04: sem Dados nacionais CT05: sem Dados nacionais CT06: sem Dados nacionais CT07: sem Dados nacionais CT08: sem Dados nacionais   FALHA: Falha no teste dos indicadores e gráficos. . A base pública anterior foi preservada.",
   "sourceFile": "vigitel-2006-2024-peso-rake.csv",
   "requestId": "358930099"
 }
