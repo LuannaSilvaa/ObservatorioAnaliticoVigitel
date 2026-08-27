@@ -376,13 +376,16 @@
         height:retangulo.height
       };
 
-      elemento.style.position='fixed';
-      elemento.style.margin='0';
-      elemento.style.left=retangulo.left+'px';
-      elemento.style.top=retangulo.top+'px';
-      elemento.style.right='auto';
-      elemento.style.bottom='auto';
-      elemento.style.transform='none';
+      /* Algumas janelas, especialmente a demográfica, possuem left/transform
+         com !important no CSS. Usar prioridade important aqui garante que a
+         posição escolhida pelo usuário prevaleça durante e depois do arraste. */
+      elemento.style.setProperty('position','fixed','important');
+      elemento.style.setProperty('margin','0','important');
+      elemento.style.setProperty('left',retangulo.left+'px','important');
+      elemento.style.setProperty('top',retangulo.top+'px','important');
+      elemento.style.setProperty('right','auto','important');
+      elemento.style.setProperty('bottom','auto','important');
+      elemento.style.setProperty('transform','none','important');
       elemento.classList.add('is-being-moved');
       document.body.classList.add('moving-floating-panel');
       try{alca.setPointerCapture(evento.pointerId);}catch(error){}
@@ -398,8 +401,8 @@
       var maxTop=Math.max(margem,altura-Math.min(estado.height,altura-margem*2)-margem);
       var left=limitar(estado.left+(evento.clientX-estado.startX),margem,maxLeft);
       var top=limitar(estado.top+(evento.clientY-estado.startY),margem,maxTop);
-      elemento.style.left=left+'px';
-      elemento.style.top=top+'px';
+      elemento.style.setProperty('left',left+'px','important');
+      elemento.style.setProperty('top',top+'px','important');
       evento.preventDefault();
     });
 
@@ -434,8 +437,8 @@
       var retangulo=elemento.getBoundingClientRect();
       var left=limitar(retangulo.left,8,Math.max(8,largura-retangulo.width-8));
       var top=limitar(retangulo.top,8,Math.max(8,altura-Math.min(retangulo.height,altura-16)-8));
-      elemento.style.left=left+'px';
-      elemento.style.top=top+'px';
+      elemento.style.setProperty('left',left+'px','important');
+      elemento.style.setProperty('top',top+'px','important');
     });
   }
 
