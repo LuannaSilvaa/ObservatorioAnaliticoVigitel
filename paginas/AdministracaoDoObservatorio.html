@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<!--
+  Área administrativa do Observatório Analítico do Vigitel.
+  A página funciona inteiramente no navegador: lê os arquivos locais, valida a
+  correspondência com o dicionário e gera um pacote para substituir na raiz.
+-->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<meta content="no-cache, no-store, must-revalidate" http-equiv="Cache-Control"/>
+<meta content="no-cache" http-equiv="Pragma"/>
+<meta content="0" http-equiv="Expires"/>
+<title>Administração · Observatório Analítico do Vigitel</title>
+<meta content="#F7FAFD" id="themeColorMeta" name="theme-color"/>
+<meta content="Área de atualização validada dos dados do Observatório Analítico do Vigitel." name="description"/>
+<meta content="noindex, nofollow" name="robots"/>
+<link href="../assets/img/IdentidadeVisualDoObservatorio.svg" rel="icon" type="image/svg+xml"/>
+<link href="../assets/css/InterfaceVisualDoObservatorio.css?edicao=correcaoTodosControles20260801" rel="stylesheet"/>
+<link href="../assets/css/AjustesFinaisDeInteracao.css?edicao=compatibilidadeMultidispositivo20260826v24" rel="stylesheet"/>
+<script src="../assets/js/core/ConfiguracaoRenovadaDoTema.js?edicao=compatibilidadeMultidispositivo20260827v25"></script>
+</head>
+<body class="pagina-administrativa">
+<!-- Cabeçalho compartilhado com o painel para manter identidade e navegação. -->
+<header class="cabecalho-vigitel">
+<div class="cabecalho-vigitel__marca">
+<img alt="Logo do Observatório" class="cabecalho-vigitel__logo" src="../assets/img/IdentidadeVisualDoObservatorio.svg"/>
+<div class="cabecalho-vigitel__texto">
+<p class="cabecalho-vigitel__rotulo">Observatório</p>
+<h1>Observatório Analítico de Indicadores do Vigitel</h1>
+<p class="cabecalho-vigitel__resumo">Plataforma acadêmica para análise, comparação e visualização de indicadores de saúde pública.</p>
+<p class="cabecalho-vigitel__credito">Projeto de extensão · LEPS/UFRN</p>
+</div>
+</div>
+<div class="cabecalho-vigitel__lado">
+<button aria-controls="mainNavigation" aria-expanded="false" class="mobile-menu-toggle" id="mobileMenuToggle" type="button"><span aria-hidden="true">☰</span><span>Menu</span></button>
+<nav aria-label="Menu principal" class="main-nav" id="mainNavigation">
+<a class="header-panel-link" href="../index.html#painel"><svg aria-hidden="true" viewbox="0 0 24 24"><rect fill="currentColor" height="7" rx="1" width="7" x="3" y="3"></rect><rect fill="currentColor" height="7" rx="1" width="7" x="14" y="3"></rect><rect fill="currentColor" height="7" rx="1" width="7" x="3" y="14"></rect><rect fill="currentColor" height="7" rx="1" width="7" x="14" y="14"></rect></svg><span>Painel</span></a>
+<details class="header-menu">
+<summary><svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="12" cy="12" fill="none" r="9" stroke="currentColor" stroke-width="1.8"></circle><path d="M12 10.7v5.4M12 7.2h.01" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path></svg><span>O Observatório</span><span aria-hidden="true" class="header-chevron">⌄</span></summary>
+<div class="header-dropdown">
+<a href="InformacoesDoObservatorio.html#sobre"><strong>Projeto</strong><small>Conheça objetivos e público</small></a>
+<a href="InformacoesDoObservatorio.html#metodologia"><strong>Metodologia</strong><small>Entenda dados e indicadores</small></a>
+<a href="InformacoesDoObservatorio.html#creditos"><strong>Créditos</strong><small>Instituições e referências</small></a>
+</div>
+</details>
+<details class="header-menu">
+<summary><svg aria-hidden="true" viewbox="0 0 24 24"><ellipse cx="12" cy="5.5" fill="none" rx="7.5" ry="3" stroke="currentColor" stroke-width="1.8"></ellipse><path d="M4.5 5.5v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6M4.5 11.5v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg><span>Dados e recursos</span><span aria-hidden="true" class="header-chevron">⌄</span></summary>
+<div class="header-dropdown">
+<a href="InformacoesDoObservatorio.html#microdados"><strong>Downloads</strong><small>Microdados e arquivos</small></a>
+<a href="../index.html?glossario=1#painel"><strong>Glossário</strong><small>Definições dos indicadores</small></a>
+</div>
+</details>
+<details class="header-menu">
+<summary><svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="12" cy="12" fill="none" r="9" stroke="currentColor" stroke-width="1.8"></circle><path d="M9.6 9.2a2.6 2.6 0 0 1 5 .9c0 2-2.6 2.1-2.6 4M12 17.4h.01" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.9"></path></svg><span>Ajuda</span><span aria-hidden="true" class="header-chevron">⌄</span></summary>
+<div class="header-dropdown header-dropdown-right">
+<a href="../index.html?tutorial=1#painel"><strong>Como usar</strong><small>Veja o guia em quatro etapas</small></a>
+<a href="InformacoesDoObservatorio.html#contato"><strong>Contato</strong><small>Envie dúvidas e sugestões</small></a>
+</div>
+</details>
+<span aria-hidden="true" class="header-divider"></span>
+<div aria-label="Ações rápidas" class="header-utilities">
+<button aria-label="Ativar modo claro" data-header-theme data-theme-choice="light" title="Modo claro" type="button"><svg aria-hidden="true" class="theme-light-icon" viewbox="0 0 24 24"><circle cx="12" cy="12" fill="none" r="4" stroke="currentColor" stroke-width="1.8"></circle><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M18.7 5.3l-1.4 1.4M6.7 17.3l-1.4 1.4" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg></button>
+<button aria-label="Ativar modo escuro" data-header-theme data-theme-choice="dark" title="Modo escuro" type="button"><svg aria-hidden="true" class="theme-dark-icon" viewbox="0 0 24 24"><path d="M20.4 15.3A8.5 8.5 0 0 1 8.7 3.6 8.5 8.5 0 1 0 20.4 15.3Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"></path></svg></button>
+<a aria-current="page" aria-label="Administração" class="header-admin-link active" href="AdministracaoDoObservatorio.html" title="Administração"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="m9.4 4.2.6-2.2h4l.6 2.2 2 .8 2-1.1 2.1 3.5-1.8 1.5.2 2.1 2 1.2-2 3.5-2.2-.8-1.7 1.2-.4 2.4h-4l-.6-2.3-1.9-.8-2.1 1.1-2-3.5 1.8-1.5-.1-2.1-2-1.2 2-3.5 2 .8 1.5-1.3Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.55"></path><circle cx="12" cy="12" fill="none" r="3" stroke="currentColor" stroke-width="1.7"></circle></svg></a>
+</div>
+<button class="nav-button header-signout" hidden="" id="botaoSair" type="button">Sair</button>
+</nav>
+</div>
+</header>
+
+<main class="administracao-principal">
+<!-- A autenticação abre uma sessão temporária somente na aba atual do navegador. -->
+<section class="administracao-login" id="areaDeLogin">
+<article class="administracao-card login-card">
+<div class="administracao-card-cabecalho">
+<span class="administracao-etiqueta">Acesso restrito</span>
+<h2>Entrar na administração</h2>
+<p>Use a credencial definida para a administração do observatório. A sessão é encerrada automaticamente.</p>
+</div>
+<form id="formularioDeLogin">
+<label class="campo-administrativo" for="usuarioAdministrativo"><span>Usuário</span><input autocomplete="username" id="usuarioAdministrativo" required="" type="text"/></label>
+<label class="campo-administrativo" for="senhaAdministrativa"><span>Senha</span><span class="campo-com-acao"><input autocomplete="current-password" id="senhaAdministrativa" required="" type="password"/><button id="mostrarSenha" type="button">Mostrar</button></span></label>
+<button class="btn primary botao-largo" id="botaoEntrar" type="submit">Entrar</button>
+<p aria-live="polite" class="mensagem-formulario" id="mensagemDoLogin"></p>
+</form>
+</article>
+</section>
+
+<!-- O painel permanece oculto até a conferência da credencial administrativa. -->
+<section hidden="" id="painelAdministrativo">
+<div class="administracao-introducao">
+<div>
+<span class="administracao-etiqueta">Atualização assistida</span>
+<h2>Importar, conferir e recalcular</h2>
+<p>Selecione o dicionário da edição e os microdados oficiais. A atualização só é liberada quando ano, capitais, pesos e variáveis forem compatíveis.</p>
+</div>
+<span class="estado-da-sessao" id="estadoDaSessao"></span>
+</div>
+
+<div class="administracao-aviso">
+<strong>Como este fluxo protege os resultados</strong>
+<p>O nome do arquivo não define o período. O sistema lê a coluna de ano, exige as 27 capitais, confere a variável de peso e calcula somente indicadores que possuem regra documentada. Indicadores novos só entram quando o dicionário traz variável, códigos válidos e códigos do evento.</p>
+</div>
+
+<!-- Campos de entrada separados evitam misturar dicionário, população geral e recorte específico. -->
+<div class="administracao-grade">
+<article class="administracao-card">
+<div class="administracao-card-cabecalho"><span class="passo">1</span><div><h3>Dicionário de dados</h3><p>CSV, XLS, XLSX ou XLSM da mesma edição dos microdados.</p></div></div>
+<label class="seletor-de-arquivo" for="arquivoDoDicionario"><span>Selecionar dicionário</span><small>Um arquivo por atualização</small><input accept=".csv,.xls,.xlsx,.xlsm" id="arquivoDoDicionario" type="file"/></label>
+<p class="resumo-do-arquivo" id="resumoDoDicionario">Nenhum arquivo selecionado.</p>
+</article>
+
+<article class="administracao-card">
+<div class="administracao-card-cabecalho"><span class="passo">2</span><div><h3>Dados do Vigitel</h3><p>Arquivos anuais ou harmonizados da população geral.</p></div></div>
+<label class="seletor-de-arquivo" for="arquivosDoVigitel"><span>Selecionar dados gerais</span><small>CSV, XLS, XLSX ou XLSM</small><input accept=".csv,.xls,.xlsx,.xlsm" id="arquivosDoVigitel" multiple="" type="file"/></label>
+<p class="resumo-do-arquivo" id="resumoDosDados">Nenhum arquivo selecionado.</p>
+</article>
+
+<article class="administracao-card">
+<div class="administracao-card-cabecalho"><span class="passo opcional">+</span><div><h3>População negra</h3><p>Arquivo específico, quando a edição disponibilizar esse recorte.</p></div></div>
+<label class="seletor-de-arquivo" for="arquivosDaPopulacaoNegra"><span>Selecionar recorte específico</span><small>O filtro q69_cor = 2 é obrigatório</small><input accept=".csv,.xls,.xlsx,.xlsm" id="arquivosDaPopulacaoNegra" multiple="" type="file"/></label>
+<p class="resumo-do-arquivo" id="resumoDaPopulacaoNegra">Nenhum arquivo selecionado.</p>
+</article>
+</div>
+
+<!-- As ações são liberadas em sequência para impedir a geração de um pacote sem validação. -->
+<div class="administracao-acoes">
+<button class="btn primary" id="botaoProcessar" type="button">Validar e processar</button>
+<button class="btn" disabled="" id="botaoGerarPacote" type="button">Gerar arquivos atualizados</button>
+<button class="btn" disabled="" id="botaoBaixarPacote" type="button">Baixar pacote ZIP</button>
+</div>
+
+<div class="progresso-administrativo" hidden="" id="progressoDaAtualizacao"><span class="loading-spinner"></span><div><strong>Processamento em andamento</strong><p id="textoDoProgresso">Preparando...</p></div></div>
+
+<!-- Os totais resumem a conferência antes que os arquivos atualizados sejam preparados. -->
+<section aria-label="Resumo da conferência" class="administracao-resumo">
+<article><strong id="quantidadeDeAnos">0</strong><span>Anos encontrados</span><small id="listaDeAnos">Nenhum</small></article>
+<article><strong id="quantidadeDeLinhas">0</strong><span>Linhas lidas</span><small>Antes dos filtros de elegibilidade</small></article>
+<article><strong id="quantidadeDeIndicadores">0</strong><span>Indicadores calculados</span><small>Com denominador válido</small></article>
+<article><strong id="quantidadeDeErros">0</strong><span>Erros bloqueadores</span><small>Devem permanecer em zero</small></article>
+<article><strong id="quantidadeDeArquivos">0</strong><span>Arquivos preparados</span><small>Inclui relatório e manifesto</small></article>
+</section>
+
+<article class="administracao-card registro-card">
+<div class="administracao-card-cabecalho"><div><h3>Registro da atualização</h3><p>Leia todos os avisos antes de baixar o pacote.</p></div></div>
+<ol aria-live="polite" class="registro-da-atualizacao" id="registroDaAtualizacao"></ol>
+</article>
+</section>
+</main>
+
+<!-- Dependências locais e módulos próprios carregados na ordem exigida pelo processamento. -->
+<script defer="" src="../assets/js/admin/LeitorDeArquivosCsv.js"></script>
+<script defer="" src="../assets/js/admin/LeitorDePlanilhas.js"></script>
+<script defer="" src="../assets/js/admin/CompactadorDeArquivos.js"></script>
+<script defer="" src="../assets/js/admin/ConfiguracaoDaAdministracao.js"></script>
+<script defer="" src="../assets/js/dados/BaseAnaliticaDoVigitel.js"></script>
+<script defer="" src="../assets/js/dados/CatalogoDeIdadeDetalhada.js"></script>
+<script defer="" src="../assets/js/dados/MetodologiaDosIndicadores.js"></script>
+<script defer="" src="../assets/js/admin/AtualizacaoDosDadosDoVigitel.js"></script>
+<script defer="" src="../assets/js/admin/AdministracaoDoObservatorio.js"></script>
+</body>
+</html>

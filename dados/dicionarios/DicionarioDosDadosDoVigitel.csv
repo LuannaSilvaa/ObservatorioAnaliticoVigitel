@@ -1,0 +1,1227 @@
+variavel,codigo,rotulo
+chave,,
+ano,,
+cidade,1,aracaju
+cidade,2,belem
+cidade,3,belo horizonte
+cidade,4,boa vista
+cidade,5,campo grande
+cidade,6,cuiaba
+cidade,7,curitiba
+cidade,8,florianopolis
+cidade,9,fortaleza
+cidade,10,goiania
+cidade,11,joao pessoa
+cidade,12,macapa
+cidade,13,maceio
+cidade,14,manaus
+cidade,15,natal
+cidade,16,palmas
+cidade,17,porto alegre
+cidade,18,porto velho
+cidade,19,recife
+cidade,20,rio branco
+cidade,21,rio de janeiro
+cidade,22,salvador
+cidade,23,sao luis
+cidade,24,sao paulo
+cidade,25,teresina
+cidade,26,vitoria
+cidade,27,distrito federal
+q6,,
+q7,1,masculino
+q7,2,feminino
+q8a,1,curso primário
+q8a,2,admissão
+q8a,3,curso ginasial ou ginásio
+q8a,4,1º grau ou fundamental ou supletivo de 1º grau
+q8a,5,2º grau ou colégio ou técnico ou normal ou científico científico ou ensino médio ou supletivo de 2º grau
+q8a,6,3º grau ou curso superior
+q8a,7,"pós-graduação (especialização, mestrado, doutorado)"
+q8a,8,nunca estudou
+q8a,777,não sabe
+q8a,888,não quis responder
+q8b,,
+q8_anos,,
+q9,777,não sabe
+q9,888,não quis informar
+q11,777,não sabe
+q11,888,não quis informar
+q14,1,sim
+q14,2,não
+q14,777,não sabe
+q14a,1,sim
+q14a,2,não
+q14a,777,não sabe
+r128,1,sim
+r128,2,não
+r128,888,não quis informar
+r128a,1,sim
+r128a,2,não
+r128a,888,não quis informar
+q12,1,sim
+q12,2,não
+q13,,
+r190,1,sim
+r190,2,não
+r190,888,não quis informar
+q15,1,1 a 2 dias por semana
+q15,2,3 a 4 dias por semana
+q15,3,5 a 6 dias por semana
+q15,4,todos os dias ( inclusive sábado e domingo)
+q15,5,quase nunca
+q15,6,nunca
+q16,1,1 a 2 dias por semana
+q16,2,3 a 4 dias por semana
+q16,3,5 a 6 dias por semana
+q16,4,todos os dias ( inclusive sábado e domingo)
+q16,5,quase nunca
+q16,6,nunca
+q17,1,1 a 2 dias por semana
+q17,2,3 a 4 dias por semana
+q17,3,5 a 6 dias por semana
+q17,4,todos os dias ( inclusive sábado e domingo)
+q17,5,quase nunca
+q17,6,nunca
+q18,1,no almoço (1 vez no dia)
+q18,2,no jantar
+q18,3,no almoço e no jantar (2 vezes no dia)
+q19,1,1 a 2 dias por semana
+q19,2,3 a 4 dias por semana
+q19,3,5 a 6 dias por semana
+q19,4,todos os dias ( inclusive sábado e domingo)
+q19,5,quase nunca
+q19,6,nunca
+q20,1,no almoço (1 vez no dia)
+q20,2,no jantar
+q20,3,no almoço e no jantar (2 vezes no dia)
+q21,1,1 a 2 dias por semana
+q21,2,3 a 4 dias por semana
+q21,3,5 a 6 dias por semana
+q21,4,todos os dias ( inclusive sábado e domingo)
+q21,5,quase nunca
+q21,6,nunca
+q21a,1,sim
+q21a,2,não
+q22,1,tirar sempre o excesso de gordura
+q22,2,comer com a gordura
+q22,3,não come carne vermelha com muita gordura
+q23,1,1 a 2 dias por semana
+q23,2,3 a 4 dias por semana
+q23,3,5 a 6 dias por semana
+q23,4,todos os dias ( inclusive sábado e domingo)
+q23,5,quase nunca
+q23,6,nunca
+q23a,1,sim
+q23a,2,não
+q24,1,tirar sempre a pele
+q24,2,comer com a pele
+q24,3,não come pedaços de frango com pele
+q25,1,1 a 2 dias por semana
+q25,2,3 a 4 dias por semana
+q25,3,5 a 6 dias por semana
+q25,4,todos os dias ( inclusive sábado e domingo)
+q25,5,quase nunca
+q25,6,nunca
+q26,1,1 copo
+q26,2,2 copos
+q26,3,3 ou mais copos
+q27,1,1 a 2 dias por semana
+q27,2,3 a 4 dias por semana
+q27,3,5 a 6 dias por semana
+q27,4,todos os dias ( inclusive sábado e domingo)
+q27,5,quase nunca
+q27,6,nunca
+q28,1,1 vez no dia
+q28,2,2 vezes no dia
+q28,3,3 ou mais vezes no dia
+q29,1,1 a 2 dias por semana
+q29,2,3 a 4 dias por semana
+q29,3,5 a 6 dias por semana
+q29,4,todos os dias ( inclusive sábado e domingo)
+q29,5,quase nunca
+q29,6,nunca
+q30,1,normal
+q30,2,diet/ light/ zero
+q30,3,ambos
+q30a,1,normal
+q30a,2,diet/ light/ zero
+q30a,3,ambos
+q31,1,1 copo/latinha por dia
+q31,2,2 copos/latinhas por dia
+q31,3,3 copos/latinhas por dia
+q31,4,4 copos/latinhas por dia
+q31,5,5 copos/latinhas por dia
+q31,6,6 ou mais copos/latinhas por dia
+q31,777,não sabe
+q31a,1,1 copo/latinha por dia
+q31a,2,2 copos/latinhas por dia
+q31a,3,3 copos/latinhas por dia
+q31a,4,4 copos/latinhas por dia
+q31a,5,5 copos/latinhas por dia
+q31a,6,6 ou mais copos/latinhas por dia
+q31a,777,não sabe
+r301_ (itens A a L),1,sim
+r301_ (itens A a L),2,não
+r302_ (itens A a M),1,sim
+r302_ (itens A a M),2,não
+r303_(itens A a W),1,sim
+r303_(itens A a W),2,não
+q32,1,1 a 2 dias por semana
+q32,2,3 a 4 dias por semana
+q32,3,5 a 6 dias por semana
+q32,4,todos os dias ( inclusive sábado e domingo)
+q32,5,quase nunca
+q32,6,nunca
+q33,1,integral
+q33,2,desnatado ou semi-desnatado
+q33,3,os dois tipos
+q33,777,não sabe
+q34,0,nenhum
+q34,1,um dia
+q34,2,dois dias
+q34,3,três dias
+q34,4,quatro dias
+q34,5,cinco dias
+q34,6,seis dias
+q34,7,todos os dias
+q34a,1,sim
+q34a,2,não
+q34b,0,nenhum
+q34b,1,um dia
+q34b,2,dois dias
+q34b,3,três dias
+q34b,4,quatro dias
+q34b,5,cinco dias
+q34b,6,seis dias
+q34b,7,todos os dias
+q34c,0,nenhum
+q34c,1,um dia
+q34c,2,dois dias
+q34c,3,três dias
+q34c,4,quatro dias
+q34c,5,cinco dias
+q34c,6,seis dias
+q34c,7,todos os dias
+q34d,0,nenhum
+q34d,1,um dia
+q34d,2,dois dias
+q34d,3,três dias
+q34d,4,quatro dias
+q34d,5,cinco dias
+q34d,6,seis dias
+q34d,7,todos os dias
+q34e,1,1 a 2 dias por semana
+q34e,2,3 a 4 dias por semana
+q34e,3,5 a 6 dias por semana
+q34e,4,todos os dias ( inclusive sábado e domingo)
+q34e,5,quase nunca
+q34e,6,nunca
+r143,1,1 a 2 dias por semana
+r143,2,3 a 4 dias por semana
+r143,3,5 a 6 dias por semana
+r143,4,todos os dias ( inclusive sábado e domingo)
+r143,5,quase nunca
+r143,6,nunca
+r146,1,1 vez no dia
+r146,2,2 vezes no dia
+r146,3,3 ou mais vezes no dia
+r144,1,1 a 2 dias por semana
+r144,2,3 a 4 dias por semana
+r144,3,5 a 6 dias por semana
+r144,4,todos os dias ( inclusive sábado e domingo)
+r144,5,quase nunca
+r144,6,nunca
+r144a,1,1 a 2 dias por semana
+r144a,2,3 a 4 dias por semana
+r144a,3,5 a 6 dias por semana
+r144a,4,todos os dias ( inclusive sábado e domingo)
+r144a,5,quase nunca
+r144a,6,nunca
+r144b,1,1 a 2 dias por semana
+r144b,2,3 a 4 dias por semana
+r144b,3,5 a 6 dias por semana
+r144b,4,todos os dias ( inclusive sábado e domingo)
+r144b,5,quase nunca
+r144b,6,nunca
+r1001,1,sim
+r1001,2,não
+r1001,888,não quis informar
+r1002,1,sim
+r1002,2,não
+r1002,888,não quis informar
+q35,1,sim
+q35,2,"sim, mas não no último mês"
+q35,3,não consumo
+q35,4,nunca consumi
+q35,888,não quis informar
+q36,1,1 a 2 dias por semana
+q36,2,3 a 4 dias por semana
+q36,3,5 a 6 dias por semana
+q36,4,todos os dias ( inclusive sábado e domingo)
+q36,5,menos de 1 dia por semana
+q36,6,menos de 1 dia por mês
+r1003,,
+q37,1,sim
+q37,2,não
+q37a,1,sim
+q37a,2,não
+q37b,1,sim
+q37b,2,não
+q38,1,sim
+q38,2,não
+q38a,1,sim
+q38a,2,não
+q38b,1,sim
+q38b,2,não
+q39,1,em um único dia no mês
+q39,2,em 2 dias
+q39,3,em 3 dias
+q39,4,em 4 dias
+q39,5,em 5 dias
+q39,6,em 6 dias
+q39,7,em 7 ou mais dias
+q39,777,não sabe
+r200,,
+r200,777,não sabe
+r200,888,não quis responder
+q40,1,sim
+q40,2,não
+q40,3,não dirijo
+q40,888,não quis informar
+q40a,,
+q40a,777,não sabe
+q40b,1,sempre
+q40b,2,algumas vezes
+q40b,3,quase nunca
+q40b,4,nunca
+q40b,888,não quis informar
+q41,1,não
+q41,2,"sim, sempre ou quase sempre"
+q41,3,"sim, de vez em quando"
+q41,4,"não, adiciono somento quando a comida é preparada sem sal"
+q42,1,sim
+q42,2,não
+q43,1,caminhada (ao ar livre- não vale deslocamento para trabalho)
+q43,2,caminhada em esteira
+q43,3,corrida (corrida ao ar livre/rua)
+q43,4,corrida em esteira
+q43,5,musculação
+q43,6,"ginástica aeróbica (spinning, step, jump, funcional)"
+q43,7,hidroginástica
+q43,8,"ginástica em geral (alongamento, pilates, ioga)"
+q43,9,natação
+q43,10,"artes marciais e luta (jiu-jitsu, karatê, judô, boxe, muay thai, capoeira)"
+q43,11,bicicleta (inclui ergométrica)
+q43,12,futebol/futsal
+q43,13,basquetebol
+q43,14,voleibol/futevolei
+q43,15,tênis
+q43,16,outros
+q43a,1,caminhada (ao ar livre- não vale deslocamento para trabalho)
+q43a,2,caminhada em esteira
+q43a,3,corrida (corrida ao ar livre/rua)
+q43a,4,corrida em esteira
+q43a,5,musculação
+q43a,6,"ginástica aeróbica (spinning, step, jump, funcional)"
+q43a,7,hidroginástica
+q43a,8,"ginástica em geral (alongamento, pilates, ioga)"
+q43a,9,natação
+q43a,10,"artes marciais e luta (jiu-jitsu, karatê, judô, boxe, muay thai, capoeira)"
+q43a,11,bicicleta (inclui ergométrica)
+q43a,12,futebol/futsal
+q43a,13,basquetebol
+q43a,14,voleibol/futevolei
+q43a,15,tênis
+q43a,16,"dança (balé, dança de salão, dança do ventre)"
+q43a,17,outros
+q44,1,sim
+q44,2,não
+q45,1,1 a 2 dias por semana
+q45,2,3 a 4 dias por semana
+q45,3,5 a 6 dias por semana
+q45,4,todos os dias (inclusive sábado e domingo)
+q46,1,menos que 10 minutos
+q46,2,entre 10 e 19 minutos
+q46,3,entre 20 e 29 minutos
+q46,4,entre 30 e 39 minutos
+q46,5,entre 40 e 49 minutos
+q46,6,entre 50 e 59 minutos
+q46,7,60 minutos ou mais
+q47,1,sim
+q47,2,não
+q48,1,sim
+q48,2,não
+q48,777,não sabe
+q49,1,sim
+q49,2,não
+q49,777,não sabe
+r147,555,menos de uma vez na semana
+r147,888,não quis responder
+r148_hh,,
+r148_mm,,
+q50,1,"sim, todo o trajeto"
+q50,2,"sim, parte do trajeto"
+q50,3,não
+q51,1,menos que 10 minutos
+q51,2,entre 10 e 19 minutos
+q51,3,entre 20 e 29 minutos
+q51,4,entre 30 e 39 minutos
+q51,5,entre 40 e 49 minutos
+q51,6,entre 50 e 59 minutos
+q51,7,60 minutos ou mais
+q52,1,sim
+q52,2,não
+q52,888,não quis informar
+q53,1,"sim, todo o trajeto"
+q53,2,"sim, parte do trajeto"
+q53,3,não
+q54,1,menos que 10 minutos
+q54,2,entre 10 e 19 minutos
+q54,3,entre 20 e 29 minutos
+q54,4,entre 30 e 39 minutos
+q54,5,entre 40 e 49 minutos
+q54,6,entre 50 e 59 minutos
+q54,7,60 minutos ou mais
+q55,1,eu sozinho
+q55,2,eu com outra pessoa
+q55,3,outra pessoa
+q55a,1,sim
+q55a,2,não
+q56,1,eu
+q56,2,outra pessoa
+q56,3,ambos
+q57,1,sim
+q57,2,não
+q58,1,5 ou mais
+q58,2,3 a 4
+q58,3,1 a 2
+q58,4,não costuma assistir televisão
+r149,555,menos de uma vez por semana
+r149,888,não quis responder
+r150_hh,,
+r150_mm,,
+q59,1,menos de 1 hora
+q59,2,entre 1 e 2 horas
+q59,3,entre 2 e 3 horas
+q59,4,entre 3 e 4 horas
+q59,5,entre 4 e 5 horas
+q59,6,entre 5 e 6 horas
+q59,7,mais de 6 horas
+q59a,1,menos de 1 hora
+q59a,2,entre 1 e 2 horas
+q59a,3,entre 2 e 3 horas
+q59a,4,entre 3 e 4 horas
+q59a,5,entre 4 e 5 horas
+q59a,6,entre 5 e 6 horas
+q59a,7,mais de 6 horas
+q59a,8,não assiste televisão
+q59b,1,sim
+q59b,2,não
+q59b,777,não sabe
+q59c,1,menos de 1 hora
+q59c,2,entre 1 e 2 horas
+q59c,3,entre 2 e 3 horas
+q59c,4,entre 3 e 4 horas
+q59c,5,entre 4 e 5 horas
+q59c,6,entre 5 e 6 horas
+q59c,7,mais de 6 horas
+r901,1,próprio entrevistado
+r901,2,cônjuge ou companheiro(a)
+r901,3,filho(a)
+r901,4,enteado(a)
+r901,5,genro ou nora
+r901,6,"pai, mãe, padrasto ou madrasta"
+r901,7,sogro(a)
+r901,8,neto(a)/bisneto(a)
+r901,9,irmão(a)
+r901,10,avô ou avó
+r901,11,outro parente – Qual? ____________________
+r901,777,não sabe/não quis responder
+r901,888,não quis responder
+r902,1,menos de 2 anos
+r902,2,entre 2 e 4 anos
+r902,3,5 anos ou mais
+r902,777,não sabe
+q60,1,"sim, diariamente"
+q60,2,"sim, mas não diariamente"
+q60,3,não
+q61,,
+q61,777,não sabe
+q61,888,não quis informar
+q61a,1,1 a 4
+q61a,2,05 a 09
+q61a,3,10 a 14
+q61a,4,15 a 19
+q61a,5,20 a 29
+q61a,6,30 a 39
+q61a,7,40 ou mais
+q61a,777,não sabe
+q61a,888,não quis informar
+q61_fx,1,01 a 04
+q61_fx,2,05 a 09
+q61_fx,3,10 a 14
+q61_fx,4,15 a 19
+q61_fx,5,20 a 29
+q61_fx,6,30 a 39
+q61_fx,7,40 ou mais
+q61_fx,888,não sabe/não quis responder
+q61a_fx,1,01 a 04
+q61a_fx,2,05 a 09
+q61a_fx,3,10 a 14
+q61a_fx,4,15 a 19
+q61a_fx,5,20 a 29
+q61a_fx,6,30 a 39
+q61a_fx,7,40 ou mais
+q61a_fx,888,não sabe/não quis responder
+r405,1,sim
+r405,2,não
+r405,888,não quis informar
+q62,777,não lembra
+q63,1,sim
+q63,2,não
+q64,1,"sim, diariamente"
+q64,2,"sim, mas não diariamente"
+q64,3,não
+q65,,
+q65,777,não sabe
+q65,888,não quis informar
+q66,,
+q66,777,não sabe
+q66,888,não quis informar
+q67,1,sim
+q67,2,não
+q67,888,não quis informar
+q67,999,mora sozinho
+q68,1,sim
+q68,2,não
+q68,777,não sabe
+q68,888,não quis informar
+r157,1,sim
+r157,2,não
+r157,888,não quis informar
+r401,1,cigarros
+r401,2,macos (ou carteira)
+r401,3,pacotes
+r401,4,nao compro cigarros para uso proprio
+r401a_1,,
+r401b_1,,
+r401b_2,,
+r401c_1,,
+r401c_2,,
+r401c_3,,
+r402,,
+r402,777,não sabe
+r402,888,não quis informar
+r404,,
+r403,1,"sim, diariamente"
+r403,2,"sim, menos do que diariamente"
+r403,3,"nao, mas ja usei no passado"
+r403,4,nunca usei
+r403a,1,"sim, diariamente"
+r403a,2,"sim, menos do que diariamente"
+r403a,3,"nao, mas ja usei no passado"
+r403a,4,nunca usei
+q72,1,menos de 1 ano
+q72,2,entre 1 e 2 anos
+q72,3,entre 2 e 3 anos
+q72,4,entre 3 e 4 anos
+q72,5,entre 4 e 5 anos
+q72,6,mais de 5 anos
+q72,777,não lembra
+q73,1,sim
+q73,2,não
+q73,888,não quis informar
+q74,1,muito bom
+q74,2,bom
+q74,3,regular
+q74,4,ruim
+q74,5,muito ruim
+q74,777,não sabe
+q74,888,não quis informar
+q75,1,sim
+q75,2,não
+q75,777,não sabe
+r203,1,sim
+r203,2,não
+r203,777,não sabe
+r203,888,não quis informar
+r129,1,sim
+r129,2,não
+r129,777,não sabe
+r130,1,unidade de saude do SUS
+r130,2,Farmácia Popular
+r130,3,outro lugar
+r130,777,não sabe
+r130,888,não quis responder
+r130a,1,unidade de saude do SUS
+r130a,2,"Programa ""farmácia popular"" do governo federal"
+r130a,3,"outro lugar (farmácia privada/particular, drogaria)"
+r130a,777,não sabe
+r130a,888,não quis responder
+r174,1,sim
+r174,2,não
+r174,777,não sabe
+r175,1,menos de 6 meses
+r175,2,entre 6 meses e 1 ano
+r175,3,entre 1 e 2 anos
+r175,4,entre 2 e 3 anos
+r175,5,3 anos ou mais
+r175,6,nunca
+r175,777,nao sabe / nao lembra
+q76,1,sim
+q76,2,não
+q76,777,não sabe
+q76a,1,sim
+q76a,2,não
+q76a,777,não sabe
+r138,1,sim
+r138,2,não
+r138,3,nunca engravidou
+r138,777,não sabe
+r202,777,não sabe / não lembra
+r204,1,sim
+r204,2,não
+r204,777,não sabe
+r133,1,sim
+r133,2,não
+r133,777,não sabe
+r133,888,não quis informar
+r133a,1,sim
+r133a,2,não
+r133a,777,não sabe
+r133a,888,não quis informar
+r134c,1,unidade de saude do SUS
+r134c,2,"Programa ""farmácia popular"""
+r134c,3,"outro lugar (farmácia privada/particular, drogaria)"
+r134c,777,não sabe
+r134c,888,não quis responder
+d3,1,sim
+d3,2,não
+d3,777,não sabe
+d3,888,não quis informar
+r133b,1,sim
+r133b,2,não
+r133b,777,não sabe
+r133b,888,não quis informar
+r134b,1,unidade de saude do SUS
+r134b,2,"Programa ""farmácia popular"""
+r134b,3,"outro lugar (farmácia privada/particular, drogaria)"
+r134b,777,não sabe
+r134b,888,não quis responder
+r134,1,unidade de saude do SUS
+r134,2,"Programa ""farmácia popular"""
+r134,3,"outro lugar (farmácia privada/particular, drogaria)"
+r134,777,não sabe
+r134,888,não quis responder
+r134a,1,unidade de saude do SUS
+r134a,2,"Programa ""farmácia popular"" do governo federal"
+r134a,3,"outro lugar (farmácia privada/particular, drogaria)"
+r134a,777,não sabe
+r134a,888,não quis responder
+d1,1,sim
+d1,2,não
+d1,777,não sabe
+d1,888,não quis informar
+r205,1,sim
+r205,2,não
+r205,777,não sabe
+r205,888,não quis informar
+r206,1,sim
+r206,2,não
+r206,777,não sabe
+r206,888,não quis informar
+r207,1,sim
+r207,2,não
+r207,777,não sabe
+r207,888,não quis informar
+r208,1,unidade de saude do SUS
+r208,2,"outro lugar (farmácia privada/particular, drogaria)"
+r208,777,não sabe
+r208,888,não quis responder
+r209,1,sim
+r209,2,não
+r209,777,não sabe
+r176,1,menos de 6 meses
+r176,2,entre 6 meses e 1 ano
+r176,3,entre 1 e 2 anos
+r176,4,entre 2 e 3 anos
+r176,5,3 anos ou mais
+r176,6,nunca fez
+r176,777,nao sabe / nao lembra
+q78,1,sim
+q78,2,não
+q78,777,não sabe/não lembra
+q79,1,sim
+q79,2,não
+q79,777,não sabe
+q79a,1,sim
+q79a,2,não
+q79a,777,não sabe
+q80,1,menos de 1 ano
+q80,2,entre 1 e 2 anos
+q80,3,entre 2 e 3 anos
+q80,4,entre 3 e 5 anos
+q80,5,5 anos ou mais
+q80,777,não lembra
+q80,888,não quis informar
+q81,1,sim
+q81,2,não
+q81,777,não sabe
+q82,1,menos de 1 ano
+q82,2,entre 1 e 2 anos
+q82,3,entre 2 e 3 anos
+q82,4,entre 3 e 5 anos
+q82,5,5 ou mais anos
+q82,777,não lembra
+q83,1,sim
+q83,2,não
+q83,3,não fica exposto mais de 30 minutos
+q83a,1,filtro solar
+q83a,2,chapeu/sombrinha
+q83a,3,ambos
+q84_a,0,não
+q84_a,1,filtro solar
+q84_b,0,não
+q84_b,2,chapéu/sombrinha
+q84_c,0,não
+q84_c,3,roupa/vestimenta
+q85,1,sim
+q85,2,não
+q85,777,não sabe
+q85a,1,sim
+q85a,2,não
+q85a,777,não sabe
+q86,1,clube
+q86,2,academia
+q86,3,praça/rua/parque
+q86,4,escola
+q86,5,outros
+q87,1,público
+q87,2,privado
+q89,1,sim
+q89,2,não
+q89,888,não quis informar
+r501a,1,sim
+r501a,2,não
+r502a,1,sim
+r502a,2,não
+r503a,1,sim
+r503a,2,não
+r600,1,sim
+r600,2,não
+r601_(itens A a I),1,sim
+r601_(itens A a I),2,não
+r602,1,1 a 3
+r602,2,3 a 6
+r602,3,6 a 12
+r602,4,>1 ano
+r602,777,não sabe
+r602,888,não quis informar
+r603,1,"sim, muito"
+r603,2,"sim, pouco"
+r603,3,não
+r604,1,sim
+r604,2,não
+r501,1,sim
+r501,2,não
+r502,1,sim
+r502,2,não
+r503,1,sim
+r503,2,não
+r504,1,1 dose
+r504,2,2 doses
+r504,3,3 doses
+r504,4,4 doses
+r505,1,coronavac / butantã / sinovac
+r505,2,astrazeneca / oxford / fiocruz
+r505,3,pfizer / biontech
+r505,4,jansen / johnson&johnson
+r505,5,outra
+r505,90,não sabe / não quis responder
+r505_ou,,
+r506,1,grupo populacional ainda não foi chamado
+r506,2,Falta de tempo ou de condição de deslocamento
+r506,3,preocupação quanto às reações/ efeitos adversos
+r506,4,Não teve interesse
+r506,5,outros
+r506,888,não quis informar
+r506_ou,,
+r701_hh,,
+r701_mm,,
+r702_hh,,
+r702_mm,,
+r703,1,nunca
+r703,2,raramente
+r703,3,às vezes
+r703,4,quase sempre
+r703,5,sempre
+r704,1,nunca
+r704,2,raramente
+r704,3,às vezes
+r704,4,quase sempre
+r704,5,sempre
+r705,1,nunca
+r705,2,raramente
+r705,3,às vezes
+r705,4,quase sempre
+r705,5,sempre
+r706,1,sim
+r706,2,não
+r706,3,"não, porque faz tratamento para o ronco ou apneia"
+r706,777,não sabe
+r706,888,não quis informar
+r707,1,sim
+r707,2,não
+r707,777,não sabe
+r707,888,não quis informar
+q88,1,"sim, apenas um"
+q88,2,"sim, mais de um"
+q88,3,não
+q88,888,não quis informar
+q69,1,branca
+q69,2,preta
+q69,3,amarela
+q69,4,parda
+q69,5,indígena
+q69,80,outros
+q69,777,não sabe
+q69,888,não quis informar
+q69_ou,,
+civil,1,solteiro
+civil,2,casado no civil ou no religioso
+civil,3,tem união estável
+civil,4,viúvo
+civil,5,separado ou divorciado
+civil,888,não quis informar
+civil,2,não
+civil,777,não lembra
+civil,888,não quis responder
+civil,2,não
+civil,777,não lembra
+civil,888,não quis responder
+r154,1,sim
+r154,3,recusou a fazer
+r154,777,não lembra
+r154,888,não quis informar
+r154,2,não
+r154,777,não lembra
+r154,888,não quis responder
+r154,2,rodovia
+r154,3,ambos
+r154,777,não lembra
+r154,888,não quis responder
+r153,1,sim
+r153,777,não lembra
+r153,888,não quis responder
+r155,1,sim
+r155,777,não lembra
+r155,888,não quis responder
+r156,1,sim
+r156,777,não lembra
+r156,888,não quis responder
+r156,2,não
+r156,777,não lembra
+r156,888,não quis responder
+r179,1,sim
+r179,2,não
+r179,777,não sabe
+r179,888,não quis responder
+r900,1,sim
+r900,2,não
+r900,777,não sabe
+q70,1,sim
+q70,2,não
+q71,2,2 linhas
+q71,3,3 linhas
+q71,4,4 linhas
+q71,5,5 linhas
+q71,6,6 linhas
+q71,7,7 linhas
+q71,8,8 linhas
+r801,1,sim
+r801,2,não
+r901,1,Próprio entrevistado
+r901,2,Cônjuge ou companheiro(a)
+r901,3,Filho(a)
+r901,4,Enteado(a)
+r901,5,Genro ou nora
+r901,6,"Pai, mãe, padrasto ou madrasta"
+r901,7,Sogro(a)
+r901,8,Neto(a)/bisneto(a)
+r901,9,Irmão(a)
+r901,10,Avô ou avó
+r901,11,Outro parente
+r901,777,não sabe
+r901,888,não quis informar
+r902,1,menos de 2 anos
+r902,2,entre 2 e 4 anos
+r902,3,5 anos ou mais
+r902,777,não sabe
+d2,1,não tinha/estava em falta no posto de saúde/unidade de  saúde/secretaria de saúde/sus
+d2,2,porque não tinha dinheiro para comprar
+d2,3,esqueceu/não quis tomar/comprar/buscar
+d2,4,outro motivo
+d2,777,não sabe
+d2,888,não quis responder
+d4,1,não tinha/estava em falta no posto de saúde/unidade de  saúde/secretaria de saúde/sus
+d4,2,porque não tinha dinheiro para comprar
+d4,3,esqueceu/não quis tomar/comprar/buscar
+d4,4,outro motivo
+d4,777,não sabe
+d4,888,não quis responder
+d5,1,sim
+d5,2,não
+d5,777,não sabe
+d5,888,não quis responder
+d6,1,não tinha/estava em falta no posto de saúde/unidade de  saúde/secretaria de saúde/sus
+d6,2,porque não tinha dinheiro para comprar
+d6,3,esqueceu/não quis tomar/comprar/buscar
+d6,4,outro motivo
+d6,777,não sabe
+d6,888,não quis responder
+moradores,,
+adultos,,
+pesorake2025,,
+fet,1,18 a 24 anos
+fet,2,25 a 34 anos
+fet,3,35 a 44 anos
+fet,4,45 a 54 anos
+fet,5,55 a 64 anos
+fet,6,65 anos e mais
+cat_esc,,
+fesc,1,0 a 8 anos
+fesc,2,9 a 11 anos
+fesc,3,12 anos e mais
+fxesc,1,"0 a 7,9 anos"
+fxesc,2,"8 a 10,9 anos"
+fxesc,3,"11 a 14,9 anos"
+fxesc,4,15 a 20 anos
+q9_i,,
+q11_i,,
+r301,1,unidade	básica	de	saúde	(posto	ou	centr
+r301,2,"centro de especialidades, policlínica p"
+r301,3,upa (unidade de pronto atendimento)
+r301,4,outro tipo de pronto atendimento públic o
+r301,5,pronto-socorro ou emergência de hospita
+r301,6,hospital público/ambulatório
+r301,7,"no domicílio, com profissional da equip"
+r301,8,consultório particular ou clínica priva
+r301,9,ambulatório ou consultório de empresa o
+r301,10,pronto-atendimento ou emergência (pront
+r301,11,"no domicílio, com médico particular"
+r301,12,farmácia
+r301,13,outro serviço
+r302,1,nenhuma vez (agradeça e encerre a entrevista – vá para página final de encerramento)
+r302,2,1 ou 2 vezes nos últimos 12 meses
+r302,3,3 a 5 vezes nos últimos 12 meses
+r302,4,6 a 9 vezes nos últimos 12 meses
+r302,5,10 ou mais vezes nos últimos 12 meses
+r302,6,"procurou, mas não se lembra o número de vezes"
+r302,7,não se lembra se procurou
+r303,1,sim
+r303,2,não
+r303,3,não se lembra ou não sabe informar
+r304,1,sim
+r304,2,não
+r305_dia,,
+r305_hora,,
+r305_obs,,
+r101,1,sim
+r101,2,não
+r102,1,sim
+r102,2,não
+r103,1,sim
+r103,2,não
+r104,1,sim
+r104,2,não
+r105,1,sim
+r105,2,não
+r105,777,não sabe
+r106,,
+r107,1,sim
+r107,2,não
+r107,777,não sabe
+r108,1,sim
+r108,2,não
+r108,777,não sabe
+r109,1,sim
+r109,2,não
+r109,777,não quis informar
+r110,1,sim
+r110,2,não
+r110,777,não quis informar
+r111,1,sim
+r111,2,não
+r112,1,sim
+r112,2,não
+r113,1,laqueadura (ligadura de trompa)
+r113,2,vasectomia
+r113,3,camisinha
+r113,4,pílula
+r113,5,diu
+r113,6,diafragma
+r113,7,injeção
+r113,8,implante hormonal
+r113,9,outros
+r114,1,laqueadura (ligadura de trompa)
+r114,2,vasectomia
+r114,3,camisinha
+r114,4,pílula
+r114,5,diu
+r114,6,diafragma
+r114,7,injeção
+r114,8,implante hormonal
+r114,9,outros
+r114,10,nenhum outro
+r115,1,"sim, apenas 1"
+r115,2,"sim, mais de um"
+r115,3,não
+r115,777,não quis informar
+r116,,
+r120,1,há menos de 1 ano
+r120,2,entre 1 e 2 anos
+r120,3,entre 2 e 3 anos
+r120,4,entre 3 e 4 anos
+r120,5,entre 4 e 5 anos
+r120,6,há mais de 5 anos
+r120,7,nunca mediu pressão em uma consulta médica
+r120,8,nunca realizou consulta médica
+r121,1,sim
+r121,2,não
+r121,777,não sabe
+r122,1,há menos de 1 ano
+r122,2,entre 1 e 2 anos
+r122,3,entre 2 e 3 anos
+r122,4,entre 3 e 4 anos
+r122,5,entre 4 e 5 anos
+r122,6,há mais de 5 anos
+r122,7,nunca fez o exame
+r122,8,nunca realizou consulta médica
+r123,1,sim
+r123,2,não
+r124,1,sim
+r124,2,não
+r125,1,sim
+r125,2,não
+r126,1,sim
+r126,2,não
+r127,1,sim
+r127,2,não
+r131,,
+r132,1,sim
+r132,2,não
+r132,777,não sabe
+r132,888,não quis informar
+r139,1,sim
+r139,2,não
+r139,777,não sabe
+r139,888,não quis responder
+r140,1,sim
+r140,2,não
+r140,777,não sabe
+r141,1,1 a 2 vezes
+r141,2,3 a 4 vezes
+r141,3,5 a 6 vezes
+r141,4,mais de 6 vezes
+r141,777,não sabe
+r141,888,não quis informar
+r142,1,casa
+r142,2,apartamento
+r142,777,não sabe
+r142,888,não quis informar
+r151,1,sim
+r151,2,não
+r151,777,não sabe
+r152,1,há menos de 1 ano
+r152,2,de 1 até 2 anos
+r152,3,de 2 até 5 anos
+r152,4,há mais de 5 anos
+r152,777,não sabe / não lembra
+r158,1,sim
+r158,2,não
+r159,1,sim
+r159,2,não
+r159,3,não constumo preparar alimentos em casa
+r160,1,1 a 2 dias por semana
+r160,2,3 a 4 dias por semana
+r161,1,1 a 2 dias por semana
+r161,2,3 a 4 dias por semana
+r201,1,menos de 1 hora
+r201,2,entre 1 e 2 horas
+r201,3,entre 2 e 3 horas
+r201,4,entre 3 e 4 horas
+r201,5,entre 4 e 5 horas
+r201,6,entre 5 e 6 horas
+r201,7,mais de 6 horas
+fumante,0,Não
+fumante,1,Sim
+exfuma,0,Não
+exfuma,1,Sim
+mais20,0,Não
+mais20,1,Sim
+fumocasa,0,Não
+fumocasa,1,Sim
+fumocasa2024,0,Não
+fumocasa2024,1,Sim
+fumotrab,0,Não
+fumotrab,1,Sim
+fumotrab2024,0,Não
+fumotrab2024,1,Sim
+eletronico,0,Não
+eletronico,1,Sim
+eletronicoexp,0,Não
+eletronicoexp,1,Sim
+fumantetotal,0,Não
+fumantetotal,1,Sim
+imc,,
+imc_i,,
+excpeso,0,Não
+excpeso,1,Sim
+excpeso_i,0,Não
+excpeso_i,1,Sim
+obesid,0,Não
+obesid,1,Sim
+obesid_i,0,Não
+obesid_i,1,Sim
+hortareg,0,Não
+hortareg,1,Sim
+frutareg,0,Não
+frutareg,1,Sim
+flvreg,0,Não
+flvreg,1,Sim
+cruadia,,
+cozidadia,,
+hortadia,,
+sucodia,,
+sofrutadia,,
+frutadia,,
+flvdia,,
+flvreco,0,Não
+flvreco,1,Sim
+flvreco_pns,0,Não
+flvreco_pns,1,Sim
+carneg,0,Não
+carneg,1,Sim
+franpl,0,Não
+franpl,1,Sim
+gordura,0,Não
+gordura,1,Sim
+leiteint,0,Não
+leiteint,1,Sim
+doces5,0,Não
+doces5,1,Sim
+refritl5,0,Não
+refritl5,1,Sim
+feijao5,0,Não
+feijao5,1,Sim
+score_sf_2cat,0,Não
+score_sf_2cat,1,Sim
+score_upp_2cat2024,0,Não
+score_upp_2cat2024,1,Sim
+score_upp_2cat,0,Não
+score_upp_2cat,1,Sim
+lanche_7,0,Não
+lanche_7,1,Sim
+cont_lanche_7,,
+sal,0,Não
+sal,1,Sim
+atilaz,0,Não
+atilaz,1,Sim
+af,,
+freq,,
+time,,
+time_2023,,
+ati_livre,,
+ati_livre_2023,,
+ativo_livre,0,Inativo/Ins
+ativo_livre,1,Ativo
+atitrans,0,Não
+atitrans,1,Sim
+atidom,0,Não
+atidom,1,Sim
+atiocu,0,Não
+atiocu,1,Sim
+inativo,0,Não
+inativo,1,Sim
+inativo_2023,0,Não
+inativo_2023,1,Sim
+q51medio,,
+q51medio_2023,,
+q54medio,,
+q54medio_2023,,
+deslocdia,,
+deslocdia_2023,,
+deslocsemana,,
+deslocsemana_2023,,
+atiocusemana,,
+faxinasemana,,
+af3dominios,0,Não
+af3dominios,1,Sim
+af3dominios_2023,0,Não
+af3dominios_2023,1,Sim
+af3dominios_insu,0,Não
+af3dominios_insu,1,Sim
+af3dominios_insu_2023,0,Não
+af3dominios_insu_2023,1,Sim
+tv_d_3,0,Não
+tv_d_3,1,Sim
+tempo_tela_stv,0,Não
+tempo_tela_stv,1,Sim
+tempo_tela_total,0,Não
+tempo_tela_total,1,Sim
+alcabu,0,Não
+alcabu,1,Sim
+saruim,0,Não
+saruim,1,Sim
+iddmamo,1,50 a 59 anos
+iddmamo,2,60 a 69 anos
+mamo,0,Não
+mamo,1,Sim
+mamodois,0,Não
+mamodois,1,Sim
+iddpapa_old,1,25 a 34 anos
+iddpapa_old,2,35 a 44 anos
+iddpapa_old,3,45 a 54 anos
+iddpapa_old,4,55 a 59 anos
+iddpapa,1,25 a 34 anos
+iddpapa,2,35 a 44 anos
+iddpapa,3,45 a 54 anos
+iddpapa,4,55 a 64 anos
+papa,0,Não
+papa,1,Sim
+papatres,0,Não
+papatres,1,Sim
+hart,0,Não
+hart,1,Sim
+ind_med_has,0,Não
+ind_med_has,1,Sim
+med_has,0,Não
+med_has,1,Sim
+trat_med_has,0,Não
+trat_med_has,1,Sim
+diab,0,Não
+diab,1,Sim
+ind_med_db,0,Não
+ind_med_db,1,Sim
+med_db,0,Não
+med_db,1,Sim
+trat_med_db,0,Não
+trat_med_db,1,Sim
+insulina,0,Não
+insulina,1,Sim
+dislip,0,Não
+dislip,1,Sim
+depressao,0,Não
+depressao,1,Sim
+ind_med_depr,0,Não
+ind_med_depr,1,Sim
+trat_med_depr,0,Não
+trat_med_depr,1,Sim
+conducao,0,Não
+conducao,1,Sim
+r701_time,,
+sono_curto,0,Não
+sono_curto,1,Sim
+insonia,0,Não
+insonia,1,Sim

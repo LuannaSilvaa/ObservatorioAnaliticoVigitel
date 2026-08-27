@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <!-- Marca circular do Observatório. Os arcos representam acompanhamento,
+       os pilares representam os indicadores e o ponto final remete à
+       informação acessível ao usuário. -->
+  <defs>
+    <linearGradient id="arcoPrincipal" x1="22" x2="108" y1="22" y2="108" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#073B70"/>
+      <stop offset=".58" stop-color="#0D73C8"/>
+      <stop offset="1" stop-color="#11A7A1"/>
+    </linearGradient>
+    <linearGradient id="indicadores" x1="45" x2="83" y1="82" y2="44" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#13B8AD"/>
+      <stop offset="1" stop-color="#0C85C7"/>
+    </linearGradient>
+  </defs>
+  <path d="M101 29A47 47 0 1 0 101 99" fill="none" stroke="url(#arcoPrincipal)" stroke-linecap="round" stroke-width="7"/>
+  <circle cx="101" cy="29" r="4.5" fill="#11A7A1"/>
+  <path d="M94 43A33 33 0 1 0 94 87" fill="none" stroke="#0D6FC2" stroke-linecap="round" stroke-width="7"/>
+  <rect x="45" y="68" width="9" height="20" rx="3" fill="url(#indicadores)"/>
+  <rect x="59" y="58" width="9" height="30" rx="3" fill="url(#indicadores)"/>
+  <rect x="73" y="46" width="9" height="42" rx="3" fill="url(#indicadores)"/>
+  <circle cx="104" cy="55" r="4.5" fill="#0D73C8"/>
+  <path d="M104 68v24" fill="none" stroke="url(#arcoPrincipal)" stroke-linecap="round" stroke-width="7"/>
+</svg>

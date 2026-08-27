@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "Ao utilizar este projeto, cite-o conforme a referência abaixo."
+title: "Observatório Analítico de Indicadores do Vigitel"
+type: software
+authors:
+  - family-names: "Silva"
+    given-names: "Luanna Morais Alves da"
+    affiliation: "Universidade Federal do Rio Grande do Norte"
+version: "13.2"
+date-released: "2026-07-20"
+license: MIT
+abstract: "Plataforma acadêmica para análise, comparação, visualização e exportação de indicadores de saúde pública do Vigitel."
+keywords:
+  - Vigitel
+  - saúde pública
+  - indicadores de saúde
+  - vigilância epidemiológica
+  - visualização de dados

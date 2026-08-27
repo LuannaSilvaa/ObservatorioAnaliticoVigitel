@@ -1,0 +1,10 @@
+.DS_Store
+Thumbs.db
+*.zip
+*.log
+*.pyc
+__pycache__/
+Microdados/*.csv
+Microdados/*.zip
+MicrodadosBackup/
+Relatorio*.txt

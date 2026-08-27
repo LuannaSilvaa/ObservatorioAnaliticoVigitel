@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<!--
+  Página principal do Observatório Analítico de Indicadores do Vigitel.
+  A estrutura separa navegação, construção da análise, filtros, resultados processados e janelas auxiliares.
+  Ao incluir um novo recurso, mantenha os identificadores usados pelos arquivos JavaScript e confira a navegação por teclado.
+-->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<meta content="no-cache, no-store, must-revalidate" http-equiv="Cache-Control"/>
+<meta content="no-cache" http-equiv="Pragma"/>
+<meta content="0" http-equiv="Expires"/>
+<title>Observatório Analítico de Indicadores do Vigitel</title>
+<meta content="#F7FAFD" id="themeColorMeta" name="theme-color"/>
+<meta content="Plataforma acadêmica para análise, comparação e visualização de indicadores do Vigitel." name="description"/>
+<meta content="Luanna Morais Alves da Silva" name="author"/>
+<meta content="index, follow" name="robots"/>
+<meta content="website" property="og:type"/>
+<meta content="Observatório Analítico de Indicadores do Vigitel" property="og:title"/>
+<meta content="Painel acadêmico para análise e visualização de indicadores de saúde pública do Vigitel." property="og:description"/>
+<link href="assets/img/IdentidadeVisualDoObservatorio.svg" rel="icon" type="image/svg+xml"/>
+<link href="assets/css/InterfaceVisualDoObservatorio.css?edicao=correcaoTodosControles20260801" rel="stylesheet"/>
+<link href="assets/css/AjustesFinaisDeInteracao.css?edicao=compatibilidadeMultidispositivo20260826v24" rel="stylesheet"/>
+<style>
+/* Mantém as proporções do cabeçalho quando o navegador usa escala de 125%. */
+@media (min-width:1421px) and (max-width:1600px){
+  .cabecalho-vigitel{
+    min-height:112px!important;
+    padding:6px 16px 6px 34px!important;
+  }
+  .cabecalho-vigitel::before{
+    top:10px!important;
+    bottom:10px!important;
+    left:9px!important;
+  }
+  .cabecalho-vigitel__marca{
+    transform:scale(.8)!important;
+    transform-origin:left center!important;
+  }
+  .cabecalho-vigitel__lado{
+    transform:scale(.8)!important;
+    transform-origin:right center!important;
+  }
+}
+</style>
+<style id="correcao-contraste-controles-escuros">
+/* Correção crítica embutida: não depende do cache da folha de estilos. */
+html[data-theme="dark"] #advancedTools .advanced-tools-content label,
+html[data-theme="dark"] #advancedTools .advanced-tools-content .field > label,
+html[data-theme="dark"] #advancedTools .advanced-tools-content .color-field > label,
+html[data-theme="dark"] #advancedTools .advanced-tools-content .range > span{
+  color:#F4FAFD!important;
+  -webkit-text-fill-color:#F4FAFD!important;
+  opacity:1!important;
+}
+html[data-theme="dark"] #advancedTools .advanced-tools-content > label{
+  font-weight:750!important;
+}
+html[data-theme="dark"] #advancedTools .advanced-tools-content label:has(> input:disabled){
+  color:#C7D8E2!important;
+  -webkit-text-fill-color:#C7D8E2!important;
+}
+/* A ação permanece na extremidade direita da linha de visualizações. */
+#resultClearAnalysis{
+  display:inline-flex!important;
+  visibility:visible!important;
+  opacity:1!important;
+  margin-left:auto!important;
+}
+</style>
+<script src="assets/js/core/ConfiguracaoRenovadaDoTema.js?edicao=compatibilidadeMultidispositivo20260827v25"></script>
+</head>
+<body>
+<a class="skip-link" href="#painel">Ir direto para o painel</a>
+<!-- A tela inicial aparece imediatamente enquanto a base e os módulos são carregados em etapas. -->
+<div aria-live="polite" class="app-loading-screen" id="appLoadingScreen" role="status">
+<div class="app-loading-card">
+<img alt="" aria-hidden="true" class="app-loading-logo" src="assets/img/IdentidadeVisualDoObservatorio.svg"/>
+<div><span class="app-loading-kicker">Observatório Vigitel</span><strong id="appLoadingTitle">Preparando o painel</strong><p id="appLoadingText">Organizando a interface para iniciar o carregamento.</p></div>
+<div aria-hidden="true" class="app-loading-track"><span id="appLoadingBar"></span></div>
+<span class="app-loading-percent" id="appLoadingPercent">8%</span>
+<button class="btn" hidden="" id="appLoadingRetry" type="button">Tentar novamente</button>
+</div>
+</div>
+<!-- Cabeçalho institucional compacto. Os menus agrupam páginas relacionadas
+     sem retirar atalhos e mantêm todos os controles acessíveis pelo teclado. -->
+<header class="cabecalho-vigitel" data-cabecalho-versao="anterior-com-pagina-logo-circular">
+<div class="cabecalho-vigitel__marca">
+<img alt="Logo do Observatório" class="cabecalho-vigitel__logo" src="assets/img/IdentidadeVisualDoObservatorio.svg"/>
+<div class="cabecalho-vigitel__texto">
+<p class="cabecalho-vigitel__rotulo">Observatório</p>
+<h1>Observatório Analítico de Indicadores do Vigitel</h1>
+<p class="cabecalho-vigitel__resumo">Plataforma acadêmica para análise, comparação e visualização de indicadores de saúde pública.</p>
+<p class="cabecalho-vigitel__credito">Projeto de extensão · LEPS/UFRN</p>
+</div>
+</div>
+<div class="cabecalho-vigitel__lado">
+<button aria-controls="mainNavigation" aria-expanded="false" class="mobile-menu-toggle" id="mobileMenuToggle" type="button"><span aria-hidden="true">☰</span><span>Menu</span></button>
+<nav aria-label="Menu principal" class="main-nav" id="mainNavigation">
+<a aria-current="page" class="header-panel-link active" href="#painel"><svg aria-hidden="true" viewbox="0 0 24 24"><rect fill="currentColor" height="7" rx="1" width="7" x="3" y="3"></rect><rect fill="currentColor" height="7" rx="1" width="7" x="14" y="3"></rect><rect fill="currentColor" height="7" rx="1" width="7" x="3" y="14"></rect><rect fill="currentColor" height="7" rx="1" width="7" x="14" y="14"></rect></svg><span>Painel</span></a>
+<details class="header-menu">
+<summary><svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="12" cy="12" fill="none" r="9" stroke="currentColor" stroke-width="1.8"></circle><path d="M12 10.7v5.4M12 7.2h.01" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path></svg><span>O Observatório</span><span aria-hidden="true" class="header-chevron">⌄</span></summary>
+<div class="header-dropdown">
+<a href="paginas/InformacoesDoObservatorio.html#sobre"><strong>Projeto</strong><small>Conheça objetivos e público</small></a>
+<a href="paginas/InformacoesDoObservatorio.html#metodologia"><strong>Metodologia</strong><small>Entenda dados e indicadores</small></a>
+<a href="paginas/InformacoesDoObservatorio.html#creditos"><strong>Créditos</strong><small>Instituições e referências</small></a>
+</div>
+</details>
+<details class="header-menu">
+<summary><svg aria-hidden="true" viewbox="0 0 24 24"><ellipse cx="12" cy="5.5" fill="none" rx="7.5" ry="3" stroke="currentColor" stroke-width="1.8"></ellipse><path d="M4.5 5.5v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6M4.5 11.5v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg><span>Dados e recursos</span><span aria-hidden="true" class="header-chevron">⌄</span></summary>
+<div class="header-dropdown">
+<a href="paginas/InformacoesDoObservatorio.html#microdados"><strong>Downloads</strong><small>Microdados e arquivos</small></a>
+<button data-header-glossary type="button"><strong>Glossário</strong><small>Definições dos indicadores</small></button>
+</div>
+</details>
+<details class="header-menu">
+<summary><svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="12" cy="12" fill="none" r="9" stroke="currentColor" stroke-width="1.8"></circle><path d="M9.6 9.2a2.6 2.6 0 0 1 5 .9c0 2-2.6 2.1-2.6 4M12 17.4h.01" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.9"></path></svg><span>Ajuda</span><span aria-hidden="true" class="header-chevron">⌄</span></summary>
+<div class="header-dropdown header-dropdown-right">
+<button id="openOnboarding" type="button"><strong>Como usar</strong><small>Veja o guia em quatro etapas</small></button>
+<a href="paginas/InformacoesDoObservatorio.html#contato"><strong>Contato</strong><small>Envie dúvidas e sugestões</small></a>
+</div>
+</details>
+<span aria-hidden="true" class="header-divider"></span>
+<div aria-label="Ações rápidas" class="header-utilities">
+<button aria-label="Ativar modo claro" data-header-theme data-theme-choice="light" title="Modo claro" type="button"><svg aria-hidden="true" class="theme-light-icon" viewbox="0 0 24 24"><circle cx="12" cy="12" fill="none" r="4" stroke="currentColor" stroke-width="1.8"></circle><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M18.7 5.3l-1.4 1.4M6.7 17.3l-1.4 1.4" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg></button>
+<button aria-label="Ativar modo escuro" data-header-theme data-theme-choice="dark" title="Modo escuro" type="button"><svg aria-hidden="true" class="theme-dark-icon" viewbox="0 0 24 24"><path d="M20.4 15.3A8.5 8.5 0 0 1 8.7 3.6 8.5 8.5 0 1 0 20.4 15.3Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"></path></svg></button>
+<a aria-label="Abrir administração" class="header-admin-link" href="paginas/AdministracaoDoObservatorio.html" title="Administração"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="m9.4 4.2.6-2.2h4l.6 2.2 2 .8 2-1.1 2.1 3.5-1.8 1.5.2 2.1 2 1.2-2 3.5-2.2-.8-1.7 1.2-.4 2.4h-4l-.6-2.3-1.9-.8-2.1 1.1-2-3.5 1.8-1.5-.1-2.1-2-1.2 2-3.5 2 .8 1.5-1.3Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.55"></path><circle cx="12" cy="12" fill="none" r="3" stroke="currentColor" stroke-width="1.7"></circle></svg></a>
+</div>
+</nav>
+</div>
+</header>
+<!-- A versão e o período são confirmados novamente pelo JavaScript depois da leitura da base. -->
+<section aria-live="polite" class="base-version-banner" id="baseVersionBanner"><div><strong id="baseVersionName">Base de dados v14.1</strong><span id="baseVersionDetails">Mapa real do Brasil e experiência móvel atualizada · Dados de 2006 a 2024, exceto 2022.</span></div></section>
+<button aria-controls="mobileFilterDrawer" aria-expanded="false" class="mobile-filter-button" id="mobileFilterButton" type="button">Filtros</button>
+<div class="mobile-filter-overlay" hidden="" id="mobileFilterOverlay"></div>
+<!-- Área de trabalho: catálogo de blocos, construção da análise, resultados e filtros. -->
+<main class="workspace" id="painel">
+<aside class="left-panel">
+<div class="panel-title-row"><div><h2>Opções da análise</h2><p>Abra uma caixa e toque na opção desejada.</p></div></div>
+<label class="search-box"><span>⌕</span><input id="searchInput" placeholder="Buscar indicadores..." type="search"/></label>
+<h3 class="group-title"><span aria-hidden="true" class="group-title-icon"><svg viewbox="0 0 24 24"><path d="M12 3 4 7.2 12 11.4 20 7.2 12 3Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"></path><path d="M4 11.2 12 15.4 20 11.2M4 15.2 12 19.4 20 15.2" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg></span>1. Temas e indicadores</h3><div class="block-group" id="themeBlocks"></div>
+<h3 class="group-title">2. Indicadores</h3><div class="block-group" id="indicatorBlocks"></div>
+<h3 class="group-title"><span aria-hidden="true" class="group-title-icon"><svg viewbox="0 0 24 24"><path d="M4 5.5h16l-6.5 7.6V19l-3 1.6v-7.5L4 5.5Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.9"></path></svg></span>2. Filtros</h3><div class="block-group" id="filterBlocks"></div>
+<h3 class="group-title"><span aria-hidden="true" class="group-title-icon"><svg viewbox="0 0 24 24"><path d="M4 20V5M4 20h16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"></path><rect fill="none" height="6" rx=".7" stroke="currentColor" stroke-width="1.5" width="2.8" x="6.5" y="14"></rect><rect fill="none" height="10" rx=".7" stroke="currentColor" stroke-width="1.5" width="2.8" x="11" y="10"></rect><path d="m6.8 11 4-3.4 3 2.1 4.5-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"></path></svg></span>3. Gráficos</h3><div class="block-group" id="chartBlocks"></div>
+</aside>
+<section class="builder-panel">
+<div class="builder-head"><div><h2>Monte sua análise em 4 etapas</h2><p>Toque em uma etapa para escolher. Se preferir, você também pode arrastar as opções da lateral.</p></div><div class="builder-actions"><button class="btn" id="quickBuild">Preencher automaticamente</button><button class="btn primary" id="generate">Escolher tema</button><button class="btn" id="clear">Recomeçar</button></div></div>
+<section aria-labelledby="analysisPresetsTitle" class="analysis-presets" id="analysisPresets">
+<div><span class="eyebrow">Comece por um exemplo</span><h3 id="analysisPresetsTitle">Análises prontas</h3><p>Use o indicador atual ou selecione automaticamente um indicador compatível.</p></div>
+<div class="analysis-preset-grid">
+<button class="analysis-preset-card" data-analysis-preset="trend" type="button"><span aria-hidden="true">↗</span><strong>Tendência nacional</strong><small>Série por ano e período completo</small></button>
+<button class="analysis-preset-card" data-analysis-preset="map" type="button"><span aria-hidden="true">⌖</span><strong>Comparar UFs</strong><small>Mapa do Brasil no ano mais recente</small></button>
+<button class="analysis-preset-card" data-analysis-preset="sex" type="button"><span aria-hidden="true">◐</span><strong>Perfil por sexo</strong><small>Comparação no ano mais recente</small></button>
+</div>
+</section>
+<div class="builder-flow">
+<div class="drop-slot" data-icon="▱" data-slot="theme" role="button" tabindex="0"><span class="slot-label">1. Tema</span><div class="slot-content"></div></div>
+<div class="drop-slot" data-icon="⌁" data-slot="indicator" role="button" tabindex="0"><span class="slot-label">2. Indicador</span><div class="slot-content"></div></div>
+<div class="drop-slot" data-icon="▽" data-slot="filters" role="button" tabindex="0"><span class="slot-label">3. Filtros</span><div class="slot-content"></div></div>
+<div class="drop-slot" data-icon="▥" data-slot="chart" role="button" tabindex="0"><span class="slot-label">4. Gráfico</span><div class="slot-content"></div></div>
+</div>
+<section aria-label="Seleções atuais da análise" class="result-toolbar" hidden="" id="resultToolbar">
+<button class="result-filter-chip" data-result-editor="theme" data-toolbar-block="theme" draggable="true" title="Arraste para reorganizar ou clique para alterar o tema" type="button"><span class="result-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 3-8 4.2 8 4.2 8-4.2L12 3Z"></path><path d="m4 11.2 8 4.2 8-4.2M4 15.2l8 4.2 8-4.2"></path></svg></span><span><small>Tema</small><strong id="resultToolbarTheme">Não selecionado</strong></span><span aria-hidden="true" class="result-chip-chevron">⌄</span></button>
+<button class="result-filter-chip" data-result-editor="indicator" data-toolbar-block="indicator" draggable="true" title="Arraste para reorganizar ou clique para alterar o indicador" type="button"><span class="result-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4v16h16"></path><path d="m7 16 4-5 3 2 5-6"></path><circle cx="19" cy="7" r="1.5"></circle></svg></span><span><small>Indicador</small><strong id="resultToolbarIndicator">Não selecionado</strong></span><span aria-hidden="true" class="result-chip-chevron">⌄</span></button>
+<button class="result-filter-chip result-chart-chip" data-result-editor="chart" data-toolbar-block="chart" draggable="true" title="Arraste para reorganizar ou clique para alterar o gráfico" type="button"><span class="result-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4v16h16"></path><rect height="6" rx=".8" width="3" x="7" y="14"></rect><rect height="10" rx=".8" width="3" x="12" y="10"></rect><rect height="14" rx=".8" width="3" x="17" y="6"></rect></svg></span><span><small>Tipo de gráfico</small><strong id="resultToolbarChart">Série temporal</strong></span><span aria-hidden="true" class="result-chip-chevron">⌄</span></button>
+<button class="result-filter-chip" data-result-filter="period" data-toolbar-block="period" draggable="true" title="Arraste para reorganizar ou clique para alterar o período" type="button"><span class="result-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect height="17" rx="2" width="18" x="3" y="5"></rect><path d="M7 3v4M17 3v4M3 10h18M7 14h3M14 14h3M7 18h3"></path></svg></span><span><small>Período</small><strong id="resultToolbarPeriod">Período completo</strong></span><span aria-hidden="true" class="result-chip-chevron">⌄</span></button>
+<button class="result-filter-chip result-demographic-chip" data-result-filter="demographic" data-toolbar-block="demographic" draggable="true" title="Arraste para reorganizar ou clique para alterar os dados demográficos" type="button"><span class="result-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"></circle><path d="M5.5 21c.5-4.2 3-6.5 6.5-6.5s6 2.3 6.5 6.5"></path></svg></span><span><small>Demográficos</small><strong id="resultToolbarDemographic">Todos · População Geral</strong></span><span aria-hidden="true" class="result-chip-chevron">⌄</span></button>
+<button class="result-filter-chip" data-result-filter="geographic" data-toolbar-block="geographic" draggable="true" title="Arraste para reorganizar ou clique para alterar o local" type="button"><span class="result-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="2.5"></circle></svg></span><span><small>Local</small><strong id="resultToolbarLocal">Brasil</strong></span><span aria-hidden="true" class="result-chip-chevron">⌄</span></button>
+<button class="result-edit-filters" id="resultEditFilters" type="button"><span aria-hidden="true" class="result-edit-filters-icon"><svg viewBox="0 0 24 24"><path d="M3 5h18l-7 8v6l-4 2v-8L3 5Z"></path></svg></span>Editar filtros</button>
+</section>
+<section aria-labelledby="resultChoiceTitle" class="result-choice-popover" hidden="" id="resultChoicePopover">
+<div class="result-choice-head"><div><small id="resultChoiceEyebrow">Alterar seleção</small><h2 id="resultChoiceTitle">Escolha uma opção</h2></div><button aria-label="Salvar e fechar lista de opções" class="result-choice-close" id="resultChoiceClose" type="button"><span aria-hidden="true" class="result-choice-close-icon">×</span><span class="result-choice-close-label">Salvar</span></button></div>
+<label class="result-choice-search"><span aria-hidden="true">⌕</span><input autocomplete="off" id="resultChoiceSearch" placeholder="Buscar..." type="search"/></label>
+<div aria-live="polite" class="result-choice-options" id="resultChoiceOptions" role="listbox"></div>
+</section>
+<section class="results" hidden="">
+<nav aria-label="Formas de visualizar o resultado" class="result-view-tabs">
+<button aria-controls="chartWrapper" aria-selected="true" class="active" data-result-view="chart" id="resultViewChart" role="tab" type="button"><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 19V5M4 19h16M7 15l4-5 3 3 5-7"></path><circle cx="19" cy="6" r="1.5"></circle></svg></span>Gráfico</button>
+<button aria-controls="tableResultsPanel" aria-selected="false" data-result-view="table" id="resultViewTable" role="tab" type="button"><span aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"></rect><path d="M4 10h16M4 15h16M10 4v16"></path></svg></span>Tabela</button>
+<button aria-controls="chartWrapper" aria-selected="false" data-result-view="map" id="resultViewMap" role="tab" type="button"><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m4 6 5-2 6 2 5-2v14l-5 2-6-2-5 2V6Z"></path><path d="M9 4v14M15 6v14"></path></svg></span>Mapa</button>
+<button aria-label="Limpar toda a análise" class="result-clear-analysis" id="resultClearAnalysis" title="Apagar tema, indicador, filtros, gráfico e personalizações" type="button"><span aria-hidden="true">↻</span>Limpar análise</button>
+</nav>
+<div class="results-head">
+<div><h2 id="resultTitle">Monte a análise</h2><p id="resultSubtitle">Use os blocos e os filtros para gerar o gráfico.</p></div><span class="badge"></span>
+<div aria-label="Opções de download" class="export-row">
+<div class="export-group"><span>Imagem do gráfico</span><div><button class="btn primary" id="downloadImage" title="Baixar o gráfico como imagem PNG"><svg aria-hidden="true" viewbox="0 0 24 24"><rect fill="none" height="14" rx="2" stroke="currentColor" stroke-width="1.7" width="16" x="4" y="5"></rect><path d="m6 17 4.2-4 3 2.8 2.4-2.3L19 17" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"></path><circle cx="15.5" cy="9" fill="currentColor" r="1.5"></circle></svg>PNG</button><button class="btn" id="downloadVectorSvg" title="Baixar o gráfico como imagem vetorial SVG"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M7 3h7l4 4v14H7V3Z" fill="none" stroke="currentColor" stroke-width="1.6"></path><path d="M14 3v5h5" fill="none" stroke="currentColor" stroke-width="1.6"></path><text fill="currentColor" font-size="4" font-weight="900" x="7.2" y="16.2">SVG</text></svg>SVG</button></div></div>
+<div class="export-group"><span>Resultado da análise</span><div><button class="btn" id="downloadCsv"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M7 3h7l4 4v14H7V3Z" fill="none" stroke="currentColor" stroke-width="1.6"></path><path d="M14 3v5h5" fill="none" stroke="currentColor" stroke-width="1.6"></path><text fill="currentColor" font-size="4.2" font-weight="800" x="6.8" y="16">CSV</text></svg>CSV</button><button class="btn" id="downloadExcel"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M7 3h7l4 4v14H7V3Z" fill="none" stroke="currentColor" stroke-width="1.6"></path><path d="M14 3v5h5" fill="none" stroke="currentColor" stroke-width="1.6"></path><text fill="currentColor" font-size="4.2" font-weight="800" x="6.8" y="16">XLS</text></svg>Excel</button></div></div>
+<div class="export-group"><span>Base filtrada</span><div><button class="btn" id="downloadBaseCsv"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M5 7 12 3l7 4-7 4-7-4Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.7"></path><path d="M5 11 12 15l7-4M5 15l7 4 7-4" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.7"></path></svg>CSV</button><button class="btn" id="downloadBaseExcel"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M5 7 12 3l7 4-7 4-7-4Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.7"></path><path d="M5 11 12 15l7-4M5 15l7 4 7-4" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.7"></path></svg>Excel</button></div></div>
+</div>
+</div>
+<div class="chart-tools">
+<div class="chart-tool-group control-card"><span class="control-card-title">Legenda do gráfico</span><label class="chart-search" for="legendSearchInput"><span>Buscar categoria</span><input id="legendSearchInput" placeholder="Ex.: 35 anos" type="search"/></label><button class="btn" id="clearLegendSearch" type="button">Limpar busca</button><button class="btn" id="showAllLegendItems" type="button">Mostrar todas</button></div>
+<details class="advanced-tools" id="advancedTools">
+<summary>
+<span aria-hidden="true" class="advanced-tools-icon"><svg viewbox="0 0 24 24"><circle cx="6" cy="12" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="18" cy="12" r="1.8"></circle></svg></span>
+<span class="advanced-tools-copy"><strong>Mais opções</strong><small>Salvar, comparar, exportar e personalizar</small></span>
+<span class="advanced-tools-label">Ferramentas avançadas</span>
+<span aria-hidden="true" class="advanced-tools-chevron">⌄</span>
+</summary>
+<div class="advanced-tools-content">
+<div class="export-options control-card"><span class="control-card-title">Configuração da exportação</span><label class="export-field"><span>Formato de saída</span><select id="exportPreset"><option value="auto">Automático</option><option value="a4-portrait">A4 retrato</option><option value="a4-landscape">A4 paisagem</option><option value="slide-16-9">Slide 16:9</option><option value="banner">Banner</option></select></label><label class="export-check"><input id="exportTransparentBg" type="checkbox"/> Fundo transparente</label></div>
+<div class="command-bar control-card"><span class="control-card-title">Ações da análise</span><button class="btn" disabled="" id="undoAction" type="button">Desfazer</button><button class="btn" disabled="" id="redoAction" type="button">Refazer</button><button class="btn" id="saveAnalysisBtn" type="button">Salvar</button><button class="btn" id="versionHistoryBtn" type="button">Histórico</button><button class="btn" id="favoritesBtn" type="button">Favoritos</button><button class="btn" id="shareConfigBtn" type="button">Compartilhar</button><button class="btn" id="downloadReportPdf" type="button">Relatório PDF</button><button class="btn" id="openSelectedGlossary" type="button">Glossário</button><button class="btn" id="fullscreenChart" type="button">Tela cheia</button><button class="btn" id="runTestsBtn" type="button">Verificar painel</button></div>
+<div class="compare-controls control-card"><span class="control-card-title">Comparação</span><label><input id="compareEnabled" type="checkbox"/> Comparar indicadores</label><select aria-label="Segundo indicador para comparação" id="compareIndicator"></select></div>
+</div>
+</details>
+<span aria-live="polite" class="sr-only" id="analysisSaveStatus"></span>
+</div>
+<div aria-live="polite" class="chart-explanation" id="chartExplanation"></div>
+<div aria-label="Área dos gráficos" class="chart-wrapper" id="chartWrapper" role="region"><div aria-hidden="true" class="loading-mask" id="chartLoading"><div class="chart-loading-content"><div class="loading-spinner"></div><strong id="chartLoadingText">Atualizando a análise</strong><span>Aplicando filtros e redesenhando a visualização.</span><div aria-hidden="true" class="chart-loading-track"><i></i></div></div></div><div class="chart-comparison-grid" id="chartComparisonGrid"><div class="chart-comparison-item"><h3 class="chart-comparison-title" id="primaryChartLabel"></h3><div aria-live="polite" class="chart-card" id="chart"></div></div><div class="chart-comparison-item" id="compareChartItem"><h3 class="chart-comparison-title" id="secondaryChartLabel"></h3><div aria-live="polite" class="chart-card secondary" id="chartCompare"></div></div></div></div><p class="sr-only" id="chartAssistiveText">Use Tab para navegar até a legenda e, no mapa, entre os estados. Pressione Enter ou Espaço para consultar um estado ou ocultar e mostrar categorias. O botão Tela cheia amplia a visualização.</p>
+<div class="table-tools"><div class="table-tool-group"><input id="tableSearch" placeholder="Buscar na tabela..." type="search"/><select id="tableSort"><option value="category-asc">Categoria A-Z</option><option value="category-desc">Categoria Z-A</option><option value="value-desc">Maior valor</option><option value="value-asc">Menor valor</option><option value="sample-desc">Maior amostra</option><option value="sample-asc">Menor amostra</option></select><select id="tablePageSize"><option value="10">10 por página</option><option selected="" value="25">25 por página</option><option value="50">50 por página</option><option value="100">100 por página</option></select></div><div class="table-tool-group"><button class="btn" id="tablePrev" type="button">Anterior</button><span class="table-status" id="tableStatus"></span><button class="btn" id="tableNext" type="button">Próxima</button></div></div>
+<div aria-label="Tabela de resultados processados" class="data-table-scroll" id="tableResultsPanel" role="region" tabindex="0"><table class="data-table compact-data-table"><thead><tr><th>Indicador</th><th>Categoria</th><th>Valor (%)</th><th>Precisão amostral</th><th>Detalhes</th></tr></thead><tbody id="tableBody"></tbody></table></div>
+</section>
+<aside aria-labelledby="resultSummaryTitle" class="result-analysis-summary" hidden="" id="resultAnalysisSummary">
+<h2 id="resultSummaryTitle">Resumo da análise</h2>
+<dl class="result-summary-list">
+<div><dt><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 3-8 4 8 4 8-4-8-4Z"></path><path d="m4 12 8 4 8-4M4 17l8 4 8-4"></path></svg></span>Tema</dt><dd id="resultSummaryTheme">Não selecionado</dd></div>
+<div><dt><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 19V5M4 19h16M7 15l4-5 3 3 5-7"></path><circle cx="19" cy="6" r="1.5"></circle></svg></span>Indicador</dt><dd id="resultSummaryIndicator">Não selecionado</dd></div>
+<div><dt><span aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M7 3v4M17 3v4M3 10h18M7 14h3M14 14h3M7 18h3"></path></svg></span>Período</dt><dd id="resultSummaryPeriod">Período completo</dd></div>
+<div><dt><span aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 21c.7-4.3 3.1-6.5 7-6.5s6.3 2.2 7 6.5"></path></svg></span>Sexo</dt><dd id="resultSummarySex">Todos</dd></div>
+<div><dt><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="2.5"></circle></svg></span>Local</dt><dd id="resultSummaryLocal">Brasil</dd></div>
+</dl>
+<button class="result-summary-primary" id="resultDownloadChart" type="button"><span aria-hidden="true">⇩</span>Baixar gráfico</button>
+<button class="result-summary-secondary" id="resultShareAnalysis" type="button"><span aria-hidden="true">⌯</span>Compartilhar análise</button>
+<details class="result-summary-downloads"><summary class="efeito-botoes-final"><span class="result-summary-download-label"><span aria-hidden="true" class="result-summary-download-arrow">▸</span><span>Outros formatos de download</span></span></summary><div id="resultSummaryDownloads"></div></details>
+</aside>
+</section>
+<aside aria-label="Filtros da análise" class="filter-panel" id="mobileFilterDrawer"><button aria-label="Fechar filtros" class="mobile-filter-close" id="mobileFilterClose" type="button">×</button>
+<div class="filter-top"><div class="filter-title"><span class="filter-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M4 5.5h16l-6.5 7.6V19l-3 1.6v-7.5L4 5.5Z" fill="none" stroke="#22e0ce" stroke-linejoin="round" stroke-width="1.9"></path></svg></span><h2>Filtros</h2></div><button class="clear-btn" id="clearFilters" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M8 8v11M12 8v11M16 8v11" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path><path d="M5 6h14M9 6V4h6v2M7 6l1 15h8l1-15" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span class="trash-label">Limpar</span></button></div>
+<details class="filter-cluster" data-filter-section="period"><summary><span class="ficon"><svg aria-hidden="true" viewbox="0 0 24 24"><rect fill="none" height="14.5" rx="2" stroke="#22e0ce" stroke-width="1.8" width="16" x="4" y="5.5"></rect><path d="M8 3.5v4M16 3.5v4M4 10h16" fill="none" stroke="#22e0ce" stroke-linecap="round" stroke-width="1.8"></path><path d="M8 13h2M12 13h2M16 13h1M8 16h2M12 16h2" stroke="#22e0ce" stroke-linecap="round" stroke-width="1.6"></path></svg></span><span class="cluster-title">Período</span><button aria-label="Limpar filtro de período" class="cluster-trash" data-clear-section="period" title="Limpar filtro de período" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M8 8v11M12 8v11M16 8v11" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path><path d="M5 6h14M9 6V4h6v2M7 6l1 15h8l1-15" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span class="trash-label">Limpar</span></button></summary><div class="cluster-body">
+<details class="mini-filter"><summary>Anos <span class="filter-summary-inline" id="yearSummary"></span></summary><div class="mini-filter-body"><div class="multi-actions"><button id="allYears" type="button">Todos</button><button id="noYears" type="button">Nenhum</button><button id="latestYear" type="button">Mais recente</button></div><div class="checkbox-list" id="yearChecks"></div></div></details>
+</div></details>
+<details class="filter-cluster" data-filter-section="demographic"><summary><span class="ficon"><svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="12" cy="7.3" fill="none" r="3" stroke="#22e0ce" stroke-width="1.8"></circle><path d="M5 20c.9-4.4 4-6.6 7-6.6s6.1 2.2 7 6.6" fill="none" stroke="#22e0ce" stroke-linecap="round" stroke-width="1.8"></path></svg></span><span class="cluster-title">Demográficos</span><button aria-label="Limpar filtros demográficos" class="cluster-trash" data-clear-section="demographic" title="Limpar filtros demográficos" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M8 8v11M12 8v11M16 8v11" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path><path d="M5 6h14M9 6V4h6v2M7 6l1 15h8l1-15" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span class="trash-label">Limpar</span></button></summary><div class="cluster-body">
+<div class="field demographic-sex-field"><label>Sexo</label><div class="sex-checkbox-grid" id="sexChecks" role="group" aria-label="Selecione um ou mais sexos"></div></div>
+<div class="age-range-filter" data-age-range-ui id="ageRangeFilter">
+<div class="age-range-heading"><div><strong>Idade <button aria-label="Ajuda sobre idade" class="result-help-trigger inline" title="Use o marcador para selecionar uma faixa contínua ou preencha os campos. Em intervalos específicos, você pode digitar exemplos como 18-24, 30-35, 50." type="button">?</button></strong></div><span data-age-range-summary id="ageRangeSummary">18 a 80+</span></div>
+<div class="age-range-scale" aria-hidden="true"><span>18</span><div class="age-dual-range" data-age-dual-range id="ageDualRange"><div class="age-dual-range-track"></div><div class="age-dual-range-fill"></div><input aria-label="Idade inicial" data-age-min-range id="ageRangeMin" max="80" min="18" step="1" type="range" value="18"/><input aria-label="Idade final" data-age-max-range id="ageRangeMax" max="80" min="18" step="1" type="range" value="80"/></div><span>80+</span></div>
+<div class="result-age-row-fields"><label><span>Começar em</span><input data-age-min-number id="ageMinInput" inputmode="numeric" max="80" min="18" type="number" value="18"/></label><label><span>Finalizar em</span><input data-age-max-number id="ageMaxInput" inputmode="numeric" max="80" min="18" type="number" value="80"/></label><label class="result-age-interval-label"><span>Intervalos específicos <button aria-label="Ajuda sobre intervalos" class="result-help-trigger inline" title="Digite intervalos como 18-24, 30-35, 50. Você também pode usar apenas o marcador." type="button">?</button></span><span class="result-age-interval-combo"><input data-age-interval id="ageIntervalInput" placeholder="Ex.: 18-24, 30-35, 50" type="text"/><button data-age-apply id="applyAgeInterval" type="button">Aplicar</button></span></label></div>
+<button class="age-range-clear" data-age-clear id="clearAgeRange" type="button">Usar todas as idades</button>
+</div>
+<div class="age-quinquenal-panel">
+  <div class="age-quinquenal-head"><div><strong>Faixa etária quinquenal</strong><small>Grupos de idade usados na comparação</small></div><div class="age-quinquenal-actions"><button id="visibleAllAges" type="button">Selecionar todas</button><button id="visibleNoAges" type="button">Sem recorte</button></div></div>
+  <div class="age-quinquenal-grid" id="ageQuickGroups" role="group" aria-label="Faixa etária quinquenal"></div>
+</div>
+<div class="age-filter-compat" hidden><button id="allAgeDetails" type="button">Todas</button><button id="noAgeDetails" type="button">Nenhuma</button><div id="ageDetailChecks"></div><button id="allAges" type="button">Todas</button><button id="noAges" type="button">Nenhuma</button><div id="ageChecks"></div><span id="ageDetailSummary"></span><span id="ageSummary"></span></div>
+<div class="field"><label>Tipo de população</label><select id="popFilter"></select></div>
+</div></details>
+<details class="filter-cluster" data-filter-section="geographic"><summary><span class="ficon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M12 21s7-6.2 7-12A7 7 0 0 0 5 9c0 5.8 7 12 7 12Z" fill="none" stroke="#22e0ce" stroke-linejoin="round" stroke-width="1.8"></path><circle cx="12" cy="9" fill="none" r="2.4" stroke="#22e0ce" stroke-width="1.8"></circle></svg></span><span class="cluster-title">Geográficos</span><button aria-label="Limpar filtros geográficos" class="cluster-trash" data-clear-section="geographic" title="Limpar filtros geográficos" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M8 8v11M12 8v11M16 8v11" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path><path d="M5 6h14M9 6V4h6v2M7 6l1 15h8l1-15" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span class="trash-label">Limpar</span></button></summary><div class="cluster-body"><div class="field"><label>Região</label><select id="regionFilter"></select></div><div class="field"><label>UF</label><select id="ufFilter"></select></div></div></details>
+<details class="filter-cluster" data-filter-section="other"><summary><span class="ficon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M9.4 4.2 10 2h4l.6 2.2 2 .8 2-1.1 2.1 3.5-1.8 1.5.2 2.1 2 1.2-2 3.5-2.2-.8-1.7 1.2-.4 2.4h-4l-.6-2.3-1.9-.8-2.1 1.1-2-3.5 1.8-1.5-.1-2.1-2-1.2 2-3.5 2 .8 1.5-1.3Z" fill="none" stroke="#22e0ce" stroke-linejoin="round" stroke-width="1.55"></path><circle cx="12" cy="12" fill="none" r="3" stroke="#22e0ce" stroke-width="1.7"></circle></svg></span><span class="cluster-title">Outros filtros</span><button aria-label="Limpar outros filtros" class="cluster-trash" data-clear-section="other" title="Limpar outros filtros" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M8 8v11M12 8v11M16 8v11" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path><path d="M5 6h14M9 6V4h6v2M7 6l1 15h8l1-15" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg><span class="trash-label">Limpar</span></button></summary><div class="cluster-body"><div class="field"><label>Recorte do gráfico</label><select id="groupFilter"></select></div>
+<h4 class="mini-title">Edição do texto</h4>
+<div class="field"><label>Título personalizado</label><input id="customTitle" placeholder="Deixe vazio para usar o título automático" type="text"/></div>
+<div class="field"><label>Subtítulo personalizado</label><input id="customSubtitle" placeholder="Deixe vazio para usar o subtítulo automático" type="text"/></div>
+<div class="field"><label>Fonte da imagem</label><select id="fontFamily"><option>Arial</option><option>Georgia</option><option>Verdana</option><option>Times New Roman</option></select></div>
+<div class="field"><label>Alinhamento do título</label><select id="titleAlign"><option value="left">À esquerda</option><option value="center">Centralizado</option><option value="right">À direita</option></select></div>
+<div class="field"><label>Alinhamento do subtítulo</label><select id="subtitleAlign"><option value="left">À esquerda</option><option value="center">Centralizado</option><option value="right">À direita</option></select></div>
+<div class="field"><label>Tamanho do título</label><div class="range"><input id="titleSize" max="44" min="14" type="range" value="22"/><span id="titleSizeValue">22 px</span></div></div>
+<div class="field"><label>Tamanho do subtítulo</label><div class="range"><input id="subtitleSize" max="28" min="10" type="range" value="14"/><span id="subtitleSizeValue">14 px</span></div></div>
+<div class="field"><label>Tamanho geral da letra</label><div class="range"><input id="fontSize" max="30" min="10" type="range" value="18"/><span id="fontSizeValue">18 px</span></div></div>
+<div class="field"><label>Tamanho dos eixos</label><div class="range"><input id="axisSize" max="24" min="9" type="range" value="13"/><span id="axisSizeValue">13 px</span></div></div>
+<div class="field"><label>Tamanho dos valores</label><div class="range"><input id="valueSize" max="24" min="8" type="range" value="13"/><span id="valueSizeValue">13 px</span></div></div>
+<h4 class="mini-title">Cores e estilo</h4>
+<div class="color-field"><label>Cor principal</label><input id="primaryColor" type="color" value="#073B70"/></div>
+<div class="color-field"><label>Cor secundária</label><input id="secondaryColor" type="color" value="#0FA7A0"/></div>
+<div class="sex-series-color-editor"><span>Cores das séries por sexo</span><div><label>Todos <input id="sexColorTodos" type="color" value="#073B70"/></label><label>Feminino <input id="sexColorFeminino" type="color" value="#D73372"/></label><label>Masculino <input id="sexColorMasculino" type="color" value="#0FA7A0"/></label></div></div>
+<div class="color-field"><label>Cor da letra</label><input id="textColor" type="color" value="#16324F"/></div>
+<div class="color-field"><label>Fundo da imagem</label><input id="chartBgColor" type="color" value="#FFFFFF"/></div>
+<div class="color-field"><label>Fundo da área do gráfico</label><input id="plotBgColor" type="color" value="#FFFFFF"/></div>
+<div class="color-field"><label>Cor da grade</label><input id="gridColor" type="color" value="#DDE7F2"/></div>
+<div class="color-field"><label>Cor da borda</label><input id="borderColor" type="color" value="#D6E1EE"/></div>
+<div class="field"><label>Paleta de cores</label><select id="paletteSelect"><option value="default">Profissional</option><option value="blue">Azul institucional</option><option value="green">Verde água</option><option value="warm">Cores quentes</option><option value="pastel">Pastel</option><option value="mono">Monocromática</option></select></div>
+<label><input checked="" id="showBorder" type="checkbox"/> Mostrar bordas do gráfico</label>
+<h4 class="mini-title">Eixos e rótulos</h4>
+<div class="field"><label>Título do eixo horizontal</label><input id="xAxisTitle" placeholder="Automático" type="text"/></div>
+<div class="field"><label>Título do eixo vertical</label><input id="yAxisTitle" placeholder="Automático" type="text"/></div>
+<label><input checked="" id="showXAxisTitle" type="checkbox"/> Mostrar título do eixo horizontal</label>
+<label><input checked="" id="showYAxisTitle" type="checkbox"/> Mostrar título do eixo vertical</label>
+<label><input checked="" id="showAxisLabels" type="checkbox"/> Mostrar valores dos eixos</label>
+<label><input checked="" id="showGrid" type="checkbox"/> Mostrar grade de apoio</label>
+<div class="field"><label>Rotação dos rótulos</label><select id="labelRotation"><option value="auto">Automática</option><option value="0">0°</option><option value="35">35°</option><option value="45">45°</option><option value="60">60°</option></select></div>
+<div class="field"><label>Casas decimais</label><select id="decimalPlaces"><option value="0">0</option><option selected="" value="1">1</option><option value="2">2</option></select></div>
+<div class="field"><label>Ordenação</label><select id="sortOrder"><option value="original">Original</option><option value="desc">Maior para menor</option><option value="asc">Menor para maior</option></select></div>
+<h4 class="mini-title">Valores, legenda e fonte</h4>
+<label><input checked="" id="showValues" type="checkbox"/> Mostrar valores no gráfico</label>
+<div class="field"><label>Posição dos valores</label><select id="valuePosition"><option value="outside">Fora</option><option value="inside">Dentro</option><option value="none">Ocultar</option></select></div>
+<label><input checked="" id="showLegend" type="checkbox"/> Mostrar legenda quando aplicável</label>
+<div class="field"><label>Posição da legenda</label><select id="legendPosition"><option value="right">À direita</option><option value="bottom">Embaixo</option></select></div>
+<div class="field"><label>Tamanho da legenda</label><div class="range"><input id="legendSize" max="30" min="8" type="range" value="13"/><span id="legendSizeValue">13 px</span></div></div>
+<label><input checked="" id="showSource" type="checkbox"/> Mostrar fonte</label>
+<div class="field"><label>Alinhamento da fonte</label><select id="sourceAlign"><option value="left">À esquerda</option><option value="center">Centralizada</option><option value="right">À direita</option></select></div>
+<div class="field"><label>Texto da fonte</label><input id="sourceText" placeholder="Fonte automática" type="text"/></div>
+<h4 class="mini-title">Ajustes específicos</h4>
+<div class="field"><label>Largura das barras</label><div class="range"><input id="barWidthScale" max="120" min="40" type="range" value="70"/><span id="barWidthScaleValue">70%</span></div></div>
+<div class="field"><label>Espessura da linha</label><div class="range"><input id="lineWidth" max="10" min="1" type="range" value="4"/><span id="lineWidthValue">4 px</span></div></div>
+<div class="field"><label>Tamanho dos pontos</label><div class="range"><input id="pointSize" max="12" min="0" type="range" value="5"/><span id="pointSizeValue">5 px</span></div></div>
+<label><input checked="" id="showPoints" type="checkbox"/> Mostrar pontos nas linhas</label>
+<div class="field"><label>Tamanho do furo da rosca</label><div class="range"><input id="donutHole" max="75" min="25" type="range" value="45"/><span id="donutHoleValue">45%</span></div></div>
+<label><input checked="" id="showTreemapLabels" type="checkbox"/> Mostrar textos no treemap</label>
+<h4 class="mini-title">Presets e aparência</h4>
+<p class="panel-subtitle">Escolha um visual pronto para apresentação, impressão ou alto contraste.</p>
+<div class="preset-grid"><button class="preset-btn" id="presetDefault" type="button">Padrão</button><button class="preset-btn" id="presetPresentation" type="button">Apresentação</button><button class="preset-btn" id="presetPrint" type="button">Impressão</button><button class="preset-btn" id="presetContrast" type="button">Alto contraste</button></div>
+<div class="appearance-actions"><button class="clear-btn" id="restoreAppearance" type="button">Restaurar aparência padrão</button></div></div></details>
+<div class="status" hidden="" id="dataStatus"></div>
+</aside>
+</main>
+<!-- Janelas auxiliares mantidas fora da área principal para favorecer a navegação por teclado. -->
+<dialog class="app-dialog" id="favoritesDialog"><div class="dialog-head"><h2>Análises favoritas</h2><button aria-label="Fechar" class="dialog-close" data-close-dialog="favoritesDialog" type="button">×</button></div><div class="dialog-body"><div class="favorite-save-row"><input id="favoriteName" maxlength="80" placeholder="Nome da análise" type="text"/><button class="btn primary" id="saveFavoriteBtn" type="button">Salvar favorita</button></div><div class="favorite-list" id="favoriteList"></div></div></dialog>
+<dialog class="app-dialog" id="versionHistoryDialog"><div class="dialog-head"><h2>Histórico de versões da análise</h2><button aria-label="Fechar" class="dialog-close" data-close-dialog="versionHistoryDialog" type="button">×</button></div><div class="dialog-body"><div class="version-toolbar"><p>As versões ficam guardadas neste navegador. Abra uma versão anterior para recuperar filtros, gráfico, aparência e comparação.</p><button class="btn" id="clearVersionHistory" type="button">Limpar histórico</button></div><div class="version-list" id="versionHistoryList"></div></div></dialog>
+<dialog class="app-dialog" id="testsDialog"><div class="dialog-head"><h2>Verificação automática do sistema</h2><button aria-label="Fechar" class="dialog-close" data-close-dialog="testsDialog" type="button">×</button></div><div class="dialog-body"><div class="test-summary" id="testSummary"></div><div class="test-list" id="testList"></div></div></dialog>
+<section aria-hidden="true" class="report-print-area" id="reportPrintArea"></section>
+<dialog aria-labelledby="glossaryDialogTitle" class="app-dialog glossary-dialog" id="glossaryDialog">
+<div class="dialog-head"><div><span class="eyebrow">Ajuda contextual</span><h2 id="glossaryDialogTitle">Glossário dos indicadores</h2></div><button aria-label="Fechar" class="dialog-close" data-close-dialog="glossaryDialog" type="button">×</button></div>
+<label class="dialog-search"><span>Buscar indicador</span><input id="glossarySearch" placeholder="Digite o nome ou código" type="search"/></label>
+<div class="glossary-layout"><nav aria-label="Lista de indicadores" class="glossary-list" id="glossaryList"></nav><article class="glossary-content" id="glossaryContent"><p>Selecione um indicador para ver definição, fórmula, população analisada e cuidados de interpretação.</p></article></div>
+</dialog>
+<dialog aria-labelledby="onboardingTitle" class="app-dialog onboarding-dialog" id="onboardingDialog">
+<div class="dialog-head"><div><span class="eyebrow">Guia rápido</span><h2 id="onboardingTitle">Conheça o Observatório</h2></div><button aria-label="Fechar tutorial" class="dialog-close" data-onboarding-close type="button">×</button></div>
+<div class="onboarding-progress"><span id="onboardingProgressBar"></span></div>
+<div class="onboarding-body">
+<section class="onboarding-step" data-onboarding-step="0"><span class="onboarding-illustration" aria-hidden="true">①</span><div><h3>Monte a análise em quatro escolhas</h3><p>Escolha tema, indicador, filtros e tipo de gráfico. Você pode clicar nas etapas ou arrastar as opções da lateral para os blocos correspondentes.</p></div></section>
+<section class="onboarding-step" data-onboarding-step="1" hidden=""><span class="onboarding-illustration" aria-hidden="true">↔</span><div><h3>Organize e monte pelo desenho</h3><p>No resultado, arraste os blocos para mudar a ordem. Quando ainda não houver gráfico, solte um bloco ou uma opção sobre o desenho central; a visualização será montada automaticamente assim que as quatro escolhas estiverem completas.</p></div></section>
+<section class="onboarding-step" data-onboarding-step="2" hidden=""><span class="onboarding-illustration" aria-hidden="true">▥</span><div><h3>Compare e amplie a visualização</h3><p>Ative Comparar indicadores para ver dois gráficos do mesmo tamanho. Use a tela cheia para visualizar gráfico ou mapa sem precisar rolar a página.</p></div></section>
+<section class="onboarding-step" data-onboarding-step="3" hidden=""><span class="onboarding-illustration" aria-hidden="true">⚙</span><div><h3>Personalize, baixe ou recomece</h3><p>Em Mais opções, ajuste cores, textos, fundo transparente e bordas. Depois baixe no formato desejado. “Limpar análise” apaga todas as escolhas atuais e retorna ao início.</p></div></section>
+</div>
+<div class="onboarding-actions"><button class="btn" data-onboarding-close type="button">Pular tutorial</button><div><button class="btn" disabled="" id="onboardingPrevious" type="button">Voltar</button><button class="btn primary" id="onboardingNext" type="button">Continuar</button></div></div>
+</dialog>
+<div aria-hidden="true" class="toast-region" id="toastRegion"></div>
+<!-- O carregador progressivo permite a primeira pintura antes da leitura da base principal. -->
+<script defer="" src="assets/js/core/InicializacaoDoObservatorio.js?edicao=modaisCompactos20260820v19"></script>
+</body>
+</html>

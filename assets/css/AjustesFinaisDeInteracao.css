@@ -1,0 +1,5976 @@
+/*
+ * Ajustes finais de interação
+ * Mantém ações reconhecíveis sem transformar barras, abas e menus em caixas.
+ */
+
+/* Barras expansíveis permanecem estáveis, sem qualquer deslocamento. */
+details > summary,
+.advanced-tools > summary,
+.filter-cluster > summary,
+.mini-filter > summary{
+  cursor:pointer !important;
+  transform:none !important;
+}
+details > summary:hover,
+details > summary:active{
+  transform:none !important;
+}
+
+/* As abas recebem o destaque visual definido no bloco final deste arquivo. */
+.result-view-tabs button{
+  transform:none !important;
+}
+.result-view-tabs button:active{
+  transform:none !important;
+}
+
+/* O cabeçalho mantém feedback leve, sem deslocar os itens. */
+.cabecalho-vigitel .main-nav > a,
+.cabecalho-vigitel .header-menu > summary{
+  transform:none !important;
+}
+.cabecalho-vigitel .main-nav > a:hover,
+.cabecalho-vigitel .header-menu > summary:hover,
+.cabecalho-vigitel .header-menu[open] > summary{
+  transform:none !important;
+  box-shadow:inset 0 0 0 1px rgba(15,167,154,.20) !important;
+}
+
+/* Opções internas: sem sublinhado, sem linha atravessada e com seta centralizada. */
+.cabecalho-vigitel .header-dropdown > a,
+.cabecalho-vigitel .header-dropdown > button,
+.cabecalho-vigitel .header-dropdown > a:hover,
+.cabecalho-vigitel .header-dropdown > button:hover{
+  text-decoration:none !important;
+  transform:none !important;
+}
+.cabecalho-vigitel .header-dropdown > a::after,
+.cabecalho-vigitel .header-dropdown > button::after,
+.cabecalho-vigitel .header-dropdown > a.active::after{
+  content:"›" !important;
+  position:absolute !important;
+  left:auto !important;
+  right:15px !important;
+  top:50% !important;
+  bottom:auto !important;
+  display:block !important;
+  width:auto !important;
+  height:auto !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  color:#0B9F9A !important;
+  font-size:23px !important;
+  line-height:1 !important;
+  transform:translateY(-50%) !important;
+}
+
+/* Botões de ação continuam destacados, mas sem saltar ou aumentar. */
+button:not(:disabled),
+.btn:not(:disabled),
+[role="button"]{
+  cursor:pointer !important;
+}
+button:not(:disabled):hover,
+.btn:not(:disabled):hover,
+[role="button"]:hover,
+button:not(:disabled):active,
+.btn:not(:disabled):active,
+[role="button"]:active{
+  transform:none !important;
+}
+
+html[data-theme="dark"] details > summary,
+html[data-theme="dark"] .result-view-tabs button{
+  transform:none !important;
+}
+
+/* As duas faixas do resultado compartilham exatamente os mesmos limites laterais. */
+.workspace.analysis-ready .advanced-tools,
+.workspace.analysis-ready .chart-explanation{
+  width:auto !important;
+  margin-right:8px !important;
+  margin-left:8px !important;
+  box-sizing:border-box !important;
+}
+
+/* Ícones herdam a cor correta do botão e permanecem legíveis em qualquer tema. */
+.advanced-tools-icon,
+html[data-theme="dark"] .advanced-tools-icon{
+  color:#FFFFFF !important;
+}
+:is(.advanced-tools-icon,.btn,.clear-btn,.cluster-trash,.result-summary-primary,.result-summary-secondary,.result-clear-analysis,.result-edit-filters) svg,
+html[data-theme="dark"] :is(.advanced-tools-icon,.btn,.clear-btn,.cluster-trash,.result-summary-primary,.result-summary-secondary,.result-clear-analysis,.result-edit-filters) svg{
+  color:inherit !important;
+}
+.advanced-tools-icon svg{
+  fill:currentColor !important;
+  stroke:currentColor !important;
+}
+.clear-btn svg,
+.cluster-trash svg{
+  color:inherit !important;
+  opacity:1 !important;
+}
+
+/* Tema escuro de alto contraste compartilhado pelas três páginas. */
+html[data-theme="dark"] body{
+  background:#0B1822 !important;
+  color:#EAF4F7 !important;
+}
+html[data-theme="dark"] :is(.cabecalho-vigitel,.main-nav,.workspace,.results,.result-toolbar,.result-summary,.left-panel,.filter-panel,.builder,.info-section,.admin-section,.panel){
+  border-color:#355264 !important;
+}
+html[data-theme="dark"] .cabecalho-vigitel{
+  background:#10212D !important;
+  box-shadow:0 10px 28px rgba(0,0,0,.30) !important;
+}
+html[data-theme="dark"] :is(.cabecalho-vigitel__texto h1,.cabecalho-vigitel__credito,.cabecalho-vigitel .main-nav>a,.cabecalho-vigitel .header-menu>summary){
+  color:#F4FAFD !important;
+}
+html[data-theme="dark"] :is(.cabecalho-vigitel__rotulo,.cabecalho-vigitel__resumo){
+  color:#BFD2DE !important;
+}
+html[data-theme="dark"] .cabecalho-vigitel .main-nav{
+  background:#132733 !important;
+  border-color:#355264 !important;
+}
+html[data-theme="dark"] :is(.cabecalho-vigitel .main-nav>a:hover,.cabecalho-vigitel .header-menu>summary:hover,.cabecalho-vigitel .header-menu[open]>summary,.cabecalho-vigitel .main-nav>a.active){
+  background:#21404D !important;
+  color:#FFFFFF !important;
+  border-color:#55C9C1 !important;
+}
+html[data-theme="dark"] .cabecalho-vigitel .header-dropdown{
+  background:#10212D !important;
+  border-color:#426174 !important;
+}
+html[data-theme="dark"] :is(.cabecalho-vigitel .header-dropdown>a,.cabecalho-vigitel .header-dropdown>button){
+  background:#172C39 !important;
+  border-color:#355264 !important;
+}
+html[data-theme="dark"] :is(.cabecalho-vigitel .header-dropdown strong,.cabecalho-vigitel .header-dropdown>button strong){
+  color:#F4FAFD !important;
+}
+html[data-theme="dark"] .cabecalho-vigitel .header-dropdown small{color:#BFD2DE !important}
+html[data-theme="dark"] :is(.cabecalho-vigitel .header-dropdown>a:hover,.cabecalho-vigitel .header-dropdown>button:hover){
+  background:#21404D !important;
+  border-color:#55C9C1 !important;
+}
+
+html[data-theme="dark"] :is(.result-toolbar,.results,.result-summary,.left-panel,.filter-panel,.builder,.advanced-tools,.advanced-tools-content,.chart-explanation,.control-card,.table-tools,.compare-controls,.info-card,.info-hero,.admin-card,.app-dialog,.dialog-body){
+  background:#10212D !important;
+  border-color:#355264 !important;
+  color:#EAF4F7 !important;
+}
+html[data-theme="dark"] :is(h1,h2,h3,h4,.panel-title,.cluster-title,.control-card-title,.slot-label,.result-filter-chip strong,.result-summary-list dt,.result-summary-list dd,.advanced-tools-copy strong){
+  color:#F4FAFD !important;
+}
+html[data-theme="dark"] :is(p,small,.panel-subtitle,.advanced-tools-copy small,.chart-explanation span,.info-card p,.info-hero p,.result-filter-chip small){
+  color:#BED0DC !important;
+}
+html[data-theme="dark"] :is(input,select,textarea){
+  background:#172C39 !important;
+  border-color:#426174 !important;
+  color:#F4FAFD !important;
+}
+html[data-theme="dark"] :is(input,textarea)::placeholder{color:#91A9B8 !important}
+html[data-theme="dark"] :is(.result-filter-chip,.drop-slot,.analysis-preset-card,.block-card,.theme-indicator-item,.mini-filter>summary,.filter-cluster>summary){
+  background:#152A36 !important;
+  border-color:#3B5B6D !important;
+  color:#EAF4F7 !important;
+}
+html[data-theme="dark"] :is(.result-filter-chip:hover,.drop-slot:hover,.analysis-preset-card:hover,.block-card:hover,.theme-indicator-item:hover,.mini-filter>summary:hover,.filter-cluster>summary:hover){
+  background:#21404D !important;
+  border-color:#55C9C1 !important;
+  color:#FFFFFF !important;
+}
+html[data-theme="dark"] :is(button,.btn,[role="button"],summary):focus-visible{
+  outline:3px solid rgba(105,221,212,.72) !important;
+  outline-offset:2px !important;
+}
+html[data-theme="dark"] :is(.result-view-tabs button,.result-view-tabs button span){color:#CFE0EA !important}
+html[data-theme="dark"] .result-view-tabs button.active,
+html[data-theme="dark"] .result-view-tabs button.active span{color:#69DDD4 !important}
+html[data-theme="dark"] :is(.result-chip-icon,.ficon,.filter-icon,.group-title-icon,.block-icon,.header-chevron,.result-chip-chevron){
+  color:#69DDD4 !important;
+}
+html[data-theme="dark"] :is(.clear-btn,.cluster-trash,.result-clear-analysis,.result-summary-primary,.btn.primary){
+  color:#FFFFFF !important;
+}
+html[data-theme="dark"] .result-edit-filters{
+  background:#172C39 !important;
+  border-color:#55C9C1 !important;
+  color:#F4FAFD !important;
+  box-shadow:inset 0 0 0 1px rgba(105,221,212,.16) !important;
+}
+html[data-theme="dark"] .result-edit-filters:hover{
+  background:#21404D !important;
+  color:#FFFFFF !important;
+}
+html[data-theme="dark"] .result-edit-filters svg{color:#69DDD4 !important}
+
+/* Gráficos e mapas permanecem brancos para leitura e exportação. */
+html[data-theme="dark"] :is(.chart-wrapper,.chart-card,.chart-card-inner,.map-card,.map-stage,.chart-export-surface){
+  background:#FFFFFF !important;
+  border-color:#D6E1EE !important;
+  color:#16324F !important;
+}
+html[data-theme="dark"] :is(.chart-card h2,.chart-card h3,.chart-card p,.chart-card text,.map-card h2,.map-card h3,.map-card p){
+  color:#16324F !important;
+}
+
+/* Controles de configuração e administração com leitura reforçada. */
+html[data-theme="dark"] :is(
+  .advanced-tools label,
+  .advanced-tools .field>label,
+  .advanced-tools .color-field>label,
+  .advanced-tools .range>span,
+  .filter-panel label,
+  .campo-administrativo>span:first-child,
+  .administracao-card label,
+  .mini-title,
+  .export-group>span,
+  .result-summary-downloads>summary
+){
+  color:#F4FAFD !important;
+  opacity:1 !important;
+}
+
+/* Os textos dos controles marcáveis precisam conservar contraste máximo.
+   A lista explícita evita que estilos antigos do formulário sejam herdados
+   quando o usuário troca o tipo de gráfico. */
+html[data-theme="dark"] .advanced-tools-content > label,
+html[data-theme="dark"] .advanced-tools-content label:has(> input[type="checkbox"]),
+html[data-theme="dark"] .advanced-tools-content label:has(> input[type="radio"]),
+html[data-theme="dark"] label:has(> #showBorder),
+html[data-theme="dark"] label:has(> #showXAxisTitle),
+html[data-theme="dark"] label:has(> #showYAxisTitle),
+html[data-theme="dark"] label:has(> #showAxisLabels),
+html[data-theme="dark"] label:has(> #showGrid),
+html[data-theme="dark"] label:has(> #showValues),
+html[data-theme="dark"] label:has(> #showLegend),
+html[data-theme="dark"] label:has(> #showSource),
+html[data-theme="dark"] label:has(> #showPoints),
+html[data-theme="dark"] label:has(> #showTreemapLabels){
+  color:#F4FAFD !important;
+  -webkit-text-fill-color:#F4FAFD !important;
+  opacity:1 !important;
+  font-weight:750 !important;
+}
+html[data-theme="dark"] .advanced-tools-content label:has(> input:disabled){
+  color:#C7D8E2 !important;
+  -webkit-text-fill-color:#C7D8E2 !important;
+  opacity:1 !important;
+}
+html[data-theme="dark"] label:has(input:disabled),
+html[data-theme="dark"] label:has(select:disabled){
+  color:#BFD2DE !important;
+  opacity:1 !important;
+}
+html[data-theme="dark"] :is(input[type="checkbox"],input[type="radio"]){
+  accent-color:#69DDD4 !important;
+  opacity:1 !important;
+}
+html[data-theme="dark"] input[type="range"]{
+  accent-color:#45D5CA !important;
+}
+html[data-theme="dark"] :is(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]),select,textarea){
+  background:#0F1D27 !important;
+  border-color:#4B6B7D !important;
+  color:#F4FAFD !important;
+  opacity:1 !important;
+}
+html[data-theme="dark"] :is(input,select,textarea):focus{
+  border-color:#69DDD4 !important;
+  outline:3px solid rgba(105,221,212,.26) !important;
+  outline-offset:1px !important;
+}
+html[data-theme="dark"] select option{
+  background:#10212D !important;
+  color:#F4FAFD !important;
+}
+html[data-theme="dark"] button:not(.primary):not(.result-summary-primary):not(.result-clear-analysis):not([data-header-theme]){
+  border-color:#426174 !important;
+  color:#EAF4F7 !important;
+}
+html[data-theme="dark"] button:not(.primary):not(.result-summary-primary):not(.result-clear-analysis):not([data-header-theme]):hover{
+  border-color:#69DDD4 !important;
+  color:#FFFFFF !important;
+}
+html[data-theme="dark"] button:disabled{
+  border-color:#3A5362 !important;
+  background:#1A2D38 !important;
+  color:#B8CBD6 !important;
+  opacity:.78 !important;
+}
+html[data-theme="dark"] #mostrarSenha{
+  background:#21404D !important;
+  border:1px solid #55C9C1 !important;
+  color:#FFFFFF !important;
+  opacity:1 !important;
+}
+html[data-theme="dark"] #mostrarSenha:hover{
+  background:#2A5260 !important;
+  border-color:#8BE8E1 !important;
+}
+html[data-theme="dark"] :is(.administracao-etiqueta,.passo){
+  background:#DDF8F4 !important;
+  color:#075F65 !important;
+}
+html[data-theme="dark"] :is(.administracao-card-cabecalho p,.administracao-introducao p,.resumo-do-arquivo,.mensagem-formulario){
+  color:#C5D7E1 !important;
+}
+html[data-theme="dark"] .mensagem-formulario{background:transparent !important}
+html[data-theme="dark"] :is(.export-group,.result-summary-downloads){
+  border-color:#426174 !important;
+  background:#10212D !important;
+}
+html[data-theme="dark"] :is(.export-group .btn,#resultSummaryDownloads .btn){
+  background:#172C39 !important;
+  border-color:#426174 !important;
+  color:#F4FAFD !important;
+}
+html[data-theme="dark"] :is(.export-group .btn,#resultSummaryDownloads .btn):hover{
+  background:#21404D !important;
+  border-color:#69DDD4 !important;
+}
+html[data-theme="dark"] :is(.export-group .btn svg,#resultSummaryDownloads .btn svg){color:#69DDD4 !important}
+html[data-theme="dark"] :is(.export-group .btn.primary,#resultSummaryDownloads .btn.primary){
+  background:linear-gradient(135deg,#169F98,#167FC1) !important;
+  border-color:#45D5CA !important;
+  color:#FFFFFF !important;
+}
+html[data-theme="dark"] :is(.export-group .btn.primary svg,#resultSummaryDownloads .btn.primary svg){color:#FFFFFF !important}
+
+html[data-theme="dark"] .administracao-resumo strong{color:#FFFFFF !important}
+
+/* A limpeza fica imediatamente após Mapa; nunca é empurrada para fora da tela. */
+.result-view-tabs .result-clear-analysis,
+html[data-theme="dark"] .result-view-tabs .result-clear-analysis{
+  margin:0 0 8px auto !important;
+  flex:0 0 auto !important;
+}
+html[data-theme="dark"] .administracao-resumo span{
+  color:#C9DCE6 !important;
+  opacity:1 !important;
+}
+html[data-theme="dark"] .administracao-resumo small{
+  color:#E0EBF1 !important;
+  opacity:1 !important;
+}
+html[data-theme="dark"] .registro-da-atualizacao{
+  background:#0F2230 !important;
+  border-color:#426174 !important;
+}
+html[data-theme="dark"] .registro-item{
+  color:#D7E5EC !important;
+  border-color:#355264 !important;
+}
+html[data-theme="dark"] .registro-item time{color:#AFC5D1 !important}
+html[data-theme="dark"] .administracao-acoes button:disabled{
+  background:#182A35 !important;
+  border-color:#486474 !important;
+  color:#C3D3DC !important;
+  opacity:.86 !important;
+  filter:none !important;
+}
+
+/* ================================================================
+   SINALIZAÇÃO UNIVERSAL DE CLIQUE
+   Todos os controles respondem ao mouse, teclado e toque sem adotar
+   o aspecto rígido de vários quadrados independentes.
+   ================================================================ */
+:is(button,.btn,[role="button"],summary,a.header-action,a.result-action):not(:disabled){
+  cursor:pointer !important;
+  transition:background-color .16s ease,color .16s ease,border-color .16s ease,
+             box-shadow .16s ease,filter .16s ease,transform .10s ease !important;
+  -webkit-tap-highlight-color:rgba(15,167,154,.18);
+}
+
+/* Botões de ação: volume suave e resposta física curta. */
+:is(button,.btn,[role="button"]):not(:disabled):not(.result-view-tab):not([data-result-view]){
+  box-shadow:0 2px 5px rgba(7,59,112,.08) !important;
+}
+:is(button,.btn,[role="button"]):not(:disabled):not(.result-view-tab):not([data-result-view]):hover{
+  border-color:#55BDB7 !important;
+  box-shadow:0 6px 14px rgba(7,59,112,.14) !important;
+  filter:brightness(.985);
+  transform:translateY(-1px) !important;
+}
+:is(button,.btn,[role="button"]):not(:disabled):not(.result-view-tab):not([data-result-view]):active{
+  box-shadow:0 1px 3px rgba(7,59,112,.12) !important;
+  filter:brightness(.96);
+  transform:translateY(1px) !important;
+}
+
+/* Abas: aparência leve, arredondada apenas no hover, sem caixas permanentes. */
+.result-view-tabs button:not(.result-clear-analysis){
+  position:relative !important;
+  padding:10px 13px !important;
+  border-radius:10px 10px 0 0 !important;
+}
+.result-view-tabs button:not(.result-clear-analysis):hover{
+  background:#EDF8F7 !important;
+  color:#087E91 !important;
+}
+.result-view-tabs button:not(.result-clear-analysis):active{
+  background:#DFF3F1 !important;
+}
+
+/* Barras e menus expansíveis: mudança clara de fundo e seta ao interagir. */
+details > summary:hover,
+.cabecalho-vigitel .header-menu > summary:hover{
+  background-color:#EFF8FA !important;
+  color:#075F78 !important;
+}
+details > summary:active,
+.cabecalho-vigitel .header-menu > summary:active{
+  background-color:#DDEFF2 !important;
+}
+
+/* Opções internas e cartões selecionáveis. */
+:is(.result-choice-option,.theme-option,.indicator-option,.chart-type-option,
+    .filter-option,.header-dropdown > a,.header-dropdown > button,
+    [data-quick-age-value],[data-quick-age-action]){
+  border-radius:12px !important;
+}
+:is(.result-choice-option,.theme-option,.indicator-option,.chart-type-option,
+    .filter-option,.header-dropdown > a,.header-dropdown > button,
+    [data-quick-age-value],[data-quick-age-action]):hover{
+  background:#EAF8F6 !important;
+  border-color:#48C2BA !important;
+  color:#075F78 !important;
+}
+
+/* Foco de teclado forte e consistente em todas as páginas. */
+:is(button,.btn,[role="button"],summary,a,select,input,textarea):focus-visible{
+  outline:3px solid rgba(15,167,154,.38) !important;
+  outline-offset:2px !important;
+}
+
+/* Controles indisponíveis não parecem clicáveis. */
+:is(button,.btn,[role="button"]):disabled,
+[aria-disabled="true"]{
+  cursor:not-allowed !important;
+  box-shadow:none !important;
+  transform:none !important;
+}
+
+/* Equivalentes de alto contraste para o tema escuro. */
+html[data-theme="dark"] :is(button,.btn,[role="button"]):not(:disabled):not(.result-view-tab):not([data-result-view]){
+  box-shadow:0 2px 6px rgba(0,0,0,.28) !important;
+}
+html[data-theme="dark"] :is(button,.btn,[role="button"]):not(:disabled):not(.result-view-tab):not([data-result-view]):hover{
+  background-color:#21404D !important;
+  border-color:#69DDD4 !important;
+  color:#FFFFFF !important;
+  box-shadow:0 7px 16px rgba(0,0,0,.34) !important;
+}
+html[data-theme="dark"] .result-view-tabs button:not(.result-clear-analysis):hover,
+html[data-theme="dark"] details > summary:hover,
+html[data-theme="dark"] .cabecalho-vigitel .header-menu > summary:hover,
+html[data-theme="dark"] :is(.result-choice-option,.theme-option,.indicator-option,.chart-type-option,
+  .filter-option,.header-dropdown > a,.header-dropdown > button,
+  [data-quick-age-value],[data-quick-age-action]):hover{
+  background:#21404D !important;
+  border-color:#69DDD4 !important;
+  color:#FFFFFF !important;
+}
+
+/* Abas principais com aparência inequívoca de botão. Elas continuam leves e
+   arredondadas, mas agora possuem superfície, contorno e resposta ao clique. */
+.result-view-tabs button:not(.result-clear-analysis),
+.result-view-tabs [data-result-view]{
+  min-height:42px !important;
+  margin:0 4px 8px 0 !important;
+  padding:10px 16px !important;
+  border:1px solid #C6DCE9 !important;
+  border-radius:12px !important;
+  background:linear-gradient(180deg,#FFFFFF,#F3F8FB) !important;
+  color:#073B70 !important;
+  box-shadow:0 3px 8px rgba(7,59,112,.09) !important;
+  transform:none !important;
+}
+.result-view-tabs button:not(.result-clear-analysis):hover,
+.result-view-tabs [data-result-view]:hover{
+  border-color:#30B6AC !important;
+  background:#EAF8F6 !important;
+  color:#075F78 !important;
+  box-shadow:0 7px 15px rgba(7,111,126,.16) !important;
+  transform:translateY(-1px) !important;
+}
+.result-view-tabs button:not(.result-clear-analysis):active,
+.result-view-tabs [data-result-view]:active{
+  background:#D8F2EF !important;
+  box-shadow:0 2px 5px rgba(7,59,112,.12) !important;
+  transform:translateY(1px) !important;
+}
+.result-view-tabs button.active:not(.result-clear-analysis),
+.result-view-tabs [data-result-view].active,
+.result-view-tabs [aria-selected="true"]:not(.result-clear-analysis){
+  border-color:#0FA79A !important;
+  background:linear-gradient(180deg,#E9FAF8,#DCF4F1) !important;
+  color:#075F78 !important;
+  box-shadow:0 0 0 2px rgba(15,167,154,.12),0 5px 12px rgba(7,111,126,.13) !important;
+}
+.result-view-tabs button.active:not(.result-clear-analysis)::after,
+.result-view-tabs [data-result-view].active::after{
+  left:14px !important;
+  right:14px !important;
+  bottom:-5px !important;
+  height:3px !important;
+  border-radius:999px !important;
+}
+
+/* A área de formatos complementares funciona como um botão expansível. */
+.result-summary-downloads > summary,
+#resultSummaryDownloads > summary,
+details.result-summary-downloads > summary{
+  min-height:46px !important;
+  padding:12px 16px !important;
+  border:1px solid #BFD8E6 !important;
+  border-radius:13px !important;
+  background:linear-gradient(180deg,#F9FCFE,#EDF5F9) !important;
+  color:#073B70 !important;
+  font-weight:850 !important;
+  box-shadow:0 3px 9px rgba(7,59,112,.09) !important;
+}
+.result-summary-downloads > summary:hover,
+#resultSummaryDownloads > summary:hover,
+details.result-summary-downloads > summary:hover{
+  border-color:#30B6AC !important;
+  background:#E6F7F5 !important;
+  color:#075F78 !important;
+  box-shadow:0 7px 16px rgba(7,111,126,.15) !important;
+  transform:translateY(-1px) !important;
+}
+.result-summary-downloads > summary:active,
+#resultSummaryDownloads > summary:active,
+details.result-summary-downloads > summary:active{
+  background:#D8F2EF !important;
+  box-shadow:0 2px 5px rgba(7,59,112,.12) !important;
+  transform:translateY(1px) !important;
+}
+.result-summary-downloads[open] > summary,
+#resultSummaryDownloads[open] > summary{
+  border-color:#0FA79A !important;
+  background:#DCF4F1 !important;
+  color:#075F78 !important;
+  box-shadow:0 0 0 2px rgba(15,167,154,.11) !important;
+}
+
+html[data-theme="dark"] .result-view-tabs button:not(.result-clear-analysis),
+html[data-theme="dark"] .result-view-tabs [data-result-view],
+html[data-theme="dark"] :is(.result-summary-downloads,#resultSummaryDownloads) > summary{
+  border-color:#456779 !important;
+  background:linear-gradient(180deg,#1B3442,#152A37) !important;
+  color:#EAF6F8 !important;
+  box-shadow:0 4px 10px rgba(0,0,0,.28) !important;
+}
+html[data-theme="dark"] .result-view-tabs button:not(.result-clear-analysis):hover,
+html[data-theme="dark"] .result-view-tabs [data-result-view]:hover,
+html[data-theme="dark"] :is(.result-summary-downloads,#resultSummaryDownloads) > summary:hover{
+  border-color:#69DDD4 !important;
+  background:#214653 !important;
+  color:#FFFFFF !important;
+  box-shadow:0 7px 16px rgba(0,0,0,.35) !important;
+}
+html[data-theme="dark"] .result-view-tabs button.active:not(.result-clear-analysis),
+html[data-theme="dark"] .result-view-tabs [data-result-view].active,
+html[data-theme="dark"] .result-view-tabs [aria-selected="true"]:not(.result-clear-analysis),
+html[data-theme="dark"] :is(.result-summary-downloads,#resultSummaryDownloads)[open] > summary{
+  border-color:#69DDD4 !important;
+  background:#214A52 !important;
+  color:#FFFFFF !important;
+  box-shadow:0 0 0 2px rgba(105,221,212,.15),0 5px 13px rgba(0,0,0,.3) !important;
+}
+
+/* ========================================================================== 
+   Correção responsiva para celulares
+   O cabeçalho permanece compacto. A navegação é exibida como uma caixa
+   suspensa somente depois do toque no botão de menu.
+   ========================================================================== */
+@media (max-width:760px){
+  html,
+  body{
+    width:100%!important;
+    max-width:100%!important;
+    overflow-x:hidden!important;
+  }
+
+  body{
+    padding-bottom:max(20px,env(safe-area-inset-bottom))!important;
+  }
+
+  /* Cabeçalho compacto: marca à esquerda e botão de menu à direita. */
+  .cabecalho-vigitel{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) auto!important;
+    grid-template-areas:"marca menu"!important;
+    align-items:center!important;
+    gap:8px!important;
+    width:calc(100% - 20px)!important;
+    min-height:0!important;
+    margin:10px auto 12px!important;
+    padding:14px 12px 14px 26px!important;
+    overflow:visible!important;
+    border-radius:20px!important;
+    box-sizing:border-box!important;
+  }
+
+  .cabecalho-vigitel::before{
+    top:12px!important;
+    bottom:12px!important;
+    left:9px!important;
+    width:4px!important;
+  }
+
+  .cabecalho-vigitel__marca{
+    grid-area:marca!important;
+    display:grid!important;
+    grid-template-columns:52px minmax(0,1fr)!important;
+    align-items:center!important;
+    gap:10px!important;
+    width:auto!important;
+    min-width:0!important;
+    transform:none!important;
+  }
+
+  .cabecalho-vigitel__logo{
+    width:52px!important;
+    height:52px!important;
+    min-width:52px!important;
+  }
+
+  .cabecalho-vigitel__texto{
+    width:100%!important;
+    min-width:0!important;
+  }
+
+  .cabecalho-vigitel__rotulo{
+    margin:0 0 4px!important;
+    font-size:8px!important;
+    line-height:1.1!important;
+    letter-spacing:.16em!important;
+  }
+
+  .cabecalho-vigitel__texto h1{
+    display:block!important;
+    max-width:100%!important;
+    margin:0 0 4px!important;
+    font-size:14px!important;
+    line-height:1.16!important;
+    white-space:normal!important;
+    overflow-wrap:normal!important;
+    word-break:normal!important;
+  }
+
+  .cabecalho-vigitel__resumo{
+    display:none!important;
+  }
+
+  .cabecalho-vigitel__credito{
+    display:block!important;
+    margin:0!important;
+    font-size:9px!important;
+    line-height:1.2!important;
+    white-space:normal!important;
+  }
+
+  .cabecalho-vigitel__lado{
+    grid-area:menu!important;
+    position:static!important;
+    display:block!important;
+    justify-self:end!important;
+    align-self:center!important;
+    width:44px!important;
+    min-width:44px!important;
+    transform:none!important;
+  }
+
+  /* Apenas o ícone fica visível; o texto continua disponível ao leitor de tela. */
+  .cabecalho-vigitel .mobile-menu-toggle{
+    position:relative!important;
+    z-index:402!important;
+    display:inline-grid!important;
+    place-items:center!important;
+    width:44px!important;
+    height:44px!important;
+    min-width:44px!important;
+    min-height:44px!important;
+    margin:0!important;
+    padding:0!important;
+    border:1px solid #CFE0EC!important;
+    border-radius:13px!important;
+    background:#FFFFFF!important;
+    color:#073B70!important;
+    box-shadow:0 5px 13px rgba(12,92,122,.08)!important;
+    cursor:pointer!important;
+  }
+
+  .cabecalho-vigitel .mobile-menu-toggle>span:first-child{
+    display:block!important;
+    font-size:22px!important;
+    line-height:1!important;
+  }
+
+  .cabecalho-vigitel .mobile-menu-toggle>span:last-child{
+    position:absolute!important;
+    width:1px!important;
+    height:1px!important;
+    padding:0!important;
+    margin:-1px!important;
+    overflow:hidden!important;
+    clip:rect(0,0,0,0)!important;
+    white-space:nowrap!important;
+    border:0!important;
+  }
+
+  body.mobile-menu-open .cabecalho-vigitel .mobile-menu-toggle{
+    border-color:#8FCFCB!important;
+    background:#EAF8F7!important;
+    color:#087C78!important;
+  }
+
+  /* O menu aberto flutua abaixo do cabeçalho e não aumenta sua altura. */
+  .cabecalho-vigitel .main-nav{
+    position:absolute!important;
+    z-index:401!important;
+    top:calc(100% + 8px)!important;
+    right:10px!important;
+    left:10px!important;
+    display:none!important;
+    flex-direction:column!important;
+    align-items:stretch!important;
+    justify-content:flex-start!important;
+    gap:5px!important;
+    width:auto!important;
+    max-width:none!important;
+    min-width:0!important;
+    max-height:calc(100vh - 120px)!important;
+    margin:0!important;
+    padding:8px!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+    border:1px solid #CFE0EC!important;
+    border-radius:16px!important;
+    background:#FFFFFF!important;
+    box-shadow:0 18px 38px rgba(13,54,91,.20)!important;
+    box-sizing:border-box!important;
+  }
+
+  body.mobile-menu-open .cabecalho-vigitel .main-nav{
+    display:flex!important;
+  }
+
+  .cabecalho-vigitel .main-nav>a,
+  .cabecalho-vigitel .header-menu,
+  .cabecalho-vigitel .header-menu>summary{
+    flex:0 0 auto!important;
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    box-sizing:border-box!important;
+  }
+
+  .cabecalho-vigitel .main-nav>a,
+  .cabecalho-vigitel .header-menu>summary{
+    justify-content:flex-start!important;
+    min-height:46px!important;
+    padding:8px 12px!important;
+    white-space:normal!important;
+    text-align:left!important;
+  }
+
+  .cabecalho-vigitel .header-chevron{
+    margin-left:auto!important;
+  }
+
+  .cabecalho-vigitel .header-dropdown,
+  .cabecalho-vigitel .header-dropdown-right{
+    position:static!important;
+    width:100%!important;
+    max-width:100%!important;
+    margin:5px 0 7px!important;
+    padding:6px!important;
+    border-radius:12px!important;
+    box-shadow:none!important;
+    box-sizing:border-box!important;
+  }
+
+  .cabecalho-vigitel .header-dropdown>a,
+  .cabecalho-vigitel .header-dropdown>button{
+    width:100%!important;
+    min-height:52px!important;
+    padding:9px 11px!important;
+    box-sizing:border-box!important;
+  }
+
+  .cabecalho-vigitel .header-divider{
+    width:100%!important;
+    height:1px!important;
+    margin:4px 0!important;
+  }
+
+  .cabecalho-vigitel .header-utilities{
+    display:grid!important;
+    grid-template-columns:repeat(3,42px)!important;
+    justify-content:start!important;
+    gap:8px!important;
+    width:100%!important;
+    padding:2px!important;
+  }
+
+  .cabecalho-vigitel .header-utilities>button,
+  .cabecalho-vigitel .header-utilities>a{
+    width:42px!important;
+    height:42px!important;
+    min-width:42px!important;
+    min-height:42px!important;
+  }
+
+  /* O acesso aos filtros fica no fluxo da página, mas sem virar uma faixa. */
+  .mobile-filter-button{
+    position:relative!important;
+    inset:auto!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    width:auto!important;
+    min-width:126px!important;
+    max-width:calc(100% - 40px)!important;
+    min-height:44px!important;
+    margin:0 20px 12px auto!important;
+    padding:9px 20px!important;
+    border-radius:13px!important;
+    box-sizing:border-box!important;
+    box-shadow:0 9px 20px rgba(8,67,111,.20)!important;
+  }
+
+  .workspace,
+  .workspace.analysis-ready{
+    width:calc(100% - 20px)!important;
+    max-width:100%!important;
+    min-width:0!important;
+    margin-right:auto!important;
+    margin-left:auto!important;
+    padding-right:0!important;
+    padding-left:0!important;
+    box-sizing:border-box!important;
+  }
+
+  .workspace>.left-panel,
+  .workspace>.builder-panel,
+  .workspace>.filter-panel,
+  .workspace.analysis-ready>.builder-panel,
+  .workspace.analysis-ready .results,
+  .result-analysis-summary{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    box-sizing:border-box!important;
+  }
+
+  /* Cartões superiores continuam em duas colunas, sem cortar os textos. */
+  .result-toolbar{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:9px!important;
+    width:100%!important;
+    min-width:0!important;
+    padding:12px!important;
+    overflow:visible!important;
+    box-sizing:border-box!important;
+  }
+
+  .result-filter-chip{
+    width:100%!important;
+    min-width:0!important;
+    min-height:66px!important;
+    padding:8px 28px 8px 8px!important;
+  }
+
+  .result-filter-chip>span:nth-child(2){
+    min-width:0!important;
+    overflow:hidden!important;
+  }
+
+  .result-filter-chip small{
+    white-space:nowrap!important;
+  }
+
+  .result-filter-chip strong,
+  .result-demographic-chip strong{
+    display:-webkit-box!important;
+    max-width:100%!important;
+    overflow:hidden!important;
+    font-size:10px!important;
+    line-height:1.25!important;
+    white-space:normal!important;
+    overflow-wrap:anywhere!important;
+    text-overflow:clip!important;
+    -webkit-box-orient:vertical!important;
+    -webkit-line-clamp:2!important;
+  }
+
+  .result-edit-filters{
+    grid-column:1/-1!important;
+    width:100%!important;
+    min-width:0!important;
+    min-height:48px!important;
+  }
+
+  /* As três visualizações cabem na mesma linha; Limpar análise fica abaixo. */
+  .result-view-tabs{
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    align-items:stretch!important;
+    gap:4px!important;
+    width:100%!important;
+    margin:0 0 14px!important;
+    padding:0 0 9px!important;
+    overflow:visible!important;
+    box-sizing:border-box!important;
+  }
+
+  .result-view-tabs button:not(.result-clear-analysis){
+    justify-content:center!important;
+    gap:5px!important;
+    width:100%!important;
+    min-width:0!important;
+    padding:8px 3px 10px!important;
+    font-size:10px!important;
+    white-space:nowrap!important;
+  }
+
+  .result-view-tabs #resultClearAnalysis,
+  .result-view-tabs .result-clear-analysis{
+    grid-column:1/-1!important;
+    justify-self:stretch!important;
+    width:100%!important;
+    min-width:0!important;
+    margin:6px 0 0!important;
+  }
+
+  .workspace.analysis-ready .results{
+    overflow:hidden!important;
+  }
+
+  .workspace.analysis-ready .results-head,
+  .workspace.analysis-ready .chart-tools,
+  .workspace.analysis-ready .chart-wrapper,
+  .workspace.analysis-ready .chart-card,
+  .workspace.analysis-ready .data-table-scroll{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    box-sizing:border-box!important;
+  }
+
+  .workspace.analysis-ready .chart-wrapper,
+  .workspace.analysis-ready .chart-card{
+    overflow:hidden!important;
+  }
+
+  .workspace.analysis-ready .chart-card>svg,
+  .workspace.analysis-ready .chart-card>canvas{
+    display:block!important;
+    max-width:100%!important;
+    height:auto!important;
+  }
+
+  /* Mais opções permanece totalmente clicável e dentro do cartão. */
+  .advanced-tools,
+  .advanced-tools>summary{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    box-sizing:border-box!important;
+  }
+
+  .advanced-tools>summary{
+    display:grid!important;
+    grid-template-columns:48px minmax(0,1fr) auto!important;
+    align-items:center!important;
+    gap:10px!important;
+    padding:10px!important;
+  }
+
+  .advanced-tools-copy{
+    min-width:0!important;
+  }
+
+  .advanced-tools-copy strong,
+  .advanced-tools-copy small{
+    white-space:normal!important;
+    overflow-wrap:anywhere!important;
+  }
+
+  .advanced-tools-label{
+    display:none!important;
+  }
+
+  .advanced-tools-chevron{
+    justify-self:end!important;
+  }
+
+  .advanced-tools-content,
+  .advanced-tools-content>*{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    box-sizing:border-box!important;
+  }
+
+  .cabecalho-vigitel .header-signout{
+    width:100%!important;
+    min-height:44px!important;
+    margin:2px 0 0!important;
+    box-sizing:border-box!important;
+  }
+
+  html[data-theme="dark"] .cabecalho-vigitel .main-nav{
+    border-color:#30495B!important;
+    background:#13232F!important;
+  }
+
+  html[data-theme="dark"] .cabecalho-vigitel .mobile-menu-toggle{
+    border-color:#385163!important;
+    background:#172A37!important;
+    color:#E6F0F7!important;
+  }
+}
+
+@media (max-width:430px){
+  .cabecalho-vigitel{
+    gap:7px!important;
+    padding-right:10px!important;
+    padding-left:24px!important;
+  }
+
+  .cabecalho-vigitel__marca{
+    grid-template-columns:46px minmax(0,1fr)!important;
+    gap:8px!important;
+  }
+
+  .cabecalho-vigitel__logo{
+    width:46px!important;
+    height:46px!important;
+    min-width:46px!important;
+  }
+
+  .cabecalho-vigitel__texto h1{
+    font-size:12.5px!important;
+    line-height:1.14!important;
+  }
+
+  .cabecalho-vigitel__credito{
+    font-size:8px!important;
+  }
+
+  .cabecalho-vigitel__lado,
+  .cabecalho-vigitel .mobile-menu-toggle{
+    width:42px!important;
+    min-width:42px!important;
+  }
+
+  .cabecalho-vigitel .mobile-menu-toggle{
+    height:42px!important;
+    min-height:42px!important;
+  }
+
+  .result-toolbar{
+    gap:7px!important;
+    padding:10px!important;
+  }
+
+  .result-filter-chip{
+    min-height:64px!important;
+    padding-right:25px!important;
+  }
+
+  .result-view-tabs button:not(.result-clear-analysis){
+    font-size:9.5px!important;
+  }
+}
+
+
+/* ==============================================================
+   Ajustes finais extras para celular
+   - centraliza a caixa de escolha
+   - troca o X por Salvar no celular
+   - remove o botão flutuante de filtros
+   - reduz o espaço vazio da área do gráfico
+   ============================================================== */
+.result-choice-close-icon{display:inline-flex;align-items:center;justify-content:center}
+.result-choice-close-label{display:none}
+
+@media (max-width:760px){
+  #mobileFilterButton{
+    display:none!important;
+  }
+
+  .result-choice-popover{
+    width:min(92vw,430px)!important;
+    max-width:min(92vw,430px)!important;
+    max-height:min(82vh,720px)!important;
+    padding:14px!important;
+    border-radius:18px!important;
+  }
+
+  .result-choice-head{
+    align-items:flex-start!important;
+    gap:10px!important;
+  }
+
+  .result-choice-head>div{
+    min-width:0!important;
+    flex:1 1 auto!important;
+  }
+
+  .result-choice-close{
+    width:auto!important;
+    min-width:92px!important;
+    height:42px!important;
+    min-height:42px!important;
+    padding:0 15px!important;
+    border-radius:14px!important;
+    font-size:13px!important;
+    font-weight:800!important;
+    line-height:1!important;
+    white-space:nowrap!important;
+  }
+
+  .result-choice-close-icon{
+    display:none!important;
+  }
+
+  .result-choice-close-label{
+    display:inline!important;
+  }
+
+  .workspace.analysis-ready .chart-wrapper,
+  .workspace.analysis-ready .chart-comparison-grid,
+  .workspace.analysis-ready .chart-comparison-item{
+    min-height:0!important;
+    height:auto!important;
+    align-items:start!important;
+    align-content:start!important;
+  }
+
+  .workspace.analysis-ready .chart-wrapper{
+    padding:0!important;
+    margin-top:6px!important;
+  }
+
+  .workspace.analysis-ready .chart-card,
+  .workspace.analysis-ready .compare-active .chart-card.secondary{
+    margin:0!important;
+    min-height:0!important;
+    height:auto!important;
+    aspect-ratio:auto!important;
+    align-items:flex-start!important;
+    justify-content:flex-start!important;
+    padding:8px!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+  }
+
+  .workspace.analysis-ready .chart-card>svg,
+  .workspace.analysis-ready .compare-active .chart-card.secondary>svg{
+    display:block!important;
+    width:100%!important;
+    min-width:560px!important;
+    max-width:none!important;
+    height:auto!important;
+    min-height:0!important;
+    margin:0!important;
+  }
+
+  .workspace.analysis-ready .chart-comparison-title:empty{
+    display:none!important;
+  }
+}
+
+/* ========================================================================== 
+   EFEITO DE PASSAGEM DO MOUSE IGUAL AOS CARTÕES DE FILTRO
+   O destaque muda contorno, fundo e halo, sem deslocar o elemento.
+   ========================================================================== */
+
+/* Mantém uma borda transparente nas abas para o destaque não alterar medidas. */
+html body .result-view-tabs > button[data-result-view]:not(#hover-video-a):not(#hover-video-b):not(#hover-video-c){
+  border:1px solid transparent !important;
+  border-radius:13px !important;
+  background:transparent !important;
+  box-shadow:none !important;
+}
+
+/* Todos os controles usam a mesma transição dos cartões da barra de filtros. */
+html body .result-view-tabs > button[data-result-view]:not(#hover-video-a):not(#hover-video-b):not(#hover-video-c),
+html body .result-view-tabs > #resultClearAnalysis:not(#hover-video-a):not(#hover-video-b):not(#hover-video-c),
+html body .result-summary-downloads > summary:not(#hover-video-a):not(#hover-video-b):not(#hover-video-c){
+  cursor:pointer !important;
+  transform:none !important;
+  transition:
+    border-color .18s ease,
+    background-color .18s ease,
+    color .18s ease,
+    box-shadow .18s ease,
+    filter .18s ease !important;
+}
+
+/* Gráfico, Tabela e Mapa: mesmo contorno verde-água e halo do vídeo. */
+html body .result-view-tabs > button[data-result-view]:not(#hover-video-a):not(#hover-video-b):not(#hover-video-c):hover,
+html body .result-view-tabs > button[data-result-view]:not(#hover-video-a):not(#hover-video-b):not(#hover-video-c):focus-visible,
+html body .result-view-tabs > button[data-result-view]:not(#hover-video-a):not(#hover-video-b):not(#hover-video-c).efeito-hover-igual-video{
+  border-color:#73C9C4 !important;
+  background:#F2FBFA !important;
+  color:#075F78 !important;
+  box-shadow:0 0 0 3px rgba(15,167,160,.11) !important;
+  outline:0 !important;
+  transform:none !important;
+}
+
+/* Limpar análise conserva a cor azul e recebe o mesmo contorno/halo. */
+html body .result-view-tabs > #resultClearAnalysis:not(#hover-video-a):not(#hover-video-b):not(#hover-video-c):hover,
+html body .result-view-tabs > #resultClearAnalysis:not(#hover-video-a):not(#hover-video-b):not(#hover-video-c):focus-visible,
+html body .result-view-tabs > #resultClearAnalysis:not(#hover-video-a):not(#hover-video-b):not(#hover-video-c).efeito-hover-igual-video{
+  border-color:#73C9C4 !important;
+  background:linear-gradient(135deg,#0C6FBA,#0D5B9F) !important;
+  color:#FFFFFF !important;
+  box-shadow:
+    0 0 0 3px rgba(15,167,160,.16),
+    0 6px 15px rgba(7,59,112,.18) !important;
+  filter:brightness(1.04) !important;
+  outline:0 !important;
+  transform:none !important;
+  text-decoration:none !important;
+}
+
+/* Outros formatos de download recebe exatamente o destaque dos filtros. */
+html body .result-summary-downloads > summary:not(#hover-video-a):not(#hover-video-b):not(#hover-video-c):hover,
+html body .result-summary-downloads > summary:not(#hover-video-a):not(#hover-video-b):not(#hover-video-c):focus-visible,
+html body .result-summary-downloads > summary:not(#hover-video-a):not(#hover-video-b):not(#hover-video-c).efeito-hover-igual-video{
+  border-color:#73C9C4 !important;
+  background:#F2FBFA !important;
+  color:#075F78 !important;
+  box-shadow:0 0 0 3px rgba(15,167,160,.11) !important;
+  outline:0 !important;
+  transform:none !important;
+}
+
+/* O clique não empurra, levanta ou redimensiona nenhum desses controles. */
+html body .result-view-tabs > button[data-result-view]:not(#hover-video-a):not(#hover-video-b):not(#hover-video-c):active,
+html body .result-view-tabs > #resultClearAnalysis:not(#hover-video-a):not(#hover-video-b):not(#hover-video-c):active,
+html body .result-summary-downloads > summary:not(#hover-video-a):not(#hover-video-b):not(#hover-video-c):active{
+  transform:none !important;
+}
+
+/* Versão escura com a mesma leitura visual. */
+html[data-theme="dark"] body .result-view-tabs > button[data-result-view]:not(#hover-video-a):not(#hover-video-b):not(#hover-video-c):hover,
+html[data-theme="dark"] body .result-view-tabs > button[data-result-view]:not(#hover-video-a):not(#hover-video-b):not(#hover-video-c):focus-visible,
+html[data-theme="dark"] body .result-view-tabs > button[data-result-view]:not(#hover-video-a):not(#hover-video-b):not(#hover-video-c).efeito-hover-igual-video,
+html[data-theme="dark"] body .result-summary-downloads > summary:not(#hover-video-a):not(#hover-video-b):not(#hover-video-c):hover,
+html[data-theme="dark"] body .result-summary-downloads > summary:not(#hover-video-a):not(#hover-video-b):not(#hover-video-c):focus-visible,
+html[data-theme="dark"] body .result-summary-downloads > summary:not(#hover-video-a):not(#hover-video-b):not(#hover-video-c).efeito-hover-igual-video{
+  border-color:#69DDD4 !important;
+  background:#214653 !important;
+  color:#FFFFFF !important;
+  box-shadow:0 0 0 3px rgba(105,221,212,.16) !important;
+}
+
+html[data-theme="dark"] body .result-view-tabs > #resultClearAnalysis:not(#hover-video-a):not(#hover-video-b):not(#hover-video-c):hover,
+html[data-theme="dark"] body .result-view-tabs > #resultClearAnalysis:not(#hover-video-a):not(#hover-video-b):not(#hover-video-c):focus-visible,
+html[data-theme="dark"] body .result-view-tabs > #resultClearAnalysis:not(#hover-video-a):not(#hover-video-b):not(#hover-video-c).efeito-hover-igual-video{
+  border-color:#69DDD4 !important;
+  background:linear-gradient(135deg,#186197,#144E7C) !important;
+  color:#FFFFFF !important;
+  box-shadow:
+    0 0 0 3px rgba(105,221,212,.18),
+    0 6px 15px rgba(0,0,0,.30) !important;
+  transform:none !important;
+}
+
+
+
+/* ========================================================================== 
+   PADRONIZAÇÃO DOS BOTÕES DO RESUMO
+   Baixar gráfico, Compartilhar análise e Outros formatos seguem a mesma
+   linguagem visual e o mesmo destaque ao passar o mouse usados nas abas
+   superiores. Nenhum controle muda de posição ou tamanho.
+   ========================================================================== */
+html body .result-summary-primary:not(#resumo-padrao-a):not(#resumo-padrao-b),
+html body .result-summary-secondary:not(#resumo-padrao-a):not(#resumo-padrao-b),
+html body .result-summary-downloads > summary:not(#resumo-padrao-a):not(#resumo-padrao-b){
+  box-sizing:border-box !important;
+  width:100% !important;
+  min-height:50px !important;
+  margin:0 !important;
+  padding:12px 16px !important;
+  border-radius:13px !important;
+  font:inherit !important;
+  font-size:11px !important;
+  font-weight:850 !important;
+  line-height:1.2 !important;
+  cursor:pointer !important;
+  transform:none !important;
+  transition:
+    border-color .18s ease,
+    background-color .18s ease,
+    color .18s ease,
+    box-shadow .18s ease,
+    filter .18s ease !important;
+}
+
+html body .result-summary-primary:not(#resumo-padrao-a):not(#resumo-padrao-b){
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:9px !important;
+  border:1px solid #0B4F97 !important;
+  background:linear-gradient(135deg,#0B5EA8,#0B4C86) !important;
+  color:#FFFFFF !important;
+  box-shadow:0 4px 10px rgba(7,59,112,.13) !important;
+}
+
+html body .result-summary-secondary:not(#resumo-padrao-a):not(#resumo-padrao-b){
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:9px !important;
+  margin-top:10px !important;
+  border:1px solid #C6DCE9 !important;
+  background:linear-gradient(180deg,#FFFFFF,#F3F8FB) !important;
+  color:#073B70 !important;
+  box-shadow:0 3px 8px rgba(7,59,112,.09) !important;
+}
+
+html body .result-summary-downloads:not(#resumo-padrao-a):not(#resumo-padrao-b){
+  margin-top:10px !important;
+  border:0 !important;
+  border-radius:13px !important;
+  background:transparent !important;
+  overflow:visible !important;
+}
+
+html body .result-summary-downloads > summary:not(#resumo-padrao-a):not(#resumo-padrao-b){
+  display:flex !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+  gap:8px !important;
+  list-style:none !important;
+  border:1px solid #C6DCE9 !important;
+  background:linear-gradient(180deg,#FFFFFF,#F3F8FB) !important;
+  color:#073B70 !important;
+  box-shadow:0 3px 8px rgba(7,59,112,.09) !important;
+}
+
+html body .result-summary-downloads > summary::-webkit-details-marker{
+  display:none !important;
+}
+
+html body .result-summary-downloads > summary::before{
+  content:"▸" !important;
+  flex:0 0 auto !important;
+  color:#0FA79A !important;
+  font-size:12px !important;
+  line-height:1 !important;
+  transition:transform .18s ease !important;
+}
+
+html body .result-summary-downloads[open] > summary::before{
+  transform:rotate(90deg) !important;
+}
+
+/* Mesmo destaque visual das abas superiores, sem mover os controles. */
+html body .result-summary-primary:not(#resumo-padrao-a):not(#resumo-padrao-b):hover,
+html body .result-summary-primary:not(#resumo-padrao-a):not(#resumo-padrao-b):focus-visible,
+html body .result-summary-primary:not(#resumo-padrao-a):not(#resumo-padrao-b).efeito-hover-igual-video{
+  border-color:#73C9C4 !important;
+  background:linear-gradient(135deg,#0C6FBA,#0D5B9F) !important;
+  color:#FFFFFF !important;
+  box-shadow:
+    0 0 0 3px rgba(15,167,160,.16),
+    0 6px 15px rgba(7,59,112,.18) !important;
+  filter:brightness(1.04) !important;
+  outline:0 !important;
+  transform:none !important;
+}
+
+html body .result-summary-secondary:not(#resumo-padrao-a):not(#resumo-padrao-b):hover,
+html body .result-summary-secondary:not(#resumo-padrao-a):not(#resumo-padrao-b):focus-visible,
+html body .result-summary-secondary:not(#resumo-padrao-a):not(#resumo-padrao-b).efeito-hover-igual-video,
+html body .result-summary-downloads > summary:not(#resumo-padrao-a):not(#resumo-padrao-b):hover,
+html body .result-summary-downloads > summary:not(#resumo-padrao-a):not(#resumo-padrao-b):focus-visible,
+html body .result-summary-downloads > summary:not(#resumo-padrao-a):not(#resumo-padrao-b).efeito-hover-igual-video{
+  border-color:#73C9C4 !important;
+  background:#F2FBFA !important;
+  color:#075F78 !important;
+  box-shadow:0 0 0 3px rgba(15,167,160,.11) !important;
+  outline:0 !important;
+  transform:none !important;
+}
+
+html body .result-summary-primary:not(#resumo-padrao-a):not(#resumo-padrao-b):active,
+html body .result-summary-secondary:not(#resumo-padrao-a):not(#resumo-padrao-b):active,
+html body .result-summary-downloads > summary:not(#resumo-padrao-a):not(#resumo-padrao-b):active{
+  transform:none !important;
+}
+
+html body .result-summary-primary:not(#resumo-padrao-a):not(#resumo-padrao-b):active{
+  background:linear-gradient(135deg,#094E8C,#083F73) !important;
+  filter:none !important;
+}
+
+html body .result-summary-secondary:not(#resumo-padrao-a):not(#resumo-padrao-b):active,
+html body .result-summary-downloads > summary:not(#resumo-padrao-a):not(#resumo-padrao-b):active{
+  background:#D8F2EF !important;
+}
+
+html[data-theme="dark"] body .result-summary-secondary:not(#resumo-padrao-a):not(#resumo-padrao-b),
+html[data-theme="dark"] body .result-summary-downloads > summary:not(#resumo-padrao-a):not(#resumo-padrao-b){
+  border-color:#456779 !important;
+  background:linear-gradient(180deg,#1B3442,#152A37) !important;
+  color:#EAF6F8 !important;
+  box-shadow:0 4px 10px rgba(0,0,0,.28) !important;
+}
+
+html[data-theme="dark"] body .result-summary-primary:not(#resumo-padrao-a):not(#resumo-padrao-b){
+  border-color:#2D7BC5 !important;
+  background:linear-gradient(135deg,#144E88,#103B67) !important;
+  box-shadow:0 4px 12px rgba(0,0,0,.30) !important;
+}
+
+html[data-theme="dark"] body .result-summary-primary:not(#resumo-padrao-a):not(#resumo-padrao-b):hover,
+html[data-theme="dark"] body .result-summary-primary:not(#resumo-padrao-a):not(#resumo-padrao-b):focus-visible,
+html[data-theme="dark"] body .result-summary-primary:not(#resumo-padrao-a):not(#resumo-padrao-b).efeito-hover-igual-video{
+  border-color:#69DDD4 !important;
+  background:linear-gradient(135deg,#186197,#144E7C) !important;
+  box-shadow:
+    0 0 0 3px rgba(105,221,212,.18),
+    0 6px 15px rgba(0,0,0,.30) !important;
+}
+
+html[data-theme="dark"] body .result-summary-secondary:not(#resumo-padrao-a):not(#resumo-padrao-b):hover,
+html[data-theme="dark"] body .result-summary-secondary:not(#resumo-padrao-a):not(#resumo-padrao-b):focus-visible,
+html[data-theme="dark"] body .result-summary-secondary:not(#resumo-padrao-a):not(#resumo-padrao-b).efeito-hover-igual-video,
+html[data-theme="dark"] body .result-summary-downloads > summary:not(#resumo-padrao-a):not(#resumo-padrao-b):hover,
+html[data-theme="dark"] body .result-summary-downloads > summary:not(#resumo-padrao-a):not(#resumo-padrao-b):focus-visible,
+html[data-theme="dark"] body .result-summary-downloads > summary:not(#resumo-padrao-a):not(#resumo-padrao-b).efeito-hover-igual-video{
+  border-color:#69DDD4 !important;
+  background:#214653 !important;
+  color:#FFFFFF !important;
+  box-shadow:0 0 0 3px rgba(105,221,212,.16) !important;
+}
+
+/* ========================================================================== 
+   EFEITO FINAL DOS BOTÕES DO RESUMO E DAS ABAS
+   Mantém as cores já aprovadas e acrescenta uma elevação curta ao passar o
+   mouse, igual à resposta visual dos botões superiores. O texto do último
+   controle permanece centralizado, independentemente da seta lateral.
+   ========================================================================== */
+
+/* Centraliza exatamente o texto de Outros formatos de download. */
+html body .result-summary-downloads > summary:not(#efeito-final-a):not(#efeito-final-b){
+  position:relative !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:100% !important;
+  padding-left:44px !important;
+  padding-right:44px !important;
+  text-align:center !important;
+}
+
+html body .result-summary-downloads > summary:not(#efeito-final-a):not(#efeito-final-b)::before{
+  position:absolute !important;
+  left:17px !important;
+  top:50% !important;
+  margin:0 !important;
+  transform:translateY(-50%) !important;
+  transform-origin:center !important;
+}
+
+html body .result-summary-downloads[open] > summary:not(#efeito-final-a):not(#efeito-final-b)::before{
+  transform:translateY(-50%) rotate(90deg) !important;
+}
+
+/* A animação é ativada na largura de computador, inclusive em notebooks
+   com tela sensível ao toque. */
+@media (min-width:761px){
+  html body .result-summary-primary:not(#efeito-final-a):not(#efeito-final-b),
+  html body .result-summary-secondary:not(#efeito-final-a):not(#efeito-final-b),
+  html body .result-summary-downloads > summary:not(#efeito-final-a):not(#efeito-final-b),
+  html body .result-view-tabs > button[data-result-view]:not(#efeito-final-a):not(#efeito-final-b),
+  html body .result-view-tabs > #resultClearAnalysis:not(#efeito-final-a):not(#efeito-final-b){
+    will-change:transform !important;
+    transform:translateY(0) !important;
+    transition:
+      transform .20s cubic-bezier(.2,.8,.2,1),
+      border-color .18s ease,
+      background-color .18s ease,
+      color .18s ease,
+      box-shadow .18s ease,
+      filter .18s ease !important;
+  }
+
+  html body .result-summary-primary:not(#efeito-final-a):not(#efeito-final-b):hover,
+  html body .result-summary-primary:not(#efeito-final-a):not(#efeito-final-b):focus-visible,
+  html body .result-summary-primary:not(#efeito-final-a):not(#efeito-final-b).efeito-hover-igual-video,
+  html body .result-summary-secondary:not(#efeito-final-a):not(#efeito-final-b):hover,
+  html body .result-summary-secondary:not(#efeito-final-a):not(#efeito-final-b):focus-visible,
+  html body .result-summary-secondary:not(#efeito-final-a):not(#efeito-final-b).efeito-hover-igual-video,
+  html body .result-summary-downloads > summary:not(#efeito-final-a):not(#efeito-final-b):hover,
+  html body .result-summary-downloads > summary:not(#efeito-final-a):not(#efeito-final-b):focus-visible,
+  html body .result-summary-downloads > summary:not(#efeito-final-a):not(#efeito-final-b).efeito-hover-igual-video,
+  html body .result-view-tabs > button[data-result-view]:not(#efeito-final-a):not(#efeito-final-b):hover,
+  html body .result-view-tabs > button[data-result-view]:not(#efeito-final-a):not(#efeito-final-b):focus-visible,
+  html body .result-view-tabs > button[data-result-view]:not(#efeito-final-a):not(#efeito-final-b).efeito-hover-igual-video,
+  html body .result-view-tabs > #resultClearAnalysis:not(#efeito-final-a):not(#efeito-final-b):hover,
+  html body .result-view-tabs > #resultClearAnalysis:not(#efeito-final-a):not(#efeito-final-b):focus-visible,
+  html body .result-view-tabs > #resultClearAnalysis:not(#efeito-final-a):not(#efeito-final-b).efeito-hover-igual-video{
+    transform:translateY(-4px) !important;
+  }
+
+  html body .result-summary-primary:not(#efeito-final-a):not(#efeito-final-b):active,
+  html body .result-summary-secondary:not(#efeito-final-a):not(#efeito-final-b):active,
+  html body .result-summary-downloads > summary:not(#efeito-final-a):not(#efeito-final-b):active,
+  html body .result-view-tabs > button[data-result-view]:not(#efeito-final-a):not(#efeito-final-b):active,
+  html body .result-view-tabs > #resultClearAnalysis:not(#efeito-final-a):not(#efeito-final-b):active{
+    transform:translateY(-1px) scale(.99) !important;
+  }
+}
+
+
+/* ========================================================================== 
+   Ajuste final dos botões do resumo e das abas superiores
+   - símbolo de "Outros formatos" perto do texto
+   - movimento perceptível ao passar o mouse no computador
+   ========================================================================== */
+html body .result-summary-downloads > summary.efeito-botoes-final{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:10px !important;
+  text-align:center !important;
+  padding-left:18px !important;
+  padding-right:18px !important;
+}
+
+html body .result-summary-downloads > summary.efeito-botoes-final::before{
+  content:"▸" !important;
+  position:static !important;
+  left:auto !important;
+  top:auto !important;
+  margin:0 !important;
+  transform:none !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:auto !important;
+  min-width:10px !important;
+  color:currentColor !important;
+  flex:0 0 auto !important;
+}
+
+html body .result-summary-downloads[open] > summary.efeito-botoes-final::before{
+  content:"▾" !important;
+  transform:none !important;
+}
+
+@media (min-width:761px){
+  html body .result-summary-primary,
+  html body .result-summary-secondary,
+  html body .result-summary-downloads > summary,
+  html body .result-view-tabs > button[data-result-view],
+  html body .result-view-tabs > #resultClearAnalysis{
+    transform:translateY(0) !important;
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease, background-color .18s ease, color .18s ease !important;
+  }
+
+  html body .result-summary-primary:hover,
+  html body .result-summary-primary:focus-visible,
+  html body .result-summary-primary.efeito-hover-igual-video,
+  html body .result-summary-secondary:hover,
+  html body .result-summary-secondary:focus-visible,
+  html body .result-summary-secondary.efeito-hover-igual-video,
+  html body .result-summary-downloads > summary:hover,
+  html body .result-summary-downloads > summary:focus-visible,
+  html body .result-summary-downloads > summary.efeito-hover-igual-video,
+  html body .result-view-tabs > button[data-result-view]:hover,
+  html body .result-view-tabs > button[data-result-view]:focus-visible,
+  html body .result-view-tabs > button[data-result-view].efeito-hover-igual-video,
+  html body .result-view-tabs > #resultClearAnalysis:hover,
+  html body .result-view-tabs > #resultClearAnalysis:focus-visible,
+  html body .result-view-tabs > #resultClearAnalysis.efeito-hover-igual-video{
+    transform:translateY(-5px) !important;
+    box-shadow:0 12px 24px rgba(10,88,140,.16) !important;
+  }
+
+  html body .result-summary-primary:active,
+  html body .result-summary-secondary:active,
+  html body .result-summary-downloads > summary:active,
+  html body .result-view-tabs > button[data-result-view]:active,
+  html body .result-view-tabs > #resultClearAnalysis:active{
+    transform:translateY(-1px) !important;
+  }
+}
+
+
+/* ========================================================================== 
+   Efeito de pulo visível igual ao vídeo
+   Usa a propriedade translate separada de transform para não ser anulada
+   pelas regras antigas dos botões.
+   ========================================================================== */
+@keyframes puloVisivelDosBotoes{
+  0%{translate:0 0}
+  42%{translate:0 -11px}
+  68%{translate:0 -4px}
+  100%{translate:0 -7px}
+}
+
+@media (min-width:761px){
+  html body .result-summary-primary,
+  html body .result-summary-secondary,
+  html body .result-summary-downloads > summary,
+  html body .result-view-tabs > button[data-result-view],
+  html body .result-view-tabs > #resultClearAnalysis{
+    position:relative !important;
+    z-index:1 !important;
+    translate:0 0 !important;
+    transition:translate .20s cubic-bezier(.2,.8,.2,1), box-shadow .18s ease, border-color .18s ease, background-color .18s ease, color .18s ease !important;
+    will-change:translate !important;
+  }
+
+  html body .result-summary-primary:hover,
+  html body .result-summary-primary:focus-visible,
+  html body .result-summary-primary.efeito-pulo-hover,
+  html body .result-summary-secondary:hover,
+  html body .result-summary-secondary:focus-visible,
+  html body .result-summary-secondary.efeito-pulo-hover,
+  html body .result-summary-downloads > summary:hover,
+  html body .result-summary-downloads > summary:focus-visible,
+  html body .result-summary-downloads > summary.efeito-pulo-hover,
+  html body .result-view-tabs > button[data-result-view]:hover,
+  html body .result-view-tabs > button[data-result-view]:focus-visible,
+  html body .result-view-tabs > button[data-result-view].efeito-pulo-hover,
+  html body .result-view-tabs > #resultClearAnalysis:hover,
+  html body .result-view-tabs > #resultClearAnalysis:focus-visible,
+  html body .result-view-tabs > #resultClearAnalysis.efeito-pulo-hover{
+    z-index:20 !important;
+    translate:0 -7px !important;
+    animation:puloVisivelDosBotoes .38s cubic-bezier(.18,.86,.32,1.25) both !important;
+    box-shadow:0 15px 28px rgba(8,84,137,.22) !important;
+  }
+
+  html body .result-summary-primary:active,
+  html body .result-summary-secondary:active,
+  html body .result-summary-downloads > summary:active,
+  html body .result-view-tabs > button[data-result-view]:active,
+  html body .result-view-tabs > #resultClearAnalysis:active{
+    translate:0 -2px !important;
+    animation:none !important;
+  }
+}
+
+
+/* ========================================================================== 
+   Correção final do movimento dos botões
+   O efeito anterior que deslocava os controles para cima foi removido.
+   Agora eles se movimentam no próprio lugar por meio de uma leve pulsação,
+   sem alterar a posição vertical ou horizontal.
+   ========================================================================== */
+@keyframes botaoMexerNoLugar{
+  0%{transform:scale(1)}
+  48%{transform:scale(1.035)}
+  72%{transform:scale(.995)}
+  100%{transform:scale(1.02)}
+}
+
+@media (min-width:761px){
+  html body .result-summary-primary,
+  html body .result-summary-secondary,
+  html body .result-summary-downloads > summary,
+  html body .result-view-tabs > button[data-result-view],
+  html body .result-view-tabs > #resultClearAnalysis{
+    transform:scale(1) !important;
+    transform-origin:center !important;
+    transition:transform .20s ease, box-shadow .18s ease, border-color .18s ease, background-color .18s ease, color .18s ease !important;
+  }
+
+  html body .result-summary-primary:hover,
+  html body .result-summary-primary:focus-visible,
+  html body .result-summary-primary.efeito-hover-igual-video,
+  html body .result-summary-secondary:hover,
+  html body .result-summary-secondary:focus-visible,
+  html body .result-summary-secondary.efeito-hover-igual-video,
+  html body .result-summary-downloads > summary:hover,
+  html body .result-summary-downloads > summary:focus-visible,
+  html body .result-summary-downloads > summary.efeito-hover-igual-video,
+  html body .result-view-tabs > button[data-result-view]:hover,
+  html body .result-view-tabs > button[data-result-view]:focus-visible,
+  html body .result-view-tabs > button[data-result-view].efeito-hover-igual-video,
+  html body .result-view-tabs > #resultClearAnalysis:hover,
+  html body .result-view-tabs > #resultClearAnalysis:focus-visible,
+  html body .result-view-tabs > #resultClearAnalysis.efeito-hover-igual-video{
+    animation:botaoMexerNoLugar .32s cubic-bezier(.2,.8,.2,1) both !important;
+    transform:scale(1.02) !important;
+  }
+
+  html body .result-summary-primary:active,
+  html body .result-summary-secondary:active,
+  html body .result-summary-downloads > summary:active,
+  html body .result-view-tabs > button[data-result-view]:active,
+  html body .result-view-tabs > #resultClearAnalysis:active{
+    animation:none !important;
+    transform:scale(.985) !important;
+  }
+}
+
+
+/* ========================================================================== 
+   Centralização definitiva da seta com o texto
+   O agrupamento real no HTML evita que a seta fique presa à lateral por
+   regras antigas do pseudo-elemento.
+   ========================================================================== */
+html body .result-summary-downloads > summary.efeito-botoes-final:not(#seta-central-a):not(#seta-central-b){
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:100% !important;
+  padding-left:18px !important;
+  padding-right:18px !important;
+  text-align:center !important;
+  list-style:none !important;
+}
+
+html body .result-summary-downloads > summary.efeito-botoes-final:not(#seta-central-a):not(#seta-central-b)::-webkit-details-marker{
+  display:none !important;
+}
+
+html body .result-summary-downloads > summary.efeito-botoes-final:not(#seta-central-a):not(#seta-central-b)::marker{
+  content:"" !important;
+  font-size:0 !important;
+}
+
+html body .result-summary-downloads > summary.efeito-botoes-final:not(#seta-central-a):not(#seta-central-b)::before,
+html body .result-summary-downloads[open] > summary.efeito-botoes-final:not(#seta-central-a):not(#seta-central-b)::before{
+  content:none !important;
+  display:none !important;
+}
+
+html body .result-summary-download-label:not(#seta-central-a):not(#seta-central-b){
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:8px !important;
+  width:auto !important;
+  max-width:100% !important;
+  margin:0 auto !important;
+  text-align:center !important;
+}
+
+html body .result-summary-download-arrow:not(#seta-central-a):not(#seta-central-b){
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  flex:0 0 auto !important;
+  width:12px !important;
+  margin:0 !important;
+  transform:rotate(0deg) !important;
+  transform-origin:center !important;
+  transition:transform .18s ease !important;
+}
+
+html body .result-summary-downloads[open] .result-summary-download-arrow:not(#seta-central-a):not(#seta-central-b){
+  transform:rotate(90deg) !important;
+}
+
+
+/* ========================================================================== 
+   Ajuste responsivo para janelas de computador reduzidas
+   Evita que a navegação cubra a marca e organiza os filtros sem espaços
+   vazios quando a janela fica entre o desktop amplo e o celular.
+   ========================================================================== */
+@media (min-width:981px) and (max-width:1420px){
+  .cabecalho-vigitel{
+    grid-template-columns:minmax(0,1fr) !important;
+    grid-template-rows:auto auto !important;
+    gap:18px !important;
+    min-height:0 !important;
+    padding:24px 28px 22px 54px !important;
+    overflow:visible !important;
+  }
+
+  .cabecalho-vigitel::before{
+    top:22px !important;
+    bottom:22px !important;
+    left:17px !important;
+  }
+
+  .cabecalho-vigitel__marca{
+    width:100% !important;
+    grid-template-columns:72px minmax(0,1fr) !important;
+    gap:17px !important;
+    transform:none !important;
+  }
+
+  .cabecalho-vigitel__logo{
+    width:72px !important;
+    height:72px !important;
+    min-width:72px !important;
+  }
+
+  .cabecalho-vigitel__rotulo{
+    margin-bottom:7px !important;
+    font-size:10px !important;
+  }
+
+  .cabecalho-vigitel__texto h1{
+    margin-bottom:8px !important;
+    font-size:clamp(19px,2.1vw,24px) !important;
+    white-space:normal !important;
+  }
+
+  .cabecalho-vigitel__resumo{
+    display:none !important;
+  }
+
+  .cabecalho-vigitel__credito{
+    margin-top:0 !important;
+    font-size:11px !important;
+  }
+
+  .cabecalho-vigitel__lado{
+    justify-self:stretch !important;
+    width:100% !important;
+    transform:none !important;
+  }
+
+  .cabecalho-vigitel .main-nav{
+    width:100% !important;
+    max-width:100% !important;
+    gap:8px !important;
+    padding:8px !important;
+    box-sizing:border-box !important;
+  }
+
+  .cabecalho-vigitel .main-nav>a,
+  .cabecalho-vigitel .header-menu>summary{
+    min-height:48px !important;
+    padding-right:12px !important;
+    padding-left:12px !important;
+    font-size:11px !important;
+  }
+
+  .cabecalho-vigitel .main-nav>a{
+    padding-right:15px !important;
+    padding-left:15px !important;
+  }
+
+  .cabecalho-vigitel .main-nav>a>svg,
+  .cabecalho-vigitel .header-menu>summary>svg{
+    width:19px !important;
+    height:19px !important;
+    flex-basis:19px !important;
+  }
+
+  .cabecalho-vigitel .header-divider{
+    margin-right:3px !important;
+    margin-left:3px !important;
+  }
+
+  .cabecalho-vigitel .header-utilities{
+    gap:5px !important;
+  }
+
+  .cabecalho-vigitel .header-utilities>button,
+  .cabecalho-vigitel .header-utilities>a{
+    width:44px !important;
+    height:44px !important;
+    min-width:44px !important;
+    min-height:44px !important;
+  }
+
+  .result-edit-filters{
+    grid-column:1/-1 !important;
+    width:100% !important;
+  }
+}
+
+@media (min-width:761px) and (max-width:980px){
+  .cabecalho-vigitel{
+    grid-template-columns:minmax(0,1fr) !important;
+    grid-template-rows:auto auto !important;
+    gap:16px !important;
+    min-height:0 !important;
+    padding:22px 22px 20px 48px !important;
+    overflow:visible !important;
+  }
+
+  .cabecalho-vigitel::before{
+    top:20px !important;
+    bottom:20px !important;
+    left:15px !important;
+  }
+
+  .cabecalho-vigitel__marca{
+    width:100% !important;
+    grid-template-columns:64px minmax(0,1fr) !important;
+    gap:15px !important;
+    transform:none !important;
+  }
+
+  .cabecalho-vigitel__logo{
+    width:64px !important;
+    height:64px !important;
+    min-width:64px !important;
+  }
+
+  .cabecalho-vigitel__rotulo{
+    margin-bottom:6px !important;
+    font-size:9px !important;
+  }
+
+  .cabecalho-vigitel__texto h1{
+    margin-bottom:7px !important;
+    font-size:clamp(17px,2.5vw,21px) !important;
+    line-height:1.14 !important;
+    white-space:normal !important;
+  }
+
+  .cabecalho-vigitel__resumo{
+    display:none !important;
+  }
+
+  .cabecalho-vigitel__credito{
+    margin-top:0 !important;
+    font-size:10.5px !important;
+  }
+
+  .cabecalho-vigitel__lado{
+    justify-self:stretch !important;
+    width:100% !important;
+    transform:none !important;
+  }
+
+  .cabecalho-vigitel .main-nav{
+    display:grid !important;
+    grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+    align-items:stretch !important;
+    width:100% !important;
+    max-width:100% !important;
+    gap:7px !important;
+    padding:8px !important;
+    box-sizing:border-box !important;
+  }
+
+  .cabecalho-vigitel .main-nav>a,
+  .cabecalho-vigitel .header-menu,
+  .cabecalho-vigitel .header-menu>summary{
+    width:100% !important;
+    min-width:0 !important;
+  }
+
+  .cabecalho-vigitel .main-nav>a,
+  .cabecalho-vigitel .header-menu>summary{
+    min-height:48px !important;
+    padding:7px 8px !important;
+    font-size:10.5px !important;
+    white-space:normal !important;
+    text-align:center !important;
+  }
+
+  .cabecalho-vigitel .main-nav>a>svg,
+  .cabecalho-vigitel .header-menu>summary>svg{
+    width:18px !important;
+    height:18px !important;
+    flex:0 0 18px !important;
+  }
+
+  .cabecalho-vigitel .header-divider{
+    display:none !important;
+  }
+
+  .cabecalho-vigitel .header-utilities{
+    grid-column:1/-1 !important;
+    display:flex !important;
+    justify-content:center !important;
+    width:100% !important;
+    padding-top:7px !important;
+    border-top:1px solid #DCE7F0 !important;
+  }
+
+  .cabecalho-vigitel .header-utilities>button,
+  .cabecalho-vigitel .header-utilities>a{
+    width:42px !important;
+    height:42px !important;
+    min-width:42px !important;
+    min-height:42px !important;
+  }
+
+  .cabecalho-vigitel .header-dropdown,
+  .cabecalho-vigitel .header-dropdown-right{
+    top:calc(100% + 8px) !important;
+    right:auto !important;
+    left:0 !important;
+  }
+
+  .cabecalho-vigitel .header-menu:nth-of-type(3) .header-dropdown,
+  .cabecalho-vigitel .header-dropdown-right{
+    right:0 !important;
+    left:auto !important;
+  }
+
+  .result-edit-filters{
+    grid-column:1/-1 !important;
+    width:100% !important;
+  }
+}
+
+
+/* ========================================================================== 
+   Correção definitiva no celular: seta junto ao texto e caixa centralizada
+   ========================================================================== */
+@media (max-width:760px){
+  html body .result-summary-downloads > summary.efeito-botoes-final{
+    display:grid !important;
+    grid-template-columns:max-content !important;
+    place-content:center !important;
+    place-items:center !important;
+    width:100% !important;
+    padding:16px 18px !important;
+    list-style:none !important;
+    text-align:center !important;
+  }
+
+  html body .result-summary-downloads > summary.efeito-botoes-final::-webkit-details-marker{
+    display:none !important;
+  }
+
+  html body .result-summary-downloads > summary.efeito-botoes-final::marker{
+    content:"" !important;
+    font-size:0 !important;
+  }
+
+  html body .result-summary-downloads > summary.efeito-botoes-final::before,
+  html body .result-summary-downloads[open] > summary.efeito-botoes-final::before{
+    content:none !important;
+    display:none !important;
+  }
+
+  html body .result-summary-download-label{
+    display:grid !important;
+    grid-template-columns:auto auto !important;
+    align-items:center !important;
+    justify-content:center !important;
+    column-gap:8px !important;
+    width:max-content !important;
+    max-width:100% !important;
+    margin:0 auto !important;
+    padding:0 !important;
+    text-align:center !important;
+  }
+
+  html body .result-summary-download-arrow{
+    position:static !important;
+    display:inline-grid !important;
+    place-items:center !important;
+    width:auto !important;
+    min-width:0 !important;
+    margin:0 !important;
+    padding:0 !important;
+    line-height:1 !important;
+    transform:none !important;
+  }
+
+  html body .result-summary-downloads[open] .result-summary-download-arrow{
+    transform:rotate(90deg) !important;
+  }
+
+  html body #resultChoicePopover.result-choice-popover{
+    position:fixed !important;
+    z-index:6000 !important;
+    left:50% !important;
+    top:50% !important;
+    right:auto !important;
+    bottom:auto !important;
+    width:calc(100vw - 28px) !important;
+    max-width:640px !important;
+    height:auto !important;
+    max-height:calc(100dvh - 32px) !important;
+    margin:0 !important;
+    padding:14px !important;
+    border-radius:18px !important;
+    overflow:hidden !important;
+    transform:translate(-50%,-50%) !important;
+  }
+
+  html body #resultChoicePopover .result-choice-options{
+    min-height:0 !important;
+    max-height:none !important;
+    overflow-y:auto !important;
+    overscroll-behavior:contain !important;
+  }
+}
+
+/* ========================================================================== 
+   Glossário em celulares
+   A lista vira uma faixa horizontal compacta e o verbete ocupa a maior parte
+   da tela. Somente esta janela recebe o novo comportamento responsivo.
+   ========================================================================== */
+@media (max-width:760px){
+  .glossary-dialog[open]{
+    display:grid !important;
+    grid-template-rows:auto auto minmax(0,1fr) !important;
+    width:calc(100vw - 16px) !important;
+    max-width:calc(100vw - 16px) !important;
+    height:calc(100dvh - 16px) !important;
+    max-height:calc(100dvh - 16px) !important;
+    margin:auto !important;
+    border:1px solid #C9DAEB !important;
+    border-radius:22px !important;
+    overflow:hidden !important;
+    background:#F7FBFE !important;
+  }
+
+  .glossary-dialog .dialog-head{
+    position:relative !important;
+    top:auto !important;
+    z-index:3 !important;
+    align-items:center !important;
+    gap:10px !important;
+    padding:13px 14px !important;
+    background:#FFFFFF !important;
+  }
+
+  .glossary-dialog .dialog-head>div{
+    min-width:0 !important;
+    flex:1 1 auto !important;
+  }
+
+  .glossary-dialog .dialog-head .eyebrow{
+    margin-bottom:3px !important;
+    font-size:9px !important;
+  }
+
+  .glossary-dialog .dialog-head h2{
+    margin:0 !important;
+    font-size:clamp(17px,5vw,21px) !important;
+    line-height:1.18 !important;
+    overflow-wrap:anywhere !important;
+  }
+
+  .glossary-dialog .dialog-close{
+    width:40px !important;
+    height:40px !important;
+    min-width:40px !important;
+    flex-basis:40px !important;
+    border-radius:13px !important;
+    font-size:22px !important;
+  }
+
+  .glossary-dialog .dialog-search{
+    position:relative !important;
+    z-index:2 !important;
+    margin:10px 14px 0 !important;
+    gap:5px !important;
+    font-size:11px !important;
+  }
+
+  .glossary-dialog .dialog-search input{
+    width:100% !important;
+    min-height:46px !important;
+    padding:10px 13px !important;
+    border-radius:14px !important;
+    font-size:14px !important;
+  }
+
+  .glossary-dialog .glossary-layout{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    grid-template-rows:auto minmax(0,1fr) !important;
+    gap:10px !important;
+    min-width:0 !important;
+    min-height:0 !important;
+    height:100% !important;
+    padding:10px 14px 14px !important;
+    overflow:hidden !important;
+  }
+
+  .glossary-dialog .glossary-list{
+    display:flex !important;
+    align-items:stretch !important;
+    gap:8px !important;
+    width:100% !important;
+    max-width:100% !important;
+    max-height:none !important;
+    min-height:0 !important;
+    padding:2px 2px 8px !important;
+    overflow-x:auto !important;
+    overflow-y:hidden !important;
+    scroll-snap-type:x mandatory !important;
+    scroll-padding-inline:2px !important;
+    overscroll-behavior-inline:contain !important;
+    scrollbar-width:thin !important;
+  }
+
+  .glossary-dialog .glossary-list button{
+    flex:0 0 min(78vw,280px) !important;
+    min-width:0 !important;
+    min-height:68px !important;
+    padding:10px 12px !important;
+    border-radius:15px !important;
+    scroll-snap-align:center !important;
+    box-shadow:0 5px 12px rgba(19,66,103,.06) !important;
+  }
+
+  .glossary-dialog .glossary-list button strong{
+    display:-webkit-box !important;
+    -webkit-box-orient:vertical !important;
+    -webkit-line-clamp:2 !important;
+    overflow:hidden !important;
+    font-size:12.5px !important;
+    line-height:1.25 !important;
+  }
+
+  .glossary-dialog .glossary-list button span{
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+    white-space:nowrap !important;
+    font-size:10.5px !important;
+  }
+
+  .glossary-dialog .glossary-content{
+    min-width:0 !important;
+    min-height:0 !important;
+    height:100% !important;
+    padding:17px 16px 22px !important;
+    border-radius:18px !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    overscroll-behavior:contain !important;
+    scroll-behavior:smooth !important;
+    box-shadow:0 8px 20px rgba(19,66,103,.06) !important;
+  }
+
+  .glossary-dialog .glossary-code{
+    max-width:100% !important;
+    margin-bottom:11px !important;
+    white-space:normal !important;
+    overflow-wrap:anywhere !important;
+  }
+
+  .glossary-dialog .glossary-content h3{
+    margin:0 !important;
+    font-size:clamp(20px,6vw,25px) !important;
+    line-height:1.2 !important;
+    overflow-wrap:anywhere !important;
+  }
+
+  .glossary-dialog .glossary-section{
+    margin-top:15px !important;
+    padding-top:14px !important;
+  }
+
+  .glossary-dialog .glossary-section h4{
+    margin-bottom:6px !important;
+    font-size:13px !important;
+  }
+
+  .glossary-dialog .glossary-section p{
+    font-size:13.5px !important;
+    line-height:1.62 !important;
+    overflow-wrap:anywhere !important;
+  }
+
+  html[data-theme="dark"] .glossary-dialog[open]{
+    background:#0F1923 !important;
+    border-color:#30465A !important;
+  }
+
+  html[data-theme="dark"] .glossary-dialog .dialog-head{
+    background:#111E2A !important;
+  }
+}
+
+@media (max-width:390px){
+  .glossary-dialog[open]{
+    width:calc(100vw - 10px) !important;
+    max-width:calc(100vw - 10px) !important;
+    height:calc(100dvh - 10px) !important;
+    max-height:calc(100dvh - 10px) !important;
+    border-radius:18px !important;
+  }
+
+  .glossary-dialog .glossary-list button{
+    flex-basis:84vw !important;
+  }
+}
+
+/* ========================================================================== 
+   FILTROS DEMOGRÁFICOS — SELEÇÃO MÚLTIPLA DE SEXO + IDADE CONTÍNUA
+   Ajuste visual 2026-08: integra seleção, cores das séries e intervalo etário
+   sem alterar a estrutura geral do Observatório.
+   ========================================================================== */
+
+.demographic-sex-field{
+  margin-bottom:14px!important;
+}
+
+.demographic-sex-field>label{
+  display:block!important;
+  margin-bottom:8px!important;
+  font-size:12px!important;
+  font-weight:900!important;
+  color:var(--text)!important;
+}
+
+.sex-checkbox-grid{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:9px!important;
+}
+
+.sex-check-option{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:10px!important;
+  min-width:0!important;
+  padding:10px 11px!important;
+  border:1px solid #D6E5F1!important;
+  border-radius:14px!important;
+  background:linear-gradient(180deg,#FFFFFF 0%,#F9FCFE 100%)!important;
+  box-shadow:0 2px 8px rgba(7,59,112,.045)!important;
+  transition:border-color .18s ease, box-shadow .18s ease, transform .18s ease, background .18s ease!important;
+}
+
+.sex-check-option:hover{
+  border-color:#A9DCD9!important;
+  box-shadow:0 5px 14px rgba(15,167,160,.10)!important;
+  transform:translateY(-1px)!important;
+}
+
+.sex-check-option:has(.sex-check-main input:checked){
+  border-color:#52C9C2!important;
+  background:linear-gradient(180deg,#F7FFFE 0%,#ECFAF8 100%)!important;
+  box-shadow:0 0 0 2px rgba(15,167,160,.10),0 6px 16px rgba(15,167,160,.08)!important;
+}
+
+.sex-check-main{
+  flex:1!important;
+  display:grid!important;
+  grid-template-columns:24px minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:10px!important;
+  min-width:0!important;
+  cursor:pointer!important;
+}
+
+.sex-check-main input[type="checkbox"]{
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+
+.sex-check-mark{
+  display:grid!important;
+  place-items:center!important;
+  width:22px!important;
+  height:22px!important;
+  border:2px solid #B8D0E2!important;
+  border-radius:7px!important;
+  background:#FFF!important;
+  box-shadow:inset 0 0 0 2px #FFF!important;
+  transition:.16s ease!important;
+}
+
+.sex-check-main input:checked+.sex-check-mark{
+  border-color:var(--teal)!important;
+  background:var(--teal)!important;
+}
+
+.sex-check-main input:checked+.sex-check-mark::after{
+  content:""!important;
+  width:8px!important;
+  height:4px!important;
+  border-left:2px solid #FFF!important;
+  border-bottom:2px solid #FFF!important;
+  transform:rotate(-45deg) translateY(-1px)!important;
+}
+
+.sex-check-copy{
+  min-width:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  gap:2px!important;
+}
+
+.sex-check-copy strong{
+  color:#0A3F73!important;
+  font-size:12.5px!important;
+  font-weight:900!important;
+  line-height:1.2!important;
+}
+
+.sex-check-copy small{
+  color:#6A8096!important;
+  font-size:10.5px!important;
+  line-height:1.25!important;
+  white-space:normal!important;
+}
+
+.sex-inline-color{
+  flex:0 0 auto!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:6px!important;
+  padding:4px 5px 4px 8px!important;
+  border:1px solid #D8E6F0!important;
+  border-radius:999px!important;
+  background:#FFF!important;
+  color:#55718D!important;
+  font-size:9px!important;
+  font-weight:900!important;
+  letter-spacing:.02em!important;
+  cursor:pointer!important;
+}
+
+.sex-inline-color input[type="color"],
+.result-quick-sex-option input[type="color"]{
+  width:29px!important;
+  height:29px!important;
+  padding:2px!important;
+  border:1px solid #D4E2ED!important;
+  border-radius:50%!important;
+  background:#FFF!important;
+  cursor:pointer!important;
+  overflow:hidden!important;
+}
+
+.sex-inline-color input[type="color"]::-webkit-color-swatch-wrapper,
+.result-quick-sex-option input[type="color"]::-webkit-color-swatch-wrapper{
+  padding:1px!important;
+}
+
+.sex-inline-color input[type="color"]::-webkit-color-swatch,
+.result-quick-sex-option input[type="color"]::-webkit-color-swatch{
+  border:0!important;
+  border-radius:50%!important;
+}
+
+.sex-inline-color input[type="color"]::-moz-color-swatch,
+.result-quick-sex-option input[type="color"]::-moz-color-swatch{
+  border:0!important;
+  border-radius:50%!important;
+}
+
+/* As cores permanecem disponíveis tecnicamente no painel avançado,
+   mas a edição visível passa a ficar junto das opções de sexo. */
+.sex-series-color-editor{
+  display:none!important;
+}
+
+.age-range-filter,
+.result-quick-age-range{
+  position:relative!important;
+  margin:14px 0!important;
+  padding:15px!important;
+  border:1px solid #D3E5F0!important;
+  border-radius:16px!important;
+  background:linear-gradient(180deg,#FBFEFF 0%,#F5FAFD 100%)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9)!important;
+}
+
+.age-range-heading,
+.result-quick-field-heading{
+  display:flex!important;
+  align-items:flex-start!important;
+  justify-content:space-between!important;
+  gap:12px!important;
+  margin-bottom:13px!important;
+}
+
+.age-range-heading>div,
+.result-quick-field-heading{
+  min-width:0!important;
+}
+
+.age-range-heading strong,
+.result-quick-field-heading>span{
+  display:block!important;
+  color:#0A3F73!important;
+  font-size:12.5px!important;
+  font-weight:900!important;
+}
+
+.age-range-heading small,
+.result-quick-field-heading small{
+  display:block!important;
+  margin-top:3px!important;
+  color:#6A8096!important;
+  font-size:10.5px!important;
+  line-height:1.35!important;
+}
+
+.age-range-heading>[data-age-range-summary],
+.result-quick-field-heading>[data-age-range-summary]{
+  flex:0 0 auto!important;
+  max-width:46%!important;
+  padding:5px 9px!important;
+  border:1px solid #B9E4E0!important;
+  border-radius:999px!important;
+  background:#EAF9F7!important;
+  color:#087F79!important;
+  font-size:10px!important;
+  font-weight:900!important;
+  line-height:1.2!important;
+  text-align:center!important;
+}
+
+.age-range-scale,
+.result-age-range-scale{
+  display:grid!important;
+  grid-template-columns:auto minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:9px!important;
+  margin:2px 0 13px!important;
+  color:#426985!important;
+  font-size:10.5px!important;
+  font-weight:900!important;
+}
+
+.age-dual-range{
+  --age-min-pct:0%;
+  --age-max-pct:100%;
+  position:relative!important;
+  height:28px!important;
+  min-width:0!important;
+}
+
+.age-dual-range-track,
+.age-dual-range-fill{
+  position:absolute!important;
+  top:50%!important;
+  height:7px!important;
+  border-radius:999px!important;
+  transform:translateY(-50%)!important;
+}
+
+.age-dual-range-track{
+  left:0!important;
+  right:0!important;
+  background:#DDEAF2!important;
+  box-shadow:inset 0 1px 2px rgba(7,59,112,.08)!important;
+}
+
+.age-dual-range-fill{
+  left:var(--age-min-pct)!important;
+  right:calc(100% - var(--age-max-pct))!important;
+  background:linear-gradient(90deg,#19B7AF 0%,#0B8F9A 100%)!important;
+  box-shadow:0 2px 7px rgba(15,167,160,.20)!important;
+}
+
+.age-dual-range input[type="range"]{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:28px!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  outline:0!important;
+  background:transparent!important;
+  appearance:none!important;
+  -webkit-appearance:none!important;
+  pointer-events:none!important;
+}
+
+.age-dual-range input[type="range"]::-webkit-slider-runnable-track{
+  height:7px!important;
+  background:transparent!important;
+}
+
+.age-dual-range input[type="range"]::-webkit-slider-thumb{
+  width:20px!important;
+  height:20px!important;
+  margin-top:-6.5px!important;
+  border:3px solid #FFF!important;
+  border-radius:50%!important;
+  background:#0FA7A0!important;
+  box-shadow:0 0 0 1px #0FA7A0,0 3px 8px rgba(7,59,112,.22)!important;
+  -webkit-appearance:none!important;
+  pointer-events:auto!important;
+  cursor:grab!important;
+}
+
+.age-dual-range input[type="range"]::-moz-range-track{
+  height:7px!important;
+  background:transparent!important;
+}
+
+.age-dual-range input[type="range"]::-moz-range-thumb{
+  width:16px!important;
+  height:16px!important;
+  border:3px solid #FFF!important;
+  border-radius:50%!important;
+  background:#0FA7A0!important;
+  box-shadow:0 0 0 1px #0FA7A0,0 3px 8px rgba(7,59,112,.22)!important;
+  pointer-events:auto!important;
+  cursor:grab!important;
+}
+
+.age-range-number-fields,
+.result-age-number-fields{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:10px!important;
+  margin-bottom:11px!important;
+}
+
+.age-range-number-fields label,
+.result-age-number-fields label,
+.age-interval-editor,
+.result-age-interval-row label{
+  min-width:0!important;
+}
+
+.age-range-number-fields label>span,
+.result-age-number-fields label>span,
+.age-interval-editor>label,
+.result-age-interval-row label>span{
+  display:block!important;
+  margin-bottom:5px!important;
+  color:#315C7D!important;
+  font-size:9.5px!important;
+  font-weight:900!important;
+}
+
+.age-range-number-fields input,
+.result-age-number-fields input,
+.age-interval-editor input,
+.result-age-interval-row input{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-height:40px!important;
+  padding:9px 11px!important;
+  border:1px solid #C9DDEB!important;
+  border-radius:11px!important;
+  outline:none!important;
+  background:#FFF!important;
+  color:#0A3F73!important;
+  font-size:12px!important;
+  font-weight:800!important;
+  transition:border-color .16s ease, box-shadow .16s ease!important;
+}
+
+.age-range-number-fields input:focus,
+.result-age-number-fields input:focus,
+.age-interval-editor input:focus,
+.result-age-interval-row input:focus{
+  border-color:#3BBDB6!important;
+  box-shadow:0 0 0 3px rgba(15,167,160,.11)!important;
+}
+
+.age-interval-editor>div,
+.result-age-interval-row{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  gap:8px!important;
+  align-items:end!important;
+}
+
+.age-interval-editor button,
+.result-age-interval-row button{
+  min-height:40px!important;
+  padding:0 13px!important;
+  border:1px solid #0FA7A0!important;
+  border-radius:11px!important;
+  background:#0FA7A0!important;
+  color:#FFF!important;
+  font-size:10.5px!important;
+  font-weight:900!important;
+  box-shadow:0 4px 10px rgba(15,167,160,.15)!important;
+}
+
+.age-interval-editor small,
+.result-quick-help{
+  display:block!important;
+  margin-top:6px!important;
+  color:#74899C!important;
+  font-size:9.5px!important;
+  line-height:1.4!important;
+}
+
+.age-range-clear,
+.result-age-clear{
+  width:100%!important;
+  margin-top:10px!important;
+  min-height:36px!important;
+  border:1px solid #CFE1ED!important;
+  border-radius:10px!important;
+  background:#FFF!important;
+  color:#0A4C81!important;
+  font-size:10.5px!important;
+  font-weight:900!important;
+}
+
+.age-range-clear:hover,
+.result-age-clear:hover{
+  border-color:#9ED4D1!important;
+  background:#F2FBFA!important;
+}
+
+/* Popover rápido demográfico */
+.result-quick-demographic-layout{
+  display:grid!important;
+  grid-template-columns:minmax(0,1.35fr) minmax(190px,.85fr)!important;
+  gap:12px!important;
+  align-items:start!important;
+}
+
+.result-quick-sex-block,
+.result-quick-population-field{
+  min-width:0!important;
+}
+
+.result-quick-sex-options{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:8px!important;
+}
+
+.result-quick-sex-option{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:7px!important;
+  min-width:0!important;
+  padding:9px!important;
+  border:1px solid #D7E5EF!important;
+  border-radius:13px!important;
+  background:#FFF!important;
+  transition:.16s ease!important;
+}
+
+.result-quick-sex-option.selected{
+  border-color:#50C7C0!important;
+  background:#EFFAF9!important;
+  box-shadow:0 0 0 2px rgba(15,167,160,.08)!important;
+}
+
+.result-quick-sex-option>label{
+  display:flex!important;
+  align-items:center!important;
+  gap:7px!important;
+  min-width:0!important;
+  cursor:pointer!important;
+}
+
+.result-quick-sex-option>label input[type="checkbox"]{
+  position:absolute!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+
+.result-sex-check{
+  flex:0 0 19px!important;
+  display:grid!important;
+  place-items:center!important;
+  width:19px!important;
+  height:19px!important;
+  border:2px solid #BDD2E1!important;
+  border-radius:6px!important;
+  background:#FFF!important;
+}
+
+.result-quick-sex-option>label input:checked+.result-sex-check{
+  border-color:#0FA7A0!important;
+  background:#0FA7A0!important;
+}
+
+.result-quick-sex-option>label input:checked+.result-sex-check::after{
+  content:""!important;
+  width:7px!important;
+  height:4px!important;
+  border-left:2px solid #FFF!important;
+  border-bottom:2px solid #FFF!important;
+  transform:rotate(-45deg) translateY(-1px)!important;
+}
+
+.result-quick-sex-option strong{
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  color:#0A3F73!important;
+  font-size:10.5px!important;
+  white-space:nowrap!important;
+}
+
+.result-quick-population-field>span{
+  display:block!important;
+  margin-bottom:6px!important;
+  color:#315C7D!important;
+  font-size:10.5px!important;
+  font-weight:900!important;
+}
+
+.result-quick-population-field select{
+  width:100%!important;
+  min-height:44px!important;
+  border:1px solid #C9DDEB!important;
+  border-radius:12px!important;
+  background:#FFF!important;
+  color:#0A3F73!important;
+  font-size:11px!important;
+  font-weight:800!important;
+}
+
+.result-quick-summary{
+  display:flex!important;
+  justify-content:space-between!important;
+  gap:10px!important;
+  margin-bottom:12px!important;
+  padding:10px 12px!important;
+  border:1px solid #D6E6F0!important;
+  border-radius:12px!important;
+  background:#F7FBFD!important;
+}
+
+.result-quick-summary span{
+  color:#607990!important;
+  font-size:10px!important;
+  font-weight:800!important;
+}
+
+.result-quick-summary strong{
+  color:#087F79!important;
+  font-size:10.5px!important;
+  font-weight:900!important;
+  text-align:right!important;
+}
+
+.result-quick-footer{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:12px!important;
+  margin-top:11px!important;
+  padding-top:11px!important;
+  border-top:1px solid #E3ECF3!important;
+}
+
+.result-quick-footer>span{
+  color:#6D8397!important;
+  font-size:9.5px!important;
+}
+
+.result-quick-footer>button{
+  flex:0 0 auto!important;
+  min-height:36px!important;
+  padding:0 11px!important;
+  border:1px solid #C8DDEB!important;
+  border-radius:10px!important;
+  background:#FFF!important;
+  color:#0A4C81!important;
+  font-size:10px!important;
+  font-weight:900!important;
+}
+
+html[data-theme="dark"] .sex-check-option,
+html[data-theme="dark"] .age-range-filter,
+html[data-theme="dark"] .result-quick-age-range,
+html[data-theme="dark"] .result-quick-sex-option,
+html[data-theme="dark"] .result-quick-summary{
+  background:#111E2A!important;
+  border-color:#30465A!important;
+}
+
+html[data-theme="dark"] .sex-check-option:has(.sex-check-main input:checked),
+html[data-theme="dark"] .result-quick-sex-option.selected{
+  background:#12302F!important;
+  border-color:#2DD4BF!important;
+}
+
+html[data-theme="dark"] .sex-check-copy strong,
+html[data-theme="dark"] .age-range-heading strong,
+html[data-theme="dark"] .result-quick-field-heading>span,
+html[data-theme="dark"] .result-quick-sex-option strong,
+html[data-theme="dark"] .result-quick-population-field>span{
+  color:#E7F2FB!important;
+}
+
+html[data-theme="dark"] .sex-check-copy small,
+html[data-theme="dark"] .age-range-heading small,
+html[data-theme="dark"] .result-quick-field-heading small,
+html[data-theme="dark"] .result-quick-footer>span{
+  color:#9CB0C2!important;
+}
+
+html[data-theme="dark"] .sex-inline-color,
+html[data-theme="dark"] .age-range-number-fields input,
+html[data-theme="dark"] .result-age-number-fields input,
+html[data-theme="dark"] .age-interval-editor input,
+html[data-theme="dark"] .result-age-interval-row input,
+html[data-theme="dark"] .result-quick-population-field select,
+html[data-theme="dark"] .age-range-clear,
+html[data-theme="dark"] .result-age-clear,
+html[data-theme="dark"] .result-quick-footer>button{
+  background:#0F1923!important;
+  border-color:#30465A!important;
+  color:#DDEAF5!important;
+}
+
+@media (max-width:760px){
+  .result-quick-demographic-layout{
+    grid-template-columns:1fr!important;
+  }
+  .result-quick-sex-options{
+    grid-template-columns:1fr!important;
+  }
+  .result-quick-sex-option{
+    grid-template-columns:minmax(0,1fr) auto!important;
+  }
+  .age-range-number-fields,
+  .result-age-number-fields{
+    grid-template-columns:1fr 1fr!important;
+  }
+}
+
+@media (max-width:430px){
+  .sex-check-option{
+    padding:9px!important;
+  }
+  .sex-inline-color span{
+    display:none!important;
+  }
+  .age-range-filter,
+  .result-quick-age-range{
+    padding:12px!important;
+  }
+  .age-interval-editor>div,
+  .result-age-interval-row{
+    grid-template-columns:1fr!important;
+  }
+  .age-interval-editor button,
+  .result-age-interval-row button{
+    width:100%!important;
+  }
+  .result-quick-footer{
+    align-items:stretch!important;
+    flex-direction:column!important;
+  }
+}
+
+/* ==== Ajuste visual personalizado: filtros demográficos refinados ==== */
+.sex-series-color-editor{
+  display:grid!important;
+  gap:10px!important;
+  margin:8px 0 0!important;
+}
+.sex-series-color-editor>span{
+  color:#315C7D!important;
+  font-size:11px!important;
+  font-weight:900!important;
+}
+.sex-series-color-editor>div{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:8px!important;
+}
+.sex-series-color-editor label{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:8px!important;
+  padding:8px 10px!important;
+  border:1px solid #D6E5F1!important;
+  border-radius:12px!important;
+  background:#FFF!important;
+  color:#0A3F73!important;
+  font-size:10.5px!important;
+  font-weight:800!important;
+}
+
+.sex-checkbox-grid{
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:10px!important;
+}
+.sex-check-option{
+  position:relative!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:12px!important;
+  min-height:120px!important;
+  padding:16px 12px!important;
+  border:1px solid #D6E5F1!important;
+  border-radius:16px!important;
+  background:#FFF!important;
+  box-shadow:0 2px 8px rgba(7,59,112,.045)!important;
+  cursor:pointer!important;
+}
+.sex-check-option input[type="checkbox"]{
+  position:absolute!important;
+  inset:0!important;
+  opacity:0!important;
+  cursor:pointer!important;
+}
+.sex-check-option.selected,
+.sex-check-option:has(input:checked){
+  border-color:#50C7C0!important;
+  background:#EFFAF9!important;
+  box-shadow:0 0 0 2px rgba(15,167,160,.08)!important;
+}
+.sex-check-copy{display:block!important;text-align:center!important}
+.sex-check-copy strong{
+  font-size:14px!important;
+  line-height:1.25!important;
+}
+.sex-check-copy small{display:none!important}
+.sex-check-mark{
+  width:34px!important;
+  height:34px!important;
+  border-radius:10px!important;
+  border:2px solid #B8D0E2!important;
+}
+.sex-check-main{display:block!important}
+.sex-inline-color{display:none!important}
+
+.age-range-heading,
+.result-quick-field-heading{
+  align-items:center!important;
+}
+.age-range-heading small,
+.result-quick-field-heading small,
+.result-quick-help{
+  display:none!important;
+}
+.age-range-number-fields,
+.result-age-number-fields,
+.result-age-row-fields{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) minmax(0,1.15fr) auto!important;
+  gap:12px!important;
+  align-items:end!important;
+  margin-bottom:12px!important;
+}
+.result-age-row-fields>label,
+.result-age-row-fields>.result-age-interval-label{min-width:0!important}
+.result-age-row-fields>button{
+  min-height:42px!important;
+  align-self:end!important;
+  padding:0 18px!important;
+  border:1px solid #0FA7A0!important;
+  border-radius:14px!important;
+  background:#0FA7A0!important;
+  color:#FFF!important;
+  font-size:12px!important;
+  font-weight:900!important;
+  box-shadow:0 6px 14px rgba(15,167,160,.18)!important;
+}
+.result-help-trigger{
+  display:inline-grid!important;
+  place-items:center!important;
+  width:28px!important;
+  height:28px!important;
+  margin-left:8px!important;
+  border:1px solid #BFD4E4!important;
+  border-radius:50%!important;
+  background:#F8FBFD!important;
+  color:#0A4C81!important;
+  font-size:16px!important;
+  font-weight:900!important;
+  line-height:1!important;
+  cursor:help!important;
+  vertical-align:middle!important;
+}
+.result-help-trigger.inline{
+  width:22px!important;
+  height:22px!important;
+  margin-left:6px!important;
+  font-size:13px!important;
+}
+.result-quick-age-head>span,
+.result-age-interval-label>span{
+  display:flex!important;
+  align-items:center!important;
+  gap:0!important;
+  flex-wrap:wrap!important;
+}
+.result-quick-sex-options{
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:12px!important;
+}
+.result-quick-sex-option{
+  position:relative!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:14px!important;
+  min-height:120px!important;
+  padding:16px 12px!important;
+  border:1px solid #D7E5EF!important;
+  border-radius:16px!important;
+  background:#FFF!important;
+  cursor:pointer!important;
+}
+.result-quick-sex-option input[type="checkbox"]{
+  position:absolute!important;
+  inset:0!important;
+  opacity:0!important;
+  cursor:pointer!important;
+}
+.result-quick-sex-option>label{display:block!important}
+.result-quick-sex-option strong{
+  font-size:14px!important;
+  white-space:normal!important;
+  text-align:center!important;
+}
+.result-sex-check{
+  width:34px!important;
+  height:34px!important;
+  border-radius:10px!important;
+}
+.result-quick-population-field select{
+  min-height:60px!important;
+  border-radius:16px!important;
+  font-size:14px!important;
+}
+.result-quick-age-range,
+.result-quick-quinquenal{
+  margin-top:14px!important;
+  padding:18px!important;
+  border:1px solid #D3E5F0!important;
+  border-radius:20px!important;
+  background:linear-gradient(180deg,#FBFEFF 0%,#F6FAFD 100%)!important;
+}
+.result-quick-quinquenal-head{
+  display:flex!important;
+  align-items:flex-start!important;
+  justify-content:space-between!important;
+  gap:14px!important;
+  margin-bottom:14px!important;
+}
+.result-quick-quinquenal-head strong{
+  display:block!important;
+  color:#0A3F73!important;
+  font-size:14px!important;
+  font-weight:900!important;
+}
+.result-quick-quinquenal-head small{
+  display:block!important;
+  margin-top:4px!important;
+  color:#6A8096!important;
+  font-size:11px!important;
+}
+.result-quick-quinquenal-actions{
+  display:flex!important;
+  gap:10px!important;
+  flex-wrap:wrap!important;
+}
+.result-quick-quinquenal-actions button,
+.result-quick-age-groups button{
+  min-height:42px!important;
+  padding:0 16px!important;
+  border:1px solid #5BCDC7!important;
+  border-radius:999px!important;
+  background:#FFF!important;
+  color:#0A7E79!important;
+  font-size:11px!important;
+  font-weight:900!important;
+}
+.result-quick-age-groups{
+  display:grid!important;
+  grid-template-columns:repeat(6,minmax(0,1fr))!important;
+  gap:12px!important;
+}
+.result-quick-age-groups button.selected,
+.result-quick-age-groups button[aria-pressed="true"]{
+  background:#EFFAF9!important;
+  border-color:#33B9B2!important;
+  color:#0A3F73!important;
+}
+.result-quick-footer{
+  margin-top:16px!important;
+}
+
+html[data-theme="dark"] .sex-series-color-editor label,
+html[data-theme="dark"] .sex-check-option,
+html[data-theme="dark"] .result-quick-sex-option,
+html[data-theme="dark"] .result-quick-age-range,
+html[data-theme="dark"] .result-quick-quinquenal{
+  background:#111E2A!important;
+  border-color:#30465A!important;
+}
+html[data-theme="dark"] .sex-check-option.selected,
+html[data-theme="dark"] .sex-check-option:has(input:checked),
+html[data-theme="dark"] .result-quick-sex-option.selected{
+  background:#12302F!important;
+  border-color:#2DD4BF!important;
+}
+html[data-theme="dark"] .result-help-trigger,
+html[data-theme="dark"] .result-quick-quinquenal-actions button,
+html[data-theme="dark"] .result-quick-age-groups button,
+html[data-theme="dark"] .result-age-row-fields>button{
+  border-color:#355568!important;
+}
+html[data-theme="dark"] .result-quick-age-groups button{
+  background:#0F1923!important;
+  color:#DDEAF5!important;
+}
+html[data-theme="dark"] .result-quick-age-groups button.selected{
+  background:#173A3B!important;
+  color:#DDF8F5!important;
+}
+
+@media (max-width:760px){
+  .sex-checkbox-grid,
+  .result-quick-sex-options,
+  .result-quick-age-groups{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  .age-range-number-fields,
+  .result-age-number-fields,
+  .result-age-row-fields,
+  .sex-series-color-editor>div{
+    grid-template-columns:1fr 1fr!important;
+  }
+  .result-age-row-fields>.result-age-interval-label,
+  .result-age-row-fields>button{
+    grid-column:span 2!important;
+  }
+  .result-quick-quinquenal-head{
+    flex-direction:column!important;
+  }
+}
+@media (max-width:430px){
+  .sex-checkbox-grid,
+  .result-quick-sex-options,
+  .result-quick-age-groups,
+  .sex-series-color-editor>div,
+  .age-range-number-fields,
+  .result-age-number-fields,
+  .result-age-row-fields{
+    grid-template-columns:1fr!important;
+  }
+  .result-age-row-fields>.result-age-interval-label,
+  .result-age-row-fields>button{
+    grid-column:auto!important;
+  }
+}
+
+.age-quinquenal-panel{
+  margin-top:14px!important;
+  padding:16px!important;
+  border:1px solid #D3E5F0!important;
+  border-radius:18px!important;
+  background:linear-gradient(180deg,#FBFEFF 0%,#F6FAFD 100%)!important;
+}
+.age-quinquenal-head{
+  display:flex!important;
+  align-items:flex-start!important;
+  justify-content:space-between!important;
+  gap:12px!important;
+  margin-bottom:12px!important;
+}
+.age-quinquenal-head strong{
+  display:block!important;
+  color:#0A3F73!important;
+  font-size:13px!important;
+  font-weight:900!important;
+}
+.age-quinquenal-head small{
+  display:block!important;
+  margin-top:4px!important;
+  color:#6A8096!important;
+  font-size:10.5px!important;
+}
+.age-quinquenal-actions{
+  display:flex!important;
+  gap:8px!important;
+  flex-wrap:wrap!important;
+}
+.age-quinquenal-actions button,
+.age-quinquenal-grid button{
+  min-height:38px!important;
+  padding:0 14px!important;
+  border:1px solid #5BCDC7!important;
+  border-radius:999px!important;
+  background:#FFF!important;
+  color:#0A7E79!important;
+  font-size:10.5px!important;
+  font-weight:900!important;
+}
+.age-quinquenal-grid{
+  display:grid!important;
+  grid-template-columns:repeat(6,minmax(0,1fr))!important;
+  gap:10px!important;
+}
+.age-quinquenal-grid button.selected,
+.age-quinquenal-grid button[aria-pressed="true"]{
+  background:#EFFAF9!important;
+  border-color:#33B9B2!important;
+  color:#0A3F73!important;
+}
+html[data-theme="dark"] .age-quinquenal-panel{
+  background:#111E2A!important;
+  border-color:#30465A!important;
+}
+html[data-theme="dark"] .age-quinquenal-head strong{color:#E7F2FB!important}
+html[data-theme="dark"] .age-quinquenal-head small{color:#9CB0C2!important}
+html[data-theme="dark"] .age-quinquenal-actions button,
+html[data-theme="dark"] .age-quinquenal-grid button{
+  background:#0F1923!important;
+  border-color:#355568!important;
+  color:#DDEAF5!important;
+}
+html[data-theme="dark"] .age-quinquenal-grid button.selected{
+  background:#173A3B!important;
+  color:#DDF8F5!important;
+}
+@media (max-width:760px){
+  .age-quinquenal-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+}
+@media (max-width:430px){
+  .age-quinquenal-head{flex-direction:column!important}
+  .age-quinquenal-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+
+/* ==== Refinamento final após teste visual ==== */
+.result-quick-demographic-layout{
+  grid-template-columns:minmax(0,1.2fr) minmax(240px,.9fr)!important;
+  gap:18px!important;
+}
+
+.sex-checkbox-grid,
+.result-quick-sex-options{
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:14px!important;
+}
+
+.sex-check-option,
+.result-quick-sex-option{
+  position:relative!important;
+  min-height:108px!important;
+  padding:18px 12px!important;
+  border-radius:18px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:14px!important;
+}
+
+.sex-check-option input[type="checkbox"],
+.result-quick-sex-option input[type="checkbox"]{
+  position:absolute!important;
+  inset:0!important;
+  margin:0!important;
+  opacity:0!important;
+  cursor:pointer!important;
+}
+
+.sex-check-mark,
+.result-sex-check{
+  display:grid!important;
+  place-items:center!important;
+  width:30px!important;
+  height:30px!important;
+  min-width:30px!important;
+  min-height:30px!important;
+  border:2px solid #B8D0E2!important;
+  border-radius:9px!important;
+  background:#FFFFFF!important;
+  box-sizing:border-box!important;
+  flex:0 0 30px!important;
+}
+
+.sex-check-option input:checked + .sex-check-mark,
+.result-quick-sex-option input:checked + .result-sex-check{
+  border-color:#0FA7A0!important;
+  background:#0FA7A0!important;
+  box-shadow:0 0 0 4px rgba(15,167,160,.10)!important;
+}
+
+.sex-check-option input:checked + .sex-check-mark::after,
+.result-quick-sex-option input:checked + .result-sex-check::after{
+  content:""!important;
+  width:9px!important;
+  height:5px!important;
+  border-left:2px solid #FFF!important;
+  border-bottom:2px solid #FFF!important;
+  transform:rotate(-45deg) translateY(-1px)!important;
+}
+
+.sex-check-copy,
+.result-quick-sex-option strong{
+  text-align:center!important;
+}
+
+.sex-check-copy strong,
+.result-quick-sex-option strong{
+  display:block!important;
+  color:#0A3F73!important;
+  font-size:13px!important;
+  font-weight:900!important;
+  line-height:1.25!important;
+  white-space:normal!important;
+}
+
+.age-range-filter,
+.result-quick-age-range,
+.age-quinquenal-panel,
+.result-quick-quinquenal{
+  padding:20px!important;
+  border-radius:22px!important;
+}
+
+.age-range-heading strong,
+.result-quick-field-heading>span,
+.age-quinquenal-head strong,
+.result-quick-quinquenal-head strong{
+  font-size:15px!important;
+}
+
+.result-age-row-fields{
+  display:grid!important;
+  grid-template-columns:minmax(110px,130px) minmax(110px,130px) minmax(240px,1fr) auto!important;
+  align-items:end!important;
+  gap:12px!important;
+  margin:14px 0 12px!important;
+}
+
+.result-age-row-fields>label>span,
+.result-age-row-fields>.result-age-interval-label>span{
+  display:flex!important;
+  align-items:center!important;
+  gap:6px!important;
+  margin-bottom:7px!important;
+  color:#315C7D!important;
+  font-size:11px!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+}
+
+.result-age-row-fields input{
+  width:100%!important;
+  min-height:46px!important;
+  padding:10px 12px!important;
+  border:1px solid #C9DDEB!important;
+  border-radius:14px!important;
+  background:#FFFFFF!important;
+  color:#0A3F73!important;
+  font-size:14px!important;
+  font-weight:800!important;
+  box-sizing:border-box!important;
+}
+
+.result-age-row-fields>button{
+  min-width:120px!important;
+  min-height:46px!important;
+  padding:0 18px!important;
+  border-radius:16px!important;
+  font-size:13px!important;
+}
+
+.result-help-trigger,
+.result-help-trigger.inline{
+  flex:0 0 auto!important;
+}
+
+.age-quinquenal-head,
+.result-quick-quinquenal-head{
+  align-items:center!important;
+}
+
+.age-quinquenal-actions,
+.result-quick-quinquenal-actions{
+  display:flex!important;
+  gap:12px!important;
+  flex-wrap:wrap!important;
+}
+
+.age-quinquenal-actions button,
+.result-quick-quinquenal-actions button{
+  min-height:46px!important;
+  padding:0 18px!important;
+  border-radius:999px!important;
+  font-size:12px!important;
+  white-space:nowrap!important;
+}
+
+.age-quinquenal-grid,
+.result-quick-age-groups{
+  grid-template-columns:repeat(6,minmax(84px,1fr))!important;
+  gap:12px!important;
+}
+
+.age-quinquenal-grid button,
+.result-quick-age-groups button{
+  min-height:56px!important;
+  padding:0 10px!important;
+  border-radius:18px!important;
+  font-size:12px!important;
+  line-height:1.2!important;
+  white-space:normal!important;
+}
+
+@media (max-width:920px){
+  .result-quick-demographic-layout{
+    grid-template-columns:1fr!important;
+  }
+  .age-quinquenal-grid,
+  .result-quick-age-groups{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+}
+
+@media (max-width:760px){
+  .sex-checkbox-grid,
+  .result-quick-sex-options{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+  .result-age-row-fields{
+    grid-template-columns:1fr 1fr!important;
+  }
+  .result-age-interval-label,
+  .result-age-row-fields>button{
+    grid-column:1 / -1!important;
+  }
+}
+
+@media (max-width:560px){
+  .sex-checkbox-grid,
+  .result-quick-sex-options,
+  .age-quinquenal-grid,
+  .result-quick-age-groups{
+    grid-template-columns:1fr!important;
+  }
+  .result-age-row-fields{
+    grid-template-columns:1fr!important;
+  }
+}
+
+/* ========================================================================== 
+   CORREÇÃO ESTRUTURAL DO MODAL DEMOGRÁFICO — sem estouro horizontal
+   ========================================================================== */
+html body #resultChoicePopover.result-choice-popover{
+  width:min(720px,calc(100vw - 16px))!important;
+  max-width:min(720px,calc(100vw - 16px))!important;
+  padding:16px!important;
+}
+html body #resultChoicePopover .result-choice-options,
+html body #resultChoicePopover .result-choice-options.quick-filter{
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
+  overflow-x:hidden!important;
+}
+html body #resultChoicePopover .result-quick-summary,
+html body #resultChoicePopover .result-quick-demographic-layout,
+html body #resultChoicePopover .result-quick-age-range,
+html body #resultChoicePopover .result-quick-quinquenal,
+html body #resultChoicePopover .result-quick-footer{
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
+}
+html body #resultChoicePopover .result-quick-demographic-layout{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(190px,210px)!important;
+  gap:14px!important;
+  align-items:start!important;
+}
+html body #resultChoicePopover .result-quick-demographic-layout>*{
+  min-width:0!important;
+  max-width:100%!important;
+}
+html body #resultChoicePopover .result-quick-sex-options{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:10px!important;
+  width:100%!important;
+  min-width:0!important;
+}
+html body #resultChoicePopover .result-quick-sex-option{
+  min-width:0!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-height:96px!important;
+  padding:14px 8px!important;
+  box-sizing:border-box!important;
+}
+html body #resultChoicePopover .result-quick-sex-option strong{
+  font-size:12px!important;
+  line-height:1.2!important;
+}
+html body #resultChoicePopover .result-quick-population-field{
+  display:block!important;
+  min-width:0!important;
+  width:100%!important;
+}
+html body #resultChoicePopover .result-quick-population-field select{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  min-height:54px!important;
+  padding:0 38px 0 14px!important;
+  box-sizing:border-box!important;
+  text-overflow:ellipsis!important;
+}
+
+html body #resultChoicePopover .result-quick-age-range{
+  padding:18px!important;
+  overflow:hidden!important;
+}
+html body #resultChoicePopover .result-age-range-scale{
+  width:100%!important;
+  min-width:0!important;
+  box-sizing:border-box!important;
+}
+html body #resultChoicePopover .age-dual-range{
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+}
+html body #resultChoicePopover .result-age-row-fields{
+  display:grid!important;
+  grid-template-columns:minmax(82px,.7fr) minmax(82px,.7fr) minmax(220px,1.8fr)!important;
+  gap:10px!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  margin:14px 0 12px!important;
+  box-sizing:border-box!important;
+}
+html body #resultChoicePopover .result-age-row-fields>label{
+  min-width:0!important;
+  width:100%!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
+}
+html body #resultChoicePopover .result-age-row-fields>label>span{
+  margin-bottom:6px!important;
+  font-size:10.5px!important;
+  line-height:1.2!important;
+}
+html body #resultChoicePopover .result-age-row-fields input{
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  height:44px!important;
+  min-height:44px!important;
+  padding:9px 11px!important;
+  box-sizing:border-box!important;
+  border-radius:12px!important;
+  font-size:13px!important;
+}
+html body #resultChoicePopover .result-age-interval-combo{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  gap:8px!important;
+  align-items:stretch!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+}
+html body #resultChoicePopover .result-age-interval-combo>button{
+  min-width:86px!important;
+  height:44px!important;
+  min-height:44px!important;
+  padding:0 14px!important;
+  border:1px solid #0FA7A0!important;
+  border-radius:12px!important;
+  background:#0FA7A0!important;
+  color:#FFF!important;
+  font-size:11px!important;
+  font-weight:900!important;
+  box-sizing:border-box!important;
+}
+html body #resultChoicePopover .result-age-clear{
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
+}
+
+html body #resultChoicePopover .result-quick-quinquenal{
+  padding:18px!important;
+  overflow:hidden!important;
+}
+html body #resultChoicePopover .result-quick-quinquenal-head{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  gap:12px!important;
+  align-items:center!important;
+  width:100%!important;
+  min-width:0!important;
+}
+html body #resultChoicePopover .result-quick-quinquenal-head>div:first-child{
+  min-width:0!important;
+}
+html body #resultChoicePopover .result-quick-quinquenal-actions{
+  display:flex!important;
+  gap:8px!important;
+  flex-wrap:nowrap!important;
+  min-width:0!important;
+}
+html body #resultChoicePopover .result-quick-quinquenal-actions button{
+  min-width:0!important;
+  min-height:38px!important;
+  padding:0 12px!important;
+  font-size:10px!important;
+  white-space:nowrap!important;
+}
+html body #resultChoicePopover .result-quick-age-groups{
+  display:grid!important;
+  grid-template-columns:repeat(6,minmax(0,1fr))!important;
+  gap:8px!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
+}
+html body #resultChoicePopover .result-quick-age-groups button{
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  min-height:44px!important;
+  padding:6px 5px!important;
+  border-radius:14px!important;
+  box-sizing:border-box!important;
+  font-size:10px!important;
+  line-height:1.15!important;
+  white-space:normal!important;
+}
+
+/* A mesma organização também é usada no painel lateral permanente. */
+.age-range-filter .result-age-row-fields{
+  display:grid!important;
+  grid-template-columns:minmax(82px,.7fr) minmax(82px,.7fr) minmax(220px,1.8fr)!important;
+  gap:10px!important;
+  width:100%!important;
+  min-width:0!important;
+}
+.age-range-filter .result-age-row-fields>label{min-width:0!important}
+.age-range-filter .result-age-row-fields input{width:100%!important;min-width:0!important;box-sizing:border-box!important}
+.age-range-filter .result-age-interval-combo{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  gap:8px!important;
+  width:100%!important;
+  min-width:0!important;
+}
+.age-range-filter .result-age-interval-combo>button{
+  min-width:82px!important;
+  border:1px solid #0FA7A0!important;
+  border-radius:12px!important;
+  background:#0FA7A0!important;
+  color:#FFF!important;
+  font-weight:900!important;
+}
+.age-quinquenal-grid{
+  grid-template-columns:repeat(6,minmax(0,1fr))!important;
+}
+.age-quinquenal-grid button{
+  min-width:0!important;
+  width:100%!important;
+  padding:6px!important;
+  white-space:normal!important;
+}
+
+@media (max-width:620px){
+  html body #resultChoicePopover.result-choice-popover{
+    width:calc(100vw - 10px)!important;
+    max-width:calc(100vw - 10px)!important;
+    padding:12px!important;
+  }
+  html body #resultChoicePopover .result-quick-demographic-layout{
+    grid-template-columns:1fr!important;
+  }
+  html body #resultChoicePopover .result-quick-population-field select{
+    min-height:50px!important;
+  }
+  html body #resultChoicePopover .result-age-row-fields{
+    grid-template-columns:minmax(76px,.7fr) minmax(76px,.7fr) minmax(180px,1.8fr)!important;
+    gap:8px!important;
+  }
+  html body #resultChoicePopover .result-age-interval-combo>button{
+    min-width:72px!important;
+    padding:0 10px!important;
+  }
+  html body #resultChoicePopover .result-quick-quinquenal-head{
+    grid-template-columns:1fr!important;
+  }
+  html body #resultChoicePopover .result-quick-quinquenal-actions{
+    justify-content:flex-start!important;
+  }
+  html body #resultChoicePopover .result-quick-age-groups{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+}
+
+/* ==== v5: posicionamento real do modal demográfico e eliminação de cortes ==== */
+html body #resultChoicePopover[data-mode="filter-demographic"]{
+  width:min(760px,calc(100vw - 20px))!important;
+  max-width:min(760px,calc(100vw - 20px))!important;
+  left:50%!important;
+  right:auto!important;
+  top:8px!important;
+  bottom:auto!important;
+  transform:translateX(-50%)!important;
+  max-height:calc(100dvh - 16px)!important;
+  box-sizing:border-box!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .result-choice-options.quick-filter{
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  box-sizing:border-box!important;
+  scrollbar-gutter:stable!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .result-quick-age-range,
+html body #resultChoicePopover[data-mode="filter-demographic"] .result-quick-quinquenal{
+  overflow:visible!important;
+  height:auto!important;
+  min-height:0!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .result-quick-demographic-layout,
+html body #resultChoicePopover[data-mode="filter-demographic"] .result-age-row-fields,
+html body #resultChoicePopover[data-mode="filter-demographic"] .result-quick-quinquenal-head,
+html body #resultChoicePopover[data-mode="filter-demographic"] .result-quick-age-groups{
+  max-width:100%!important;
+  box-sizing:border-box!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .result-quick-population-field,
+html body #resultChoicePopover[data-mode="filter-demographic"] .result-quick-population-field select,
+html body #resultChoicePopover[data-mode="filter-demographic"] .result-age-row-fields>label,
+html body #resultChoicePopover[data-mode="filter-demographic"] .result-age-row-fields input,
+html body #resultChoicePopover[data-mode="filter-demographic"] .result-age-interval-combo{
+  min-width:0!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
+}
+@media (max-width:700px){
+  html body #resultChoicePopover[data-mode="filter-demographic"] .result-quick-demographic-layout{
+    grid-template-columns:1fr!important;
+  }
+  html body #resultChoicePopover[data-mode="filter-demographic"] .result-age-row-fields{
+    grid-template-columns:1fr 1fr!important;
+  }
+  html body #resultChoicePopover[data-mode="filter-demographic"] .result-age-interval-label{
+    grid-column:1 / -1!important;
+  }
+  html body #resultChoicePopover[data-mode="filter-demographic"] .result-quick-age-groups{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+}
+
+/* ========================================================================== 
+   v6 — modal demográfico compacto e isolado dos estilos antigos
+   ========================================================================== */
+html body #resultChoicePopover[data-mode="filter-demographic"]{
+  width:min(600px,calc(100vw - 24px))!important;
+  max-width:min(600px,calc(100vw - 24px))!important;
+  left:50%!important;
+  top:12px!important;
+  right:auto!important;
+  bottom:auto!important;
+  padding:12px!important;
+  border-radius:16px!important;
+  max-height:calc(100dvh - 24px)!important;
+  transform:translateX(-50%)!important;
+  overflow:hidden!important;
+  box-sizing:border-box!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .result-choice-head{
+  gap:10px!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .result-choice-head small{
+  margin-bottom:2px!important;
+  font-size:8px!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .result-choice-head h2{
+  font-size:16px!important;
+  line-height:1.2!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .result-choice-close{
+  flex-basis:32px!important;
+  width:32px!important;
+  height:32px!important;
+  font-size:20px!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .result-choice-options.quick-filter{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  gap:9px!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  padding:0 4px 2px 0!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  scrollbar-gutter:stable!important;
+  box-sizing:border-box!important;
+}
+
+/* resumo */
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-summary{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:10px!important;
+  min-height:36px!important;
+  padding:7px 10px!important;
+  border:1px solid #D7E5EE!important;
+  border-radius:11px!important;
+  background:#F7FBFD!important;
+  box-sizing:border-box!important;
+}
+.demo6-summary span{color:#607990!important;font-size:9px!important;font-weight:800!important}
+.demo6-summary strong{color:#087F79!important;font-size:9.5px!important;font-weight:900!important;text-align:right!important}
+
+/* sexo + população */
+.demo6-top{
+  display:grid!important;
+  grid-template-columns:minmax(0,1.55fr) minmax(165px,.75fr)!important;
+  gap:12px!important;
+  align-items:end!important;
+}
+.demo6-sex,.demo6-population{min-width:0!important}
+.demo6-sex h3,.demo6-age h3,.demo6-quinquenal h3{
+  margin:0!important;
+  color:#0A3F73!important;
+  font-size:12px!important;
+  font-weight:900!important;
+  line-height:1.2!important;
+}
+.demo6-sex-grid{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:7px!important;
+  margin-top:6px!important;
+}
+.demo6-sex-choice{
+  position:relative!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:7px!important;
+  min-width:0!important;
+  min-height:68px!important;
+  padding:8px 5px!important;
+  border:1px solid #D6E5F1!important;
+  border-radius:13px!important;
+  background:#FFF!important;
+  box-sizing:border-box!important;
+  cursor:pointer!important;
+}
+.demo6-sex-choice.selected{
+  border-color:#4CC6BF!important;
+  background:#EFFAF9!important;
+  box-shadow:0 0 0 2px rgba(15,167,160,.07)!important;
+}
+.demo6-sex-choice input{
+  position:absolute!important;
+  inset:0!important;
+  opacity:0!important;
+  margin:0!important;
+  cursor:pointer!important;
+}
+.demo6-check{
+  display:grid!important;
+  place-items:center!important;
+  width:23px!important;
+  height:23px!important;
+  border:2px solid #BCD2E2!important;
+  border-radius:7px!important;
+  background:#FFF!important;
+  box-sizing:border-box!important;
+}
+.demo6-sex-choice input:checked + .demo6-check{
+  border-color:#0FA7A0!important;
+  background:#0FA7A0!important;
+}
+.demo6-sex-choice input:checked + .demo6-check::after{
+  content:""!important;
+  width:7px!important;
+  height:4px!important;
+  border-left:2px solid #FFF!important;
+  border-bottom:2px solid #FFF!important;
+  transform:rotate(-45deg) translateY(-1px)!important;
+}
+.demo6-sex-choice strong{
+  color:#0A3F73!important;
+  font-size:10px!important;
+  font-weight:900!important;
+  line-height:1.1!important;
+  white-space:nowrap!important;
+}
+.demo6-population>span{
+  display:block!important;
+  margin-bottom:6px!important;
+  color:#315C7D!important;
+  font-size:9.5px!important;
+  font-weight:900!important;
+}
+.demo6-population select{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  height:44px!important;
+  padding:0 34px 0 11px!important;
+  border:1px solid #C9DDEB!important;
+  border-radius:12px!important;
+  background:#FFF!important;
+  color:#0A3F73!important;
+  font-size:11px!important;
+  font-weight:900!important;
+  box-sizing:border-box!important;
+}
+
+/* idade detalhada */
+.demo6-age{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  padding:12px!important;
+  border:1px solid #D3E5F0!important;
+  border-radius:15px!important;
+  background:linear-gradient(180deg,#FBFEFF 0%,#F7FBFD 100%)!important;
+  box-sizing:border-box!important;
+}
+.demo6-section-head{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:10px!important;
+  margin-bottom:7px!important;
+}
+.demo6-title-with-help{display:flex!important;align-items:center!important;gap:6px!important}
+.demo6-section-head>b{
+  padding:4px 8px!important;
+  border:1px solid #B9E4E0!important;
+  border-radius:999px!important;
+  background:#EAF9F7!important;
+  color:#087F79!important;
+  font-size:8.5px!important;
+  font-weight:900!important;
+}
+.demo6-help{
+  display:grid!important;
+  place-items:center!important;
+  width:21px!important;
+  height:21px!important;
+  padding:0!important;
+  border:1px solid #BFD4E4!important;
+  border-radius:50%!important;
+  background:#F8FBFD!important;
+  color:#0A4C81!important;
+  font-size:11px!important;
+  font-weight:900!important;
+  line-height:1!important;
+  cursor:help!important;
+}
+.demo6-help.small{width:18px!important;height:18px!important;font-size:9px!important}
+.demo6-age-scale{
+  display:grid!important;
+  grid-template-columns:auto minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:7px!important;
+  margin:0 0 8px!important;
+  color:#426985!important;
+  font-size:9px!important;
+  font-weight:900!important;
+}
+.demo6-age .age-dual-range{height:24px!important}
+.demo6-age .age-dual-range input[type="range"]{height:24px!important}
+.demo6-age-fields{
+  display:grid!important;
+  grid-template-columns:78px 78px minmax(0,1fr)!important;
+  gap:9px!important;
+  align-items:end!important;
+  width:100%!important;
+  min-width:0!important;
+}
+.demo6-age-fields>label{display:block!important;min-width:0!important}
+.demo6-age-fields>label>span{
+  display:flex!important;
+  align-items:center!important;
+  gap:5px!important;
+  min-height:18px!important;
+  margin-bottom:4px!important;
+  color:#315C7D!important;
+  font-size:8.5px!important;
+  font-weight:900!important;
+  line-height:1.1!important;
+  white-space:nowrap!important;
+}
+.demo6-age-fields input{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  height:37px!important;
+  padding:7px 9px!important;
+  border:1px solid #C9DDEB!important;
+  border-radius:10px!important;
+  outline:0!important;
+  background:#FFF!important;
+  color:#0A3F73!important;
+  font-size:10.5px!important;
+  font-weight:800!important;
+  box-sizing:border-box!important;
+}
+.demo6-interval-control{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 72px!important;
+  gap:6px!important;
+  min-width:0!important;
+}
+.demo6-interval-control>button{
+  height:37px!important;
+  padding:0 10px!important;
+  border:1px solid #0FA7A0!important;
+  border-radius:10px!important;
+  background:#0FA7A0!important;
+  color:#FFF!important;
+  font-size:9.5px!important;
+  font-weight:900!important;
+  box-sizing:border-box!important;
+}
+.demo6-clear-age{
+  display:block!important;
+  width:100%!important;
+  height:31px!important;
+  margin-top:8px!important;
+  padding:0 10px!important;
+  border:1px solid #CFE1ED!important;
+  border-radius:9px!important;
+  background:#FFF!important;
+  color:#0A4C81!important;
+  font-size:9px!important;
+  font-weight:900!important;
+  box-sizing:border-box!important;
+}
+
+/* faixa quinquenal */
+.demo6-quinquenal{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  padding:11px 12px!important;
+  border:1px solid #D3E5F0!important;
+  border-radius:15px!important;
+  background:linear-gradient(180deg,#FBFEFF 0%,#F7FBFD 100%)!important;
+  box-sizing:border-box!important;
+}
+.demo6-quin-head{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:10px!important;
+  margin-bottom:8px!important;
+}
+.demo6-quin-head small{
+  display:block!important;
+  margin-top:2px!important;
+  color:#6A8096!important;
+  font-size:8.5px!important;
+}
+.demo6-quin-actions{display:flex!important;gap:6px!important;flex:0 0 auto!important}
+.demo6-quin-actions button{
+  height:30px!important;
+  padding:0 10px!important;
+  border:1px solid #5BCDC7!important;
+  border-radius:999px!important;
+  background:#FFF!important;
+  color:#0A7E79!important;
+  font-size:8.5px!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+}
+.demo6-age-groups{
+  display:grid!important;
+  grid-template-columns:repeat(6,minmax(0,1fr))!important;
+  gap:6px!important;
+  width:100%!important;
+  min-width:0!important;
+}
+.demo6-age-groups button{
+  width:100%!important;
+  min-width:0!important;
+  height:34px!important;
+  padding:4px!important;
+  border:1px solid #5BCDC7!important;
+  border-radius:10px!important;
+  background:#FFF!important;
+  color:#087F79!important;
+  font-size:8.5px!important;
+  font-weight:900!important;
+  line-height:1.1!important;
+  white-space:normal!important;
+  box-sizing:border-box!important;
+}
+.demo6-age-groups button.selected,
+.demo6-age-groups button[aria-pressed="true"]{
+  background:#EAF9F7!important;
+  border-color:#28B8B0!important;
+  color:#0A3F73!important;
+}
+
+/* rodapé */
+.demo6-footer{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:10px!important;
+  padding-top:8px!important;
+  border-top:1px solid #E2ECF3!important;
+}
+.demo6-footer span{color:#6D8397!important;font-size:8px!important}
+.demo6-footer button{
+  height:31px!important;
+  padding:0 10px!important;
+  border:1px solid #C8DDEB!important;
+  border-radius:9px!important;
+  background:#FFF!important;
+  color:#0A4C81!important;
+  font-size:8.5px!important;
+  font-weight:900!important;
+}
+
+@media (max-width:540px){
+  html body #resultChoicePopover[data-mode="filter-demographic"]{
+    width:calc(100vw - 12px)!important;
+    max-width:calc(100vw - 12px)!important;
+    top:6px!important;
+    max-height:calc(100dvh - 12px)!important;
+    padding:10px!important;
+  }
+  .demo6-top{grid-template-columns:1fr!important}
+  .demo6-sex-choice{min-height:60px!important}
+  .demo6-age-fields{grid-template-columns:1fr 1fr!important}
+  .demo6-interval{grid-column:1 / -1!important}
+  .demo6-quin-head{align-items:flex-start!important;flex-direction:column!important}
+  .demo6-age-groups{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+}
+
+/* ========================================================================== 
+   V7 — Padronização final de alinhamento do modal demográfico
+   ========================================================================== */
+html body #resultChoicePopover[data-mode="filter-demographic"]{
+  width:min(610px,calc(100vw - 28px))!important;
+  max-width:min(610px,calc(100vw - 28px))!important;
+  padding:14px!important;
+}
+
+html body #resultChoicePopover[data-mode="filter-demographic"] .result-choice-options.quick-filter{
+  gap:10px!important;
+  padding-right:2px!important;
+}
+
+/* Todas as áreas começam e terminam na mesma linha visual */
+.demo6-summary,
+.demo6-top,
+.demo6-age,
+.demo6-quinquenal,
+.demo6-footer{
+  width:100%!important;
+  margin-left:0!important;
+  margin-right:0!important;
+  box-sizing:border-box!important;
+}
+
+.demo6-summary{
+  min-height:38px!important;
+  padding:8px 11px!important;
+}
+
+/* Sexo e população com títulos e controles alinhados */
+.demo6-top{
+  grid-template-columns:minmax(0,1.55fr) minmax(175px,.78fr)!important;
+  gap:12px!important;
+  align-items:start!important;
+}
+.demo6-sex,
+.demo6-population{
+  display:flex!important;
+  flex-direction:column!important;
+  min-width:0!important;
+}
+.demo6-sex h3,
+.demo6-population>span{
+  height:18px!important;
+  margin:0 0 6px!important;
+  display:flex!important;
+  align-items:center!important;
+  color:#0A3F73!important;
+  font-size:10.5px!important;
+  font-weight:900!important;
+  line-height:1!important;
+}
+.demo6-sex-grid{
+  margin-top:0!important;
+  gap:8px!important;
+}
+.demo6-sex-choice{
+  min-height:66px!important;
+  height:66px!important;
+  padding:7px 5px!important;
+  gap:6px!important;
+  border-radius:12px!important;
+}
+.demo6-population select{
+  height:66px!important;
+  min-height:66px!important;
+  border-radius:12px!important;
+  padding-left:13px!important;
+  font-size:11px!important;
+}
+
+/* Títulos de seção seguem a mesma régua */
+.demo6-section-head,
+.demo6-quin-head{
+  min-height:30px!important;
+  margin-bottom:8px!important;
+}
+.demo6-title-with-help,
+.demo6-quin-head>div:first-child{
+  min-width:0!important;
+}
+.demo6-age h3,
+.demo6-quinquenal h3{
+  font-size:12px!important;
+  line-height:1.15!important;
+}
+.demo6-help{
+  width:20px!important;
+  height:20px!important;
+}
+.demo6-section-head>b{
+  min-height:24px!important;
+  display:flex!important;
+  align-items:center!important;
+  padding:0 9px!important;
+}
+
+/* Idade: régua e campos perfeitamente nivelados */
+.demo6-age{
+  padding:12px 13px!important;
+}
+.demo6-age-scale{
+  margin-bottom:9px!important;
+}
+.demo6-age-fields{
+  grid-template-columns:88px 88px minmax(0,1fr)!important;
+  gap:9px!important;
+  align-items:end!important;
+}
+.demo6-age-fields>label>span{
+  min-height:19px!important;
+  height:19px!important;
+  margin-bottom:4px!important;
+  align-items:center!important;
+  font-size:8.5px!important;
+}
+.demo6-age-fields input,
+.demo6-interval-control>button{
+  height:38px!important;
+  min-height:38px!important;
+}
+.demo6-interval-control{
+  grid-template-columns:minmax(0,1fr) 68px!important;
+  gap:7px!important;
+}
+.demo6-clear-age{
+  height:32px!important;
+  margin-top:9px!important;
+}
+
+/* Quinquenal: título, ações e faixas na mesma régua */
+.demo6-quinquenal{
+  padding:12px 13px!important;
+}
+.demo6-quin-head{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:12px!important;
+}
+.demo6-quin-head small{
+  margin-top:3px!important;
+  line-height:1.2!important;
+}
+.demo6-quin-actions{
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:6px!important;
+}
+.demo6-quin-actions button{
+  height:31px!important;
+  min-height:31px!important;
+  padding:0 10px!important;
+}
+.demo6-age-groups{
+  gap:7px!important;
+}
+.demo6-age-groups button{
+  height:35px!important;
+  min-height:35px!important;
+  border-radius:10px!important;
+}
+
+/* Rodapé alinhado às bordas dos cartões */
+.demo6-footer{
+  min-height:42px!important;
+  padding-top:9px!important;
+}
+.demo6-footer button{
+  height:32px!important;
+  min-height:32px!important;
+}
+
+@media (max-width:540px){
+  .demo6-top{grid-template-columns:1fr!important}
+  .demo6-population select{height:48px!important;min-height:48px!important}
+  .demo6-age-fields{grid-template-columns:1fr 1fr!important}
+  .demo6-interval{grid-column:1/-1!important}
+  .demo6-quin-head{grid-template-columns:1fr!important}
+  .demo6-quin-actions{justify-content:flex-start!important}
+}
+
+/* ========================================================================== 
+   V8 — Acabamento de alinhamento e padronização do modal demográfico
+   Escopo restrito ao popover para não alterar outras páginas.
+   ========================================================================== */
+html body #resultChoicePopover[data-mode="filter-demographic"]{
+  --demo-border:#D3E5F0;
+  --demo-control-border:#C9DDEB;
+  --demo-radius:14px;
+  --demo-control-radius:10px;
+}
+
+/* Remove o destaque nativo que fazia o seletor parecer maior que os cartões. */
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-population select:focus,
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-population select:focus-visible{
+  outline:none!important;
+  border-color:#66CFC9!important;
+  box-shadow:none!important;
+}
+
+/* Régua superior: sexo e população passam a ter exatamente a mesma altura útil. */
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-top{
+  align-items:start!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-sex h3,
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-population>span{
+  height:18px!important;
+  min-height:18px!important;
+  margin:0 0 6px!important;
+  padding:0!important;
+  display:flex!important;
+  align-items:center!important;
+  line-height:18px!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-sex-grid{
+  height:66px!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-sex-choice,
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-population select{
+  height:66px!important;
+  min-height:66px!important;
+  border-radius:12px!important;
+  box-sizing:border-box!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-population select{
+  margin:0!important;
+}
+
+/* Padroniza as bordas e elimina sombras herdadas de botões genéricos. */
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-age,
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-quinquenal{
+  border-color:var(--demo-border)!important;
+  border-radius:15px!important;
+  box-shadow:none!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-age-fields input,
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-interval-control>button,
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-clear-age,
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-quin-actions button,
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-age-groups button,
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-footer button{
+  box-shadow:none!important;
+}
+
+/* Idade: títulos, ajuda, inputs e botão Aplicar na mesma régua. */
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-section-head{
+  height:30px!important;
+  min-height:30px!important;
+  margin:0 0 8px!important;
+  align-items:center!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-title-with-help{
+  height:24px!important;
+  align-items:center!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-section-head>b{
+  height:24px!important;
+  min-height:24px!important;
+  box-sizing:border-box!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-age-scale{
+  margin:0 0 9px!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-age-fields{
+  align-items:end!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-age-fields>label>span{
+  height:19px!important;
+  min-height:19px!important;
+  margin:0 0 4px!important;
+  display:flex!important;
+  align-items:center!important;
+  line-height:19px!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-help.small{
+  position:relative!important;
+  top:-1px!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-age-fields input,
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-interval-control>button{
+  height:38px!important;
+  min-height:38px!important;
+  border-radius:10px!important;
+  box-sizing:border-box!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-clear-age{
+  height:32px!important;
+  min-height:32px!important;
+  margin-top:9px!important;
+  border-radius:10px!important;
+}
+
+/* Quinquenal: cabeçalho e ações ficam centralizados no mesmo eixo. */
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-quin-head{
+  min-height:34px!important;
+  margin:0 0 9px!important;
+  align-items:center!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-quin-head>div:first-child{
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  min-height:34px!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-quin-head h3{
+  margin:0!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-quin-head small{
+  margin:3px 0 0!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-quin-actions{
+  min-height:34px!important;
+  align-items:center!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-quin-actions button{
+  height:31px!important;
+  min-height:31px!important;
+  border-radius:999px!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-age-groups button{
+  height:35px!important;
+  min-height:35px!important;
+  border-radius:10px!important;
+}
+
+/* Rodapé final na mesma régua horizontal dos blocos. */
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-footer{
+  min-height:43px!important;
+  padding:9px 0 0!important;
+  align-items:center!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-footer span{
+  line-height:1.25!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-footer button{
+  height:32px!important;
+  min-height:32px!important;
+  border-radius:10px!important;
+}
+
+/* Estados de foco ficam discretos e consistentes, sem alterar dimensões. */
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-age-fields input:focus,
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-age-fields input:focus-visible{
+  outline:none!important;
+  border-color:#66CFC9!important;
+  box-shadow:0 0 0 2px rgba(15,167,160,.08)!important;
+}
+
+/* ========================================================================== 
+   V9 — Correção pontual da linha de idade (Começar / Finalizar / Intervalos)
+   ========================================================================== */
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-age-fields{
+  grid-template-columns:96px 96px minmax(0,1fr)!important;
+  gap:12px!important;
+  align-items:start!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-age-fields>label{
+  display:grid!important;
+  grid-template-rows:20px 38px!important;
+  align-items:start!important;
+  align-content:start!important;
+  min-width:0!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-age-fields>label>span{
+  height:20px!important;
+  min-height:20px!important;
+  margin:0 0 6px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:6px!important;
+  line-height:1!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-interval{
+  min-width:0!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-interval-control{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 70px!important;
+  gap:8px!important;
+  align-items:stretch!important;
+  min-width:0!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-age-fields input,
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-interval-control>button{
+  height:38px!important;
+  min-height:38px!important;
+  margin:0!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-age-fields input{
+  padding:8px 11px!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-interval-control>button{
+  align-self:stretch!important;
+  justify-self:stretch!important;
+  padding:0 10px!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-help.small{
+  top:0!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-clear-age{
+  margin-top:10px!important;
+  height:34px!important;
+  min-height:34px!important;
+}
+
+/* ========================================================================== 
+   V10 — Corrige conflito do span de controle dos intervalos específicos
+   ========================================================================== */
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-age-fields>label>span:first-child{
+  height:20px!important;
+  min-height:20px!important;
+  margin:0 0 6px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:6px!important;
+  line-height:1!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-age-fields>label>.demo6-interval-control{
+  height:38px!important;
+  min-height:38px!important;
+  margin:0!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 70px!important;
+  gap:8px!important;
+  align-items:stretch!important;
+  justify-content:stretch!important;
+  line-height:normal!important;
+  overflow:visible!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-age-fields>label>.demo6-interval-control input,
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-age-fields>label>.demo6-interval-control button{
+  height:38px!important;
+  min-height:38px!important;
+  max-height:38px!important;
+  margin:0!important;
+  align-self:stretch!important;
+  box-sizing:border-box!important;
+}
+
+/* ========================================================================== 
+   V10 — Linha de idade refeita sem herdar os estilos conflitantes anteriores
+   ========================================================================== */
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo10-age-row{
+  display:grid!important;
+  grid-template-columns:92px 92px minmax(0,1fr)!important;
+  gap:10px!important;
+  align-items:start!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+  box-sizing:border-box!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo10-age-field,
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo10-interval-field{
+  display:grid!important;
+  grid-template-rows:18px 38px!important;
+  gap:5px!important;
+  align-items:start!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+  box-sizing:border-box!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo10-field-label{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:5px!important;
+  width:100%!important;
+  height:18px!important;
+  min-height:18px!important;
+  margin:0!important;
+  padding:0!important;
+  color:#315C7D!important;
+  font-size:8.5px!important;
+  font-weight:900!important;
+  line-height:18px!important;
+  white-space:nowrap!important;
+  box-sizing:border-box!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo10-age-field>input,
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo10-interval-controls>input{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  height:38px!important;
+  min-height:38px!important;
+  max-height:38px!important;
+  margin:0!important;
+  padding:8px 11px!important;
+  border:1px solid #C9DDEB!important;
+  border-radius:10px!important;
+  outline:none!important;
+  background:#FFF!important;
+  color:#0A3F73!important;
+  font-size:10.5px!important;
+  font-weight:800!important;
+  line-height:normal!important;
+  box-sizing:border-box!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo10-interval-controls{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 70px!important;
+  gap:8px!important;
+  align-items:stretch!important;
+  width:100%!important;
+  min-width:0!important;
+  height:38px!important;
+  min-height:38px!important;
+  margin:0!important;
+  padding:0!important;
+  box-sizing:border-box!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo10-interval-controls>button{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:70px!important;
+  min-width:70px!important;
+  height:38px!important;
+  min-height:38px!important;
+  max-height:38px!important;
+  margin:0!important;
+  padding:0 9px!important;
+  border:1px solid #0FA7A0!important;
+  border-radius:10px!important;
+  background:#0FA7A0!important;
+  color:#FFF!important;
+  font-size:9.5px!important;
+  font-weight:900!important;
+  line-height:1!important;
+  box-shadow:none!important;
+  box-sizing:border-box!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo10-field-label .demo6-help.small{
+  position:static!important;
+  top:auto!important;
+  flex:0 0 18px!important;
+  width:18px!important;
+  height:18px!important;
+  min-width:18px!important;
+  min-height:18px!important;
+  margin:0!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo10-age-field>input:focus,
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo10-interval-controls>input:focus{
+  border-color:#66CFC9!important;
+  box-shadow:0 0 0 2px rgba(15,167,160,.08)!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-clear-age{
+  margin-top:10px!important;
+}
+@media (max-width:540px){
+  html body #resultChoicePopover[data-mode="filter-demographic"] .demo10-age-row{
+    grid-template-columns:1fr 1fr!important;
+  }
+  html body #resultChoicePopover[data-mode="filter-demographic"] .demo10-interval-field{
+    grid-column:1 / -1!important;
+  }
+}
+
+/* ========================================================================== 
+   V11 — Remove ajuda da Idade e mostra explicação fixa em Intervalos específicos
+   ========================================================================== */
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-title-with-help{
+  gap:0!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo10-interval-field{
+  grid-template-rows:18px 38px!important;
+  gap:5px!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo10-field-help{
+  display:none!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo10-interval-controls{
+  margin-top:0!important;
+}
+
+
+/* ========================================================================== 
+   V15 — Correção do filtro rápido de local
+   ========================================================================== */
+html body #resultChoicePopover[data-mode="filter-geographic"]{
+  width:min(520px,calc(100vw - 24px))!important;
+  max-width:min(520px,calc(100vw - 24px))!important;
+  padding:16px!important;
+}
+html body #resultChoicePopover[data-mode="filter-geographic"] .result-choice-options.quick-filter{
+  display:grid!important;
+  gap:14px!important;
+  width:100%!important;
+  min-width:0!important;
+  overflow-x:hidden!important;
+}
+html body #resultChoicePopover[data-mode="filter-geographic"] .geoquick-summary,
+html body #resultChoicePopover[data-mode="filter-geographic"] .geoquick-fields,
+html body #resultChoicePopover[data-mode="filter-geographic"] .geoquick-footer{
+  width:100%!important;
+  min-width:0!important;
+  box-sizing:border-box!important;
+}
+html body #resultChoicePopover[data-mode="filter-geographic"] .geoquick-summary{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:12px!important;
+  min-height:50px!important;
+  padding:10px 14px!important;
+  border:1px solid #D3E5F0!important;
+  border-radius:15px!important;
+  background:#FBFEFF!important;
+}
+html body #resultChoicePopover[data-mode="filter-geographic"] .geoquick-summary span{
+  color:#5E7790!important;
+  font-size:11px!important;
+  font-weight:800!important;
+}
+html body #resultChoicePopover[data-mode="filter-geographic"] .geoquick-summary strong{
+  color:#0A8A83!important;
+  font-size:12px!important;
+  font-weight:900!important;
+  text-align:right!important;
+}
+html body #resultChoicePopover[data-mode="filter-geographic"] .geoquick-fields{
+  display:grid!important;
+  gap:12px!important;
+}
+html body #resultChoicePopover[data-mode="filter-geographic"] .geoquick-field{
+  display:grid!important;
+  gap:7px!important;
+  min-width:0!important;
+}
+html body #resultChoicePopover[data-mode="filter-geographic"] .geoquick-field>span{
+  color:#315C7D!important;
+  font-size:11px!important;
+  font-weight:900!important;
+}
+html body #resultChoicePopover[data-mode="filter-geographic"] .geoquick-field select{
+  width:100%!important;
+  min-width:0!important;
+  min-height:56px!important;
+  height:56px!important;
+  margin:0!important;
+  padding:0 16px!important;
+  border:1px solid #C9DDEB!important;
+  border-radius:16px!important;
+  background:#FFFFFF!important;
+  color:#0A3F73!important;
+  font-size:14px!important;
+  font-weight:800!important;
+  box-shadow:none!important;
+  outline:none!important;
+  box-sizing:border-box!important;
+}
+html body #resultChoicePopover[data-mode="filter-geographic"] .geoquick-field select:focus,
+html body #resultChoicePopover[data-mode="filter-geographic"] .geoquick-field select:focus-visible{
+  outline:none!important;
+  border-color:#66CFC9!important;
+  box-shadow:0 0 0 2px rgba(15,167,160,.08)!important;
+}
+html body #resultChoicePopover[data-mode="filter-geographic"] .geoquick-footer{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:12px!important;
+  padding-top:12px!important;
+  border-top:1px solid #E2ECF3!important;
+}
+html body #resultChoicePopover[data-mode="filter-geographic"] .geoquick-footer span{
+  color:#6D8397!important;
+  font-size:10px!important;
+  line-height:1.3!important;
+}
+html body #resultChoicePopover[data-mode="filter-geographic"] .geoquick-footer button{
+  min-width:108px!important;
+  height:36px!important;
+  padding:0 14px!important;
+  border:1px solid #C8DDEB!important;
+  border-radius:12px!important;
+  background:#FFF!important;
+  color:#0A4C81!important;
+  font-size:11px!important;
+  font-weight:900!important;
+  box-shadow:none!important;
+}
+@media (max-width:560px){
+  html body #resultChoicePopover[data-mode="filter-geographic"] .geoquick-summary,
+  html body #resultChoicePopover[data-mode="filter-geographic"] .geoquick-footer{
+    align-items:flex-start!important;
+    flex-direction:column!important;
+  }
+  html body #resultChoicePopover[data-mode="filter-geographic"] .geoquick-summary strong{
+    text-align:left!important;
+  }
+  html body #resultChoicePopover[data-mode="filter-geographic"] .geoquick-footer button{
+    width:100%!important;
+  }
+}
+
+/* ========================================================================== 
+   V16 — Período no padrão da idade detalhada + diálogos mais compactos
+   ========================================================================== */
+
+/* Tema, indicador e gráfico: caixas menores sem alterar a estrutura interna. */
+html body #resultChoicePopover[data-mode="theme"],
+html body #resultChoicePopover[data-mode="indicator"],
+html body #resultChoicePopover[data-mode="chart"]{
+  width:min(520px,calc(100vw - 24px))!important;
+  max-width:min(520px,calc(100vw - 24px))!important;
+  max-height:min(480px,calc(100dvh - 28px))!important;
+  padding:13px!important;
+  gap:9px!important;
+  border-radius:15px!important;
+}
+html body #resultChoicePopover[data-mode="theme"] .result-choice-head h2,
+html body #resultChoicePopover[data-mode="indicator"] .result-choice-head h2,
+html body #resultChoicePopover[data-mode="chart"] .result-choice-head h2{
+  font-size:16px!important;
+}
+html body #resultChoicePopover[data-mode="theme"] .result-choice-head small,
+html body #resultChoicePopover[data-mode="indicator"] .result-choice-head small,
+html body #resultChoicePopover[data-mode="chart"] .result-choice-head small{
+  font-size:8px!important;
+  margin-bottom:2px!important;
+}
+html body #resultChoicePopover[data-mode="theme"] .result-choice-close,
+html body #resultChoicePopover[data-mode="indicator"] .result-choice-close,
+html body #resultChoicePopover[data-mode="chart"] .result-choice-close{
+  width:30px!important;
+  height:30px!important;
+  flex-basis:30px!important;
+  font-size:18px!important;
+}
+html body #resultChoicePopover[data-mode="theme"] .result-choice-search,
+html body #resultChoicePopover[data-mode="indicator"] .result-choice-search,
+html body #resultChoicePopover[data-mode="chart"] .result-choice-search{
+  min-height:38px!important;
+  height:38px!important;
+  padding:0 10px!important;
+  border-radius:10px!important;
+}
+html body #resultChoicePopover[data-mode="theme"] .result-choice-options,
+html body #resultChoicePopover[data-mode="indicator"] .result-choice-options,
+html body #resultChoicePopover[data-mode="chart"] .result-choice-options{
+  gap:6px!important;
+  max-height:min(330px,44vh)!important;
+}
+html body #resultChoicePopover[data-mode="theme"] .result-choice-option,
+html body #resultChoicePopover[data-mode="indicator"] .result-choice-option,
+html body #resultChoicePopover[data-mode="chart"] .result-choice-option{
+  grid-template-columns:32px minmax(0,1fr) 21px!important;
+  gap:8px!important;
+  min-height:50px!important;
+  padding:7px 9px!important;
+  border-radius:10px!important;
+}
+html body #resultChoicePopover[data-mode="theme"] .result-choice-option-icon,
+html body #resultChoicePopover[data-mode="indicator"] .result-choice-option-icon,
+html body #resultChoicePopover[data-mode="chart"] .result-choice-option-icon{
+  width:32px!important;
+  height:32px!important;
+  border-radius:8px!important;
+}
+html body #resultChoicePopover[data-mode="theme"] .result-choice-option-icon svg,
+html body #resultChoicePopover[data-mode="indicator"] .result-choice-option-icon svg,
+html body #resultChoicePopover[data-mode="chart"] .result-choice-option-icon svg{
+  width:19px!important;
+  height:19px!important;
+}
+html body #resultChoicePopover[data-mode="theme"] .result-choice-option-copy strong,
+html body #resultChoicePopover[data-mode="indicator"] .result-choice-option-copy strong,
+html body #resultChoicePopover[data-mode="chart"] .result-choice-option-copy strong{
+  font-size:10px!important;
+}
+html body #resultChoicePopover[data-mode="theme"] .result-choice-option-copy small,
+html body #resultChoicePopover[data-mode="indicator"] .result-choice-option-copy small,
+html body #resultChoicePopover[data-mode="chart"] .result-choice-option-copy small{
+  font-size:8px!important;
+}
+
+/* Local um pouco menor para acompanhar os demais. */
+html body #resultChoicePopover[data-mode="filter-geographic"]{
+  width:min(460px,calc(100vw - 24px))!important;
+  max-width:min(460px,calc(100vw - 24px))!important;
+}
+html body #resultChoicePopover[data-mode="filter-geographic"] .geoquick-field select{
+  height:48px!important;
+  min-height:48px!important;
+  font-size:12px!important;
+}
+
+/* Período: substitui a grade de anos por intervalo detalhado. */
+html body #resultChoicePopover[data-mode="filter-period"]{
+  width:min(520px,calc(100vw - 24px))!important;
+  max-width:min(520px,calc(100vw - 24px))!important;
+  max-height:calc(100dvh - 28px)!important;
+  padding:14px!important;
+  border-radius:16px!important;
+}
+html body #resultChoicePopover[data-mode="filter-period"] .result-choice-options.quick-filter{
+  display:grid!important;
+  gap:10px!important;
+  width:100%!important;
+  min-width:0!important;
+  max-height:none!important;
+  overflow:visible!important;
+  padding:0!important;
+}
+.period16-summary{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:10px!important;
+  min-height:38px!important;
+  padding:8px 11px!important;
+  border:1px solid #D7E5EE!important;
+  border-radius:11px!important;
+  background:#F7FBFD!important;
+  box-sizing:border-box!important;
+}
+.period16-summary span{
+  color:#607990!important;
+  font-size:9px!important;
+  font-weight:800!important;
+}
+.period16-summary strong{
+  color:#087F79!important;
+  font-size:9.5px!important;
+  font-weight:900!important;
+  text-align:right!important;
+}
+.period16-card{
+  display:block!important;
+  width:100%!important;
+  padding:12px!important;
+  border:1px solid #D3E5F0!important;
+  border-radius:15px!important;
+  background:linear-gradient(180deg,#FBFEFF 0%,#F7FBFD 100%)!important;
+  box-sizing:border-box!important;
+}
+.period16-head{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:10px!important;
+  min-height:25px!important;
+  margin-bottom:7px!important;
+}
+.period16-head h3{
+  margin:0!important;
+  color:#0A3F73!important;
+  font-size:12px!important;
+  font-weight:900!important;
+}
+.period16-head b{
+  display:flex!important;
+  align-items:center!important;
+  min-height:23px!important;
+  padding:0 8px!important;
+  border:1px solid #B9E4E0!important;
+  border-radius:999px!important;
+  background:#EAF9F7!important;
+  color:#087F79!important;
+  font-size:8.5px!important;
+  font-weight:900!important;
+}
+.period16-scale{
+  display:grid!important;
+  grid-template-columns:auto minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:7px!important;
+  margin:0 0 9px!important;
+  color:#426985!important;
+  font-size:9px!important;
+  font-weight:900!important;
+}
+.period16-scale .age-dual-range{
+  height:24px!important;
+}
+.period16-scale .age-dual-range input[type="range"]{
+  height:24px!important;
+}
+.period16-fields{
+  display:grid!important;
+  grid-template-columns:92px 92px minmax(0,1fr)!important;
+  gap:10px!important;
+  align-items:start!important;
+  width:100%!important;
+  min-width:0!important;
+}
+.period16-fields>label,
+.period16-interval{
+  display:grid!important;
+  grid-template-rows:18px 38px!important;
+  gap:5px!important;
+  min-width:0!important;
+}
+.period16-fields>label>span,
+.period16-label{
+  display:flex!important;
+  align-items:center!important;
+  gap:5px!important;
+  height:18px!important;
+  min-height:18px!important;
+  color:#315C7D!important;
+  font-size:8.5px!important;
+  font-weight:900!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}
+.period16-fields input{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  height:38px!important;
+  padding:8px 10px!important;
+  border:1px solid #C9DDEB!important;
+  border-radius:10px!important;
+  outline:none!important;
+  background:#FFF!important;
+  color:#0A3F73!important;
+  font-size:10.5px!important;
+  font-weight:800!important;
+  box-sizing:border-box!important;
+}
+.period16-interval-control{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 68px!important;
+  gap:7px!important;
+  height:38px!important;
+  min-width:0!important;
+}
+.period16-interval-control button{
+  height:38px!important;
+  padding:0 9px!important;
+  border:1px solid #0FA7A0!important;
+  border-radius:10px!important;
+  background:#0FA7A0!important;
+  color:#FFF!important;
+  font-size:9px!important;
+  font-weight:900!important;
+  box-shadow:none!important;
+}
+.period16-help{
+  display:grid!important;
+  place-items:center!important;
+  flex:0 0 17px!important;
+  width:17px!important;
+  height:17px!important;
+  padding:0!important;
+  border:1px solid #BFD4E4!important;
+  border-radius:50%!important;
+  background:#F8FBFD!important;
+  color:#0A4C81!important;
+  font-size:9px!important;
+  font-weight:900!important;
+  cursor:help!important;
+}
+.period16-actions{
+  display:grid!important;
+  grid-template-columns:1.4fr 1fr 1fr!important;
+  gap:7px!important;
+  margin-top:9px!important;
+}
+.period16-actions button{
+  min-height:32px!important;
+  padding:6px 8px!important;
+  border:1px solid #C9DCE9!important;
+  border-radius:9px!important;
+  background:#FFF!important;
+  color:#0B467B!important;
+  font-size:8.5px!important;
+  font-weight:900!important;
+  box-shadow:none!important;
+}
+.period16-actions button:hover,
+.period16-actions button:focus-visible{
+  border-color:#54C6BE!important;
+  background:#F0FBFA!important;
+  outline:none!important;
+}
+html[data-theme="dark"] .period16-summary,
+html[data-theme="dark"] .period16-card{
+  background:#111E2A!important;
+  border-color:#30465A!important;
+}
+html[data-theme="dark"] .period16-fields input,
+html[data-theme="dark"] .period16-actions button{
+  background:#0F1923!important;
+  border-color:#30465A!important;
+  color:#DDEAF5!important;
+}
+@media (max-width:540px){
+  html body #resultChoicePopover[data-mode="filter-period"]{
+    width:calc(100vw - 12px)!important;
+    max-width:calc(100vw - 12px)!important;
+  }
+  .period16-fields{
+    grid-template-columns:1fr 1fr!important;
+  }
+  .period16-interval{
+    grid-column:1 / -1!important;
+  }
+  .period16-actions{
+    grid-template-columns:1fr!important;
+  }
+}
+
+
+/* ========================================================================== 
+   V18 — Modal demográfico no mesmo porte dos demais diálogos
+   ========================================================================== */
+html body #resultChoicePopover[data-mode="filter-demographic"]{
+  width:min(520px,calc(100vw - 24px))!important;
+  max-width:min(520px,calc(100vw - 24px))!important;
+  max-height:min(560px,calc(100dvh - 24px))!important;
+  left:50%!important;
+  right:auto!important;
+  margin:0!important;
+  transform:translateX(-50%)!important;
+}
+
+
+/* ==========================================================================
+   V19 — Cache renovado + demográfico realmente compacto
+   ========================================================================== */
+html body #resultChoicePopover[data-mode="filter-demographic"]{
+  width:min(500px,calc(100vw - 24px))!important;
+  max-width:min(500px,calc(100vw - 24px))!important;
+  max-height:min(540px,calc(100dvh - 24px))!important;
+  padding:12px!important;
+  border-radius:15px!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .result-choice-options.quick-filter{
+  gap:8px!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-summary{
+  min-height:34px!important;
+  padding:6px 9px!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-top{
+  grid-template-columns:minmax(0,1.55fr) minmax(150px,.8fr)!important;
+  gap:9px!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-sex-choice{
+  height:58px!important;
+  min-height:58px!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-population select{
+  height:58px!important;
+  min-height:58px!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-age{
+  padding:10px 11px!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo10-age-row{
+  grid-template-columns:82px 82px minmax(0,1fr)!important;
+  gap:8px!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo10-age-field,
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo10-interval-field{
+  grid-template-rows:17px 35px!important;
+  gap:4px!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo10-age-field>input,
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo10-interval-controls,
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo10-interval-controls>input,
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo10-interval-controls>button{
+  height:35px!important;
+  min-height:35px!important;
+  max-height:35px!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-clear-age{
+  height:29px!important;
+  min-height:29px!important;
+  margin-top:7px!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-quinquenal{
+  padding:9px 10px!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-quin-actions button{
+  height:28px!important;
+  min-height:28px!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-age-groups button{
+  height:31px!important;
+  min-height:31px!important;
+}
+html body #resultChoicePopover[data-mode="filter-geographic"]{
+  width:min(460px,calc(100vw - 24px))!important;
+  max-width:min(460px,calc(100vw - 24px))!important;
+}
+
+
+/* ==========================================================================
+   V21 — Identidade institucional: logos transparentes e orientador
+   ========================================================================== */
+.cabecalho-vigitel__credito-institucional{
+  display:flex!important;
+  align-items:center!important;
+  gap:10px!important;
+  flex-wrap:wrap!important;
+  margin-top:3px!important;
+}
+.cabecalho-vigitel__credito-institucional .cabecalho-vigitel__credito{
+  margin:0!important;
+}
+.cabecalho-vigitel__logos-institucionais{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:8px!important;
+  min-height:28px!important;
+}
+.cabecalho-vigitel__logos-institucionais img{
+  display:block!important;
+  width:auto!important;
+  max-width:72px!important;
+  max-height:28px!important;
+  object-fit:contain!important;
+  background:transparent!important;
+}
+.cabecalho-vigitel__logos-institucionais img:nth-child(2){max-height:30px!important;max-width:52px!important}
+.cabecalho-vigitel__logos-institucionais img:nth-child(3){max-height:28px!important;max-width:48px!important}
+.info-card--institucional{grid-column:1 / -1!important}
+.creditos-logos{
+  display:flex!important;
+  align-items:center!important;
+  gap:22px!important;
+  flex-wrap:wrap!important;
+  margin-top:16px!important;
+}
+.creditos-logos img{
+  display:block!important;
+  width:auto!important;
+  max-width:170px!important;
+  max-height:72px!important;
+  object-fit:contain!important;
+  background:transparent!important;
+}
+.creditos-logos img:nth-child(2){max-width:100px!important;max-height:82px!important}
+.creditos-logos img:nth-child(3){max-width:105px!important;max-height:76px!important}
+html[data-theme="dark"] .cabecalho-vigitel__logos-institucionais img,
+html[data-theme="dark"] .creditos-logos img{background:transparent!important}
+@media (max-width:760px){
+  .cabecalho-vigitel__credito-institucional{align-items:flex-start!important;flex-direction:column!important;gap:5px!important}
+  .cabecalho-vigitel__logos-institucionais img{max-height:24px!important;max-width:62px!important}
+  .creditos-logos{gap:14px!important}
+}
+
+
+/* ========================================================================== 
+   V22 — Créditos institucionais no mesmo padrão dos demais cartões
+   ========================================================================== */
+.info-page--creditos .credits-grid{
+  align-items:stretch!important;
+}
+.info-page--creditos .credit-card--com-logo,
+.info-page--creditos .credit-card--orientador{
+  grid-column:auto!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+}
+.info-page--creditos .credit-card-logo{
+  display:block!important;
+  width:auto!important;
+  max-width:150px!important;
+  height:62px!important;
+  max-height:62px!important;
+  margin:0 0 14px!important;
+  object-fit:contain!important;
+  object-position:left center!important;
+  background:transparent!important;
+}
+.info-page--creditos .credit-card-logo--ccet{
+  max-width:86px!important;
+  height:66px!important;
+  max-height:66px!important;
+}
+.info-page--creditos .credit-card-logo--ppgdem{
+  max-width:100px!important;
+  height:66px!important;
+  max-height:66px!important;
+}
+.info-page--creditos .credit-card--com-logo h3,
+.info-page--creditos .credit-card--orientador h3{
+  margin-top:0!important;
+}
+.info-page--creditos .credit-card--com-logo a{
+  margin-top:auto!important;
+}
+.info-page--creditos .credit-card-orientador-icon{
+  display:grid!important;
+  place-items:center!important;
+  width:56px!important;
+  height:56px!important;
+  margin:0 0 14px!important;
+  border:1px solid #BDE4E1!important;
+  border-radius:16px!important;
+  background:#EEF9F8!important;
+  color:#078E87!important;
+  font-size:25px!important;
+  font-weight:900!important;
+}
+html[data-theme="dark"] .info-page--creditos .credit-card-logo{
+  background:transparent!important;
+}
+html[data-theme="dark"] .info-page--creditos .credit-card-orientador-icon{
+  border-color:#315767!important;
+  background:#143233!important;
+  color:#74DDD5!important;
+}
+@media (max-width:760px){
+  .info-page--creditos .credit-card-logo{
+    height:54px!important;
+    max-height:54px!important;
+  }
+}
+
+/* ========================================================================== 
+   V23 — Créditos: logos, ícones e alinhamento editorial padronizados
+   ========================================================================== */
+.info-page--creditos .credits-grid--institucional{
+  align-items:stretch!important;
+  gap:20px!important;
+}
+.info-page--creditos .credit-card--institution{
+  display:flex!important;
+  flex-direction:column!important;
+  min-height:270px!important;
+  padding:26px!important;
+}
+.info-page--creditos .credit-card--institution .credit-card-main{
+  display:grid!important;
+  grid-template-columns:96px minmax(0,1fr)!important;
+  gap:20px!important;
+  align-items:start!important;
+  width:100%!important;
+}
+.info-page--creditos .credit-card-visual{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:96px!important;
+  height:82px!important;
+  padding:10px!important;
+  border:1px solid #D8E6EF!important;
+  border-radius:18px!important;
+  background:#FFFFFF!important;
+  box-sizing:border-box!important;
+}
+.info-page--creditos .credit-card-visual img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:82px!important;
+  max-height:66px!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  background:transparent!important;
+}
+.info-page--creditos .credit-card-visual--ufrn img{
+  max-width:68px!important;
+  max-height:70px!important;
+}
+.info-page--creditos .credit-card-visual--vigitel img{
+  max-width:76px!important;
+  max-height:60px!important;
+}
+.info-page--creditos .credit-card-visual--icon{
+  color:#078E87!important;
+  background:#EEF9F8!important;
+  border-color:#BDE4E1!important;
+}
+.info-page--creditos .credit-card-visual--icon svg{
+  display:block!important;
+  width:48px!important;
+  height:48px!important;
+}
+.info-page--creditos .credit-card-copy{
+  min-width:0!important;
+  padding-top:2px!important;
+}
+.info-page--creditos .credit-card-copy h3{
+  margin:0 0 10px!important;
+  color:#A96500!important;
+  font-size:22px!important;
+  line-height:1.15!important;
+}
+.info-page--creditos .credit-card-copy p{
+  margin:0!important;
+  color:#31587C!important;
+  font-size:14px!important;
+  line-height:1.62!important;
+}
+.info-page--creditos .credit-card-copy p strong{
+  color:#173F68!important;
+  font-weight:900!important;
+}
+.info-page--creditos .credit-card--institution>a{
+  align-self:flex-start!important;
+  margin-top:auto!important;
+  padding-top:18px!important;
+}
+html[data-theme="dark"] .info-page--creditos .credit-card-visual{
+  border-color:#30465A!important;
+  background:#111E2A!important;
+}
+html[data-theme="dark"] .info-page--creditos .credit-card-visual--icon{
+  background:#143233!important;
+  border-color:#315767!important;
+  color:#74DDD5!important;
+}
+html[data-theme="dark"] .info-page--creditos .credit-card-copy h3{
+  color:#E3A940!important;
+}
+html[data-theme="dark"] .info-page--creditos .credit-card-copy p{
+  color:#C1D3E0!important;
+}
+html[data-theme="dark"] .info-page--creditos .credit-card-copy p strong{
+  color:#F0F6FA!important;
+}
+@media (max-width:1100px){
+  .info-page--creditos .credit-card--institution .credit-card-main{
+    grid-template-columns:80px minmax(0,1fr)!important;
+    gap:16px!important;
+  }
+  .info-page--creditos .credit-card-visual{
+    width:80px!important;
+    height:72px!important;
+  }
+  .info-page--creditos .credit-card-copy h3{
+    font-size:19px!important;
+  }
+}
+@media (max-width:760px){
+  .info-page--creditos .credit-card--institution{
+    min-height:0!important;
+    padding:20px!important;
+  }
+  .info-page--creditos .credit-card--institution .credit-card-main{
+    grid-template-columns:72px minmax(0,1fr)!important;
+    gap:14px!important;
+  }
+  .info-page--creditos .credit-card-visual{
+    width:72px!important;
+    height:66px!important;
+    border-radius:15px!important;
+  }
+  .info-page--creditos .credit-card-copy h3{
+    font-size:18px!important;
+  }
+  .info-page--creditos .credit-card-copy p{
+    font-size:13px!important;
+  }
+}
+
+/* ========================================================================== 
+   V24 — Compatibilidade ampla: iPhone/iPad, Android, tablets e desktop
+   ========================================================================== */
+:root{
+  --app-viewport-height:100vh;
+  --app-viewport-width:100vw;
+}
+
+html{
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+  min-width:0;
+}
+
+body{
+  min-width:0;
+  min-height:100vh;
+  min-height:-webkit-fill-available;
+}
+
+img,svg,canvas,video{
+  max-width:100%;
+}
+
+/* Fallback para navegadores em que <dialog> ainda não possui comportamento nativo. */
+dialog.app-dialog:not([open]){display:none}
+dialog.app-dialog.dialog-fallback-open{
+  position:fixed!important;
+  z-index:8001!important;
+  inset:50% auto auto 50%!important;
+  display:block!important;
+  margin:0!important;
+  transform:translate(-50%,-50%)!important;
+}
+body.dialog-fallback-lock{overflow:hidden!important}
+body.dialog-fallback-lock::before{
+  content:"";
+  position:fixed;
+  z-index:8000;
+  inset:0;
+  background:rgba(4,18,31,.62);
+  -webkit-backdrop-filter:blur(4px);
+  backdrop-filter:blur(4px);
+}
+
+/* A posição calculada pelo JavaScript usa coordenadas da viewport; fixed evita
+   deslocamento incorreto quando a página do computador já foi rolada. */
+#resultChoicePopover.result-choice-popover{
+  position:fixed;
+}
+
+@media (min-width:761px) and (hover:hover) and (pointer:fine){
+  .desktop-movable-handle{
+    cursor:move!important;
+    cursor:grab!important;
+    -webkit-user-select:none;
+    user-select:none;
+  }
+  .desktop-movable-panel.is-being-moved .desktop-movable-handle{
+    cursor:grabbing!important;
+  }
+  .desktop-movable-panel.is-being-moved{
+    transition:none!important;
+    will-change:left,top;
+  }
+  body.moving-floating-panel{
+    -webkit-user-select:none!important;
+    user-select:none!important;
+  }
+}
+
+/* Tablets touch recebem uma caixa centralizada, sem depender do suporte a
+   drag-and-drop do Safari/iPadOS. */
+@media (max-width:1024px) and (hover:none),
+       (max-width:1024px) and (pointer:coarse){
+  #resultChoicePopover.result-choice-popover{
+    position:fixed!important;
+    z-index:6000!important;
+    left:50%!important;
+    top:50%!important;
+    right:auto!important;
+    bottom:auto!important;
+    width:min(92vw,640px)!important;
+    max-width:calc(100vw - 24px)!important;
+    max-height:calc(var(--app-viewport-height,100vh) - 28px)!important;
+    margin:0!important;
+    transform:translate(-50%,-50%)!important;
+  }
+}
+
+/* iPhone/iPad: área segura, altura real do Safari e controles sem zoom
+   automático ao receber foco. */
+@media (max-width:760px), (hover:none) and (pointer:coarse) and (max-width:600px){
+  body{
+    padding-left:env(safe-area-inset-left)!important;
+    padding-right:env(safe-area-inset-right)!important;
+    padding-bottom:max(20px,env(safe-area-inset-bottom))!important;
+  }
+
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]),
+  select,
+  textarea{
+    font-size:16px!important;
+  }
+
+  .cabecalho-vigitel .main-nav{
+    max-height:calc(var(--app-viewport-height,100vh) - 116px)!important;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  .filter-panel{
+    max-height:calc(var(--app-viewport-height,100vh) - max(12px,env(safe-area-inset-top)))!important;
+    padding-bottom:max(18px,env(safe-area-inset-bottom))!important;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  #resultChoicePopover.result-choice-popover{
+    width:calc(100vw - max(28px,env(safe-area-inset-left) + env(safe-area-inset-right) + 16px))!important;
+    max-width:640px!important;
+    max-height:calc(var(--app-viewport-height,100vh) - 24px)!important;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  #resultChoicePopover .result-choice-options,
+  .dialog-body,
+  .glossary-dialog .glossary-content,
+  .glossary-dialog .glossary-list{
+    -webkit-overflow-scrolling:touch;
+  }
+
+  .glossary-dialog[open]{
+    height:calc(var(--app-viewport-height,100vh) - 16px)!important;
+    max-height:calc(var(--app-viewport-height,100vh) - 16px)!important;
+  }
+
+  .onboarding-dialog,
+  .app-dialog{
+    max-height:calc(var(--app-viewport-height,100vh) - 20px)!important;
+  }
+
+  .dialog-body{
+    max-height:calc(var(--app-viewport-height,100vh) - 92px)!important;
+  }
+
+  /* Elementos clicáveis mantêm alvo confortável em telas touch. */
+  button,
+  .btn,
+  .result-filter-chip,
+  .result-choice-option,
+  .header-menu>summary,
+  .main-nav>a{
+    touch-action:manipulation;
+    -webkit-tap-highlight-color:rgba(15,167,160,.14);
+  }
+}
+
+/* iPad e tablets em retrato: evita cartões comprimidos e tabelas estourando. */
+@media (min-width:761px) and (max-width:1024px){
+  .workspace,
+  .workspace.analysis-ready{
+    width:calc(100% - 24px)!important;
+    margin:0 auto!important;
+    padding-left:0!important;
+    padding-right:0!important;
+  }
+  .result-toolbar{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+  .result-edit-filters{
+    grid-column:1/-1!important;
+  }
+  .data-table-scroll,
+  .table-wrap{
+    max-width:100%!important;
+    overflow-x:auto!important;
+    -webkit-overflow-scrolling:touch;
+  }
+}
+
+/* Safari antigo não entende 100dvh; a variável atualizada pelo JS assume o lugar. */
+@supports (-webkit-touch-callout:none){
+  .mobile-filter-overlay{
+    -webkit-backdrop-filter:blur(1px);
+    backdrop-filter:blur(1px);
+  }
+  .cabecalho-vigitel,
+  .results,
+  .filter-panel,
+  .left-panel,
+  .builder-panel{
+    -webkit-transform:translateZ(0);
+  }
+}
+
+/* Seleção múltipla compacta para local e população, mantendo o layout existente. */
+.quick-multi-field{
+  display:grid!important;
+  gap:8px!important;
+  min-width:0!important;
+}
+.quick-multi-label-row{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:12px!important;
+}
+.quick-multi-label-row span{
+  color:#48657E!important;
+  font-size:12px!important;
+  font-weight:800!important;
+}
+.quick-multi-label-row b{
+  color:#087F79!important;
+  font-size:11px!important;
+  font-weight:900!important;
+}
+.quick-multi-trigger{
+  min-height:56px!important;
+  border:1.5px solid #7FDFDA!important;
+  border-radius:22px!important;
+  background:#FFFFFF!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:12px!important;
+  width:100%!important;
+  padding:0 18px!important;
+  box-shadow:0 10px 22px rgba(13,70,120,.08)!important;
+  cursor:pointer!important;
+  text-align:left!important;
+  appearance:none!important;
+  -webkit-appearance:none!important;
+}
+.quick-multi-trigger strong{
+  color:#073B70!important;
+  font-size:15px!important;
+  font-weight:800!important;
+  line-height:1.2!important;
+  flex:1 1 auto!important;
+  min-width:0!important;
+}
+.quick-multi-chevron{
+  color:#0D4B78!important;
+  font-size:20px!important;
+  line-height:1!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  flex:0 0 auto!important;
+  align-self:center!important;
+  min-height:100%!important;
+  transition:transform .18s ease!important;
+}
+.quick-multi-field[data-open="true"] .quick-multi-trigger{
+  border-radius:22px 22px 0 0!important;
+}
+.quick-multi-field[data-open="true"] .quick-multi-chevron{
+  transform:rotate(180deg)!important;
+}
+.quick-multi-list{
+  border:1px solid rgba(22,50,79,.16)!important;
+  border-radius:0 0 18px 18px!important;
+  margin-top:-6px!important;
+  padding:10px 12px!important 12px!important;
+  max-height:250px!important;
+  overflow:auto!important;
+  background:#FFFFFF!important;
+  box-shadow:0 16px 28px rgba(13,70,120,.08)!important;
+}
+.quick-multi-list[hidden]{
+  display:none!important;
+}
+.quick-multi-option{
+  display:grid!important;
+  grid-template-columns:18px 1fr!important;
+  align-items:center!important;
+  column-gap:10px!important;
+  padding:7px 2px!important;
+  cursor:pointer!important;
+  border-radius:10px!important;
+}
+.quick-multi-option:hover{
+  background:#F4FAFD!important;
+}
+.quick-multi-option input{
+  position:absolute!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+.quick-multi-box{
+  width:18px!important;
+  height:18px!important;
+  border:1.5px solid #93AFC6!important;
+  border-radius:5px!important;
+  background:#FFFFFF!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+.quick-multi-option.checked .quick-multi-box,
+.quick-multi-option input:checked + .quick-multi-box{
+  border-color:#0FA7A0!important;
+  background:#0FA7A0!important;
+}
+.quick-multi-option.checked .quick-multi-box::after,
+.quick-multi-option input:checked + .quick-multi-box::after{
+  content:'✓'!important;
+  color:#FFFFFF!important;
+  font-size:11px!important;
+  font-weight:900!important;
+}
+.quick-multi-text{
+  color:#16324F!important;
+  font-size:14px!important;
+  font-weight:600!important;
+  line-height:1.35!important;
+}
+html body #resultChoicePopover[data-mode="filter-geographic"] .geoquick-fields.geoquick-fields-checklist,
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-population{
+  display:grid!important;
+  gap:14px!important;
+}
+html body #resultChoicePopover[data-mode="filter-geographic"] .geoquick-fields.geoquick-fields-checklist{
+  grid-template-columns:1fr!important;
+}
+html body #resultChoicePopover[data-mode="filter-demographic"] .demo6-population .quick-multi-trigger{
+  min-height:52px!important;
+}
+html[data-theme="dark"] .quick-multi-trigger,
+html[data-theme="dark"] .quick-multi-list{
+  background:#FFFFFF!important;
+}
+@media (max-width: 768px){
+  .quick-multi-trigger{
+    min-height:52px!important;
+    border-radius:18px!important;
+    padding:0 14px!important;
+  }
+  .quick-multi-trigger strong{
+    font-size:14px!important;
+  }
+  .quick-multi-list{
+    max-height:220px!important;
+  }
+}

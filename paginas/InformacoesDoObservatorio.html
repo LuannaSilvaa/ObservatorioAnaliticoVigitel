@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<!--
+  Páginas informativas do Observatório Analítico do Vigitel.
+  Cada item do menu apresenta somente o seu próprio conteúdo, mantendo
+  metodologia, projeto, contato, créditos e downloads visualmente separados.
+-->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<meta content="no-cache, no-store, must-revalidate" http-equiv="Cache-Control"/>
+<meta content="no-cache" http-equiv="Pragma"/>
+<meta content="0" http-equiv="Expires"/>
+<title>Informações · Observatório Analítico do Vigitel</title>
+<meta content="#F7FAFD" id="themeColorMeta" name="theme-color"/>
+<meta content="Metodologia, apresentação, contato, créditos e orientações sobre os microdados do Observatório Analítico do Vigitel." name="description"/>
+<meta content="Luanna Morais Alves da Silva" name="author"/>
+<meta content="index, follow" name="robots"/>
+<link href="../assets/img/IdentidadeVisualDoObservatorio.svg" rel="icon" type="image/svg+xml"/>
+<link href="../assets/css/InterfaceVisualDoObservatorio.css?edicao=correcaoTodosControles20260801" rel="stylesheet"/>
+<link href="../assets/css/AjustesFinaisDeInteracao.css?edicao=compatibilidadeMultidispositivo20260826v24" rel="stylesheet"/>
+<script src="../assets/js/core/ConfiguracaoRenovadaDoTema.js?edicao=compatibilidadeMultidispositivo20260827v25"></script>
+</head>
+<body class="pagina-informacoes">
+<a class="skip-link" href="#conteudoInformativo">Ir direto para o conteúdo</a>
+<!-- Cabeçalho compartilhado com o painel para preservar a identidade visual e a navegação. -->
+<header class="cabecalho-vigitel">
+<div class="cabecalho-vigitel__marca">
+<img alt="Logo do Observatório" class="cabecalho-vigitel__logo" src="../assets/img/IdentidadeVisualDoObservatorio.svg"/>
+<div class="cabecalho-vigitel__texto">
+<p class="cabecalho-vigitel__rotulo">Observatório</p>
+<h1>Observatório Analítico de Indicadores do Vigitel</h1>
+<p class="cabecalho-vigitel__resumo">Plataforma acadêmica para análise, comparação e visualização de indicadores de saúde pública.</p>
+<p class="cabecalho-vigitel__credito">Projeto de extensão · LEPS/UFRN</p>
+</div>
+</div>
+<div class="cabecalho-vigitel__lado">
+<button aria-controls="mainNavigation" aria-expanded="false" class="mobile-menu-toggle" id="mobileMenuToggle" type="button"><span aria-hidden="true">☰</span><span>Menu</span></button>
+<nav aria-label="Menu principal" class="main-nav" id="mainNavigation">
+<a class="header-panel-link" href="../index.html#painel"><svg aria-hidden="true" viewbox="0 0 24 24"><rect fill="currentColor" height="7" rx="1" width="7" x="3" y="3"></rect><rect fill="currentColor" height="7" rx="1" width="7" x="14" y="3"></rect><rect fill="currentColor" height="7" rx="1" width="7" x="3" y="14"></rect><rect fill="currentColor" height="7" rx="1" width="7" x="14" y="14"></rect></svg><span>Painel</span></a>
+<details class="header-menu active">
+<summary><svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="12" cy="12" fill="none" r="9" stroke="currentColor" stroke-width="1.8"></circle><path d="M12 10.7v5.4M12 7.2h.01" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path></svg><span>O Observatório</span><span aria-hidden="true" class="header-chevron">⌄</span></summary>
+<div class="header-dropdown">
+<a data-info-section="sobre" href="#sobre"><strong>Projeto</strong><small>Conheça objetivos e público</small></a>
+<a data-info-section="metodologia" href="#metodologia"><strong>Metodologia</strong><small>Entenda dados e indicadores</small></a>
+<a data-info-section="creditos" href="#creditos"><strong>Créditos</strong><small>Instituições e referências</small></a>
+</div>
+</details>
+<details class="header-menu">
+<summary><svg aria-hidden="true" viewbox="0 0 24 24"><ellipse cx="12" cy="5.5" fill="none" rx="7.5" ry="3" stroke="currentColor" stroke-width="1.8"></ellipse><path d="M4.5 5.5v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6M4.5 11.5v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg><span>Dados e recursos</span><span aria-hidden="true" class="header-chevron">⌄</span></summary>
+<div class="header-dropdown">
+<a data-info-section="microdados" href="#microdados"><strong>Downloads</strong><small>Microdados e arquivos</small></a>
+</div>
+</details>
+<details class="header-menu">
+<summary><svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="12" cy="12" fill="none" r="9" stroke="currentColor" stroke-width="1.8"></circle><path d="M9.6 9.2a2.6 2.6 0 0 1 5 .9c0 2-2.6 2.1-2.6 4M12 17.4h.01" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.9"></path></svg><span>Ajuda</span><span aria-hidden="true" class="header-chevron">⌄</span></summary>
+<div class="header-dropdown header-dropdown-right">
+<a href="../index.html?tutorial=1#painel"><strong>Como usar</strong><small>Veja o guia em quatro etapas</small></a>
+<a data-info-section="contato" href="#contato"><strong>Contato</strong><small>Envie dúvidas e sugestões</small></a>
+</div>
+</details>
+<span aria-hidden="true" class="header-divider"></span>
+<div aria-label="Ações rápidas" class="header-utilities">
+<button aria-label="Ativar modo claro" data-header-theme data-theme-choice="light" title="Modo claro" type="button"><svg aria-hidden="true" class="theme-light-icon" viewbox="0 0 24 24"><circle cx="12" cy="12" fill="none" r="4" stroke="currentColor" stroke-width="1.8"></circle><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M18.7 5.3l-1.4 1.4M6.7 17.3l-1.4 1.4" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg></button>
+<button aria-label="Ativar modo escuro" data-header-theme data-theme-choice="dark" title="Modo escuro" type="button"><svg aria-hidden="true" class="theme-dark-icon" viewbox="0 0 24 24"><path d="M20.4 15.3A8.5 8.5 0 0 1 8.7 3.6 8.5 8.5 0 1 0 20.4 15.3Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"></path></svg></button>
+<a aria-label="Abrir administração" class="header-admin-link" href="AdministracaoDoObservatorio.html" title="Administração"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="m9.4 4.2.6-2.2h4l.6 2.2 2 .8 2-1.1 2.1 3.5-1.8 1.5.2 2.1 2 1.2-2 3.5-2.2-.8-1.7 1.2-.4 2.4h-4l-.6-2.3-1.9-.8-2.1 1.1-2-3.5 1.8-1.5-.1-2.1-2-1.2 2-3.5 2 .8 1.5-1.3Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.55"></path><circle cx="12" cy="12" fill="none" r="3" stroke="currentColor" stroke-width="1.7"></circle></svg></a>
+</div>
+</nav>
+</div>
+</header>
+
+<!-- Cada seção possui identificador próprio para permitir links diretos e navegação por teclado. -->
+<main class="conteudo-informativo" id="conteudoInformativo">
+<section class="info-section info-page info-page--metodologia" id="metodologia">
+<header class="info-hero"><span class="info-hero-icon" aria-hidden="true">▤</span><div><span class="info-eyebrow">Como os dados ganham significado</span><h2>Metodologia e fontes</h2><p>O Observatório Analítico do Vigitel apresenta indicadores de saúde pública em formato interativo, permitindo consultar tendências, comparar recortes populacionais e baixar os Resultados Processados exibidos no painel. A plataforma utiliza dados do Vigitel, do Ministério da Saúde, organizados para facilitar a leitura por estudantes, pesquisadores, profissionais de saúde, gestores e demais pessoas interessadas em informações sobre fatores de risco e proteção para doenças crônicas.</p><div class="info-tags"><span>Fonte oficial</span><span>63 indicadores</span><span>Séries comparáveis</span></div></div></header>
+<div class="info-grid">
+<article class="info-card"><h3>Fonte dos dados</h3><p>Os indicadores são baseados no Vigitel, sistema de vigilância que acompanha, por inquérito telefônico, fatores de risco e proteção para doenças crônicas nas capitais brasileiras e no Distrito Federal. A identificação da fonte aparece nos gráficos, nas tabelas e nas áreas de download.</p></article>
+<article class="info-card"><h3>Leitura dos Resultados Processados</h3><p>Os valores são apresentados em percentual e representam a prevalência estimada do indicador no recorte selecionado. Os filtros permitem observar diferenças por período, sexo, região, UF, idade, faixa etária e tipo de população.</p></article>
+<article class="info-card"><h3>Recortes disponíveis</h3><p>O painel permite análises por ano, localização, sexo, idade detalhada, faixa etária quinquenal e tipo de população. Quando nenhuma opção específica é marcada, o painel considera o conjunto completo disponível para aquele filtro.</p></article>
+<article class="info-card"><h3>Gráficos e tabelas</h3><p>Após selecionar tema, indicador, filtros e tipo de gráfico, a plataforma gera uma visualização com título, subtítulo, fonte e tabela de apoio. As informações foram organizadas para que o gráfico possa ser compreendido mesmo fora do ambiente do site.</p></article>
+<article class="info-card"><h3>Exportações</h3><p>O usuário pode baixar a análise em CSV ou Excel, exportar a base filtrada e salvar o gráfico em PNG ou SVG vetorial. Esses recursos apoiam relatórios, apresentações, estudos acadêmicos e materiais de divulgação.</p></article>
+<article class="info-card"><h3>Transparência</h3><p>O projeto disponibiliza os arquivos utilizados para ampliar a transparência e permitir consulta, conferência e reprodução das análises por outros usuários.</p></article>
+</div>
+</section>
+
+<section class="info-section info-page info-page--projeto" hidden="" id="sobre">
+<header class="info-hero"><span class="info-hero-icon" aria-hidden="true">◎</span><div><span class="info-eyebrow">Dados públicos, leitura humana</span><h2>Sobre o projeto</h2><p>O Observatório Analítico do Vigitel é uma plataforma acadêmica de consulta e visualização de indicadores de saúde pública. Seu objetivo é transformar dados complexos em gráficos e tabelas de fácil leitura, ajudando o usuário a compreender padrões relacionados a hábitos, comportamentos e condições de saúde da população adulta brasileira.</p><div class="info-tags"><span>Extensão universitária</span><span>Visualização acessível</span><span>Saúde pública</span></div></div></header>
+<div class="info-grid">
+<article class="info-card"><h3>Objetivo</h3><p>Facilitar o acesso a indicadores do Vigitel por meio de uma interface visual, organizada e interativa, sem exigir que o usuário manipule planilhas ou escreva código para gerar análises.</p></article>
+<article class="info-card"><h3>Como usar</h3><p>Monte a análise escolhendo tema, indicador, filtros e gráfico. No resultado, os blocos podem ser reorganizados e as opções podem ser soltas diretamente sobre o desenho central; o gráfico aparece automaticamente quando as quatro escolhas estiverem completas. Também é possível comparar indicadores, abrir em tela cheia, personalizar cores, fundo e bordas, e baixar em diferentes formatos. “Limpar análise” apaga as escolhas atuais sem abandonar o layout do painel.</p></article>
+<article class="info-card"><h3>Temas disponíveis</h3><p>O painel reúne indicadores relacionados a tabagismo, álcool, obesidade, alimentação, atividade física, autoavaliação de saúde, prevenção de câncer, morbidade referida e trânsito.</p></article>
+<article class="info-card"><h3>Público de interesse</h3><p>A ferramenta pode ser usada por estudantes, pesquisadores, profissionais de saúde, gestores públicos, extensionistas e pessoas interessadas em acompanhar indicadores de saúde no Brasil.</p></article>
+<article class="info-card"><h3>Período coberto</h3><p>A versão atual reúne dados de 2006 a 2024, exceto 2022, conforme as edições efetivamente presentes na base validada. O painel também considera a base específica de População Negra de 2018 quando aplicável.</p></article>
+<article class="info-card"><h3>Uso dos Resultados Processados</h3><p>Os gráficos e tabelas podem apoiar estudos acadêmicos, apresentações, relatórios técnicos, materiais de extensão e atividades de divulgação de dados em saúde pública.</p></article>
+</div>
+</section>
+
+<section class="info-section info-page info-page--contato" hidden="" id="contato">
+<header class="info-hero"><span class="info-hero-icon" aria-hidden="true">✉</span><div><span class="info-eyebrow">Uma plataforma construída com escuta</span><h2>Contato e feedback</h2><p>O feedback dos usuários ajuda a melhorar a clareza dos textos, a organização dos filtros, a experiência de navegação e a qualidade das visualizações. Sugestões sobre indicadores, gráficos, acessibilidade e forma de apresentação dos dados podem orientar futuras melhorias do observatório.</p><div class="info-tags"><span>Responsabilidade acadêmica</span><span>Melhoria contínua</span><span>LEPS/UFRN</span></div></div></header>
+<div class="info-grid">
+<article class="info-card"><h3>Responsável pelo projeto</h3><p>Luanna Morais Alves da Silva.</p></article>
+<article class="info-card"><h3>Instituição</h3><p>Universidade Federal do Rio Grande do Norte — UFRN.</p></article>
+<article class="info-card"><h3>Laboratório</h3><p>LEPS — Laboratório de Estudos em População e Saúde.</p></article>
+<article class="info-card"><h3>Finalidade</h3><p>Disponibilizar uma ferramenta acadêmica e pública para visualização, comparação e exportação de indicadores de saúde.</p></article>
+<article class="info-card"><h3>Melhorias esperadas</h3><p>Comentários dos usuários podem contribuir para aprimorar filtros, títulos, legendas, textos explicativos, exportações e adaptação para diferentes telas.</p></article>
+<article class="info-card contact-card"><h3>Canal institucional</h3><p>Para dúvidas e sugestões acadêmicas, utilize a secretaria do Programa de Pós-Graduação em Demografia da UFRN.</p><div class="contact-actions"><a href="mailto:ppgdem@gmail.com?subject=Feedback%20sobre%20o%20Observat%C3%B3rio%20Anal%C3%ADtico%20do%20Vigitel">Enviar e-mail</a><a href="tel:+5584994746779">Ligar para (84) 99474-6779</a><a href="https://posgraduacao.ufrn.br/5570/contato" rel="noopener noreferrer" target="_blank">Ver contato oficial da UFRN</a></div></article>
+</div>
+</section>
+
+<section class="info-section info-page info-page--creditos" hidden="" id="creditos">
+<header class="info-hero"><span class="info-hero-icon" aria-hidden="true">◇</span><div><span class="info-eyebrow">A rede institucional por trás do observatório</span><h2>Créditos e referências</h2><p>Este observatório utiliza dados e referências institucionais relacionados à saúde pública, à demografia e à Universidade Federal do Rio Grande do Norte. Os links abaixo direcionam o usuário para as páginas oficiais associadas ao contexto acadêmico e institucional do projeto.</p><div class="info-tags"><span>Ministério da Saúde</span><span>UFRN</span><span>Produção científica</span></div></div></header>
+<div class="info-grid credits-grid credits-grid--institucional">
+<article class="info-card credit-card credit-card--institution">
+  <div class="credit-card-main"><div class="credit-card-visual"><img alt="Logo do LEPS — Laboratório de Estudos em População e Saúde" src="../assets/img/LogoLEPSTransparente.png"/></div><div class="credit-card-copy"><h3>LEPS</h3><p>Laboratório de Estudos em População e Saúde da UFRN, ambiente acadêmico de pesquisa e extensão que dá suporte ao desenvolvimento do observatório.</p></div></div>
+  <a aria-label="Acessar Instagram do LEPS" href="https://www.instagram.com/lepsufrn/" rel="noopener noreferrer" target="_blank">Acessar Instagram do LEPS</a>
+</article>
+<article class="info-card credit-card credit-card--institution">
+  <div class="credit-card-main"><div class="credit-card-visual"><img alt="Logo do CCET — Centro de Ciências Exatas e da Terra" src="../assets/img/LogoCCETTransparente.png"/></div><div class="credit-card-copy"><h3>CCET / UFRN</h3><p>Centro de Ciências Exatas e da Terra da Universidade Federal do Rio Grande do Norte, unidade acadêmica vinculada à formação e à produção científica do projeto.</p></div></div>
+  <a href="https://www.ccet.ufrn.br/" rel="noopener noreferrer" target="_blank">Acessar site do CCET</a>
+</article>
+<article class="info-card credit-card credit-card--institution">
+  <div class="credit-card-main"><div class="credit-card-visual"><img alt="Logo do Programa de Pós-Graduação em Demografia da UFRN" src="../assets/img/LogoDemografiaTransparente.png"/></div><div class="credit-card-copy"><h3>PPGDem / UFRN</h3><p>Programa de Pós-Graduação em Demografia da UFRN, responsável por formação e produção científica nas áreas de população, demografia e saúde.</p></div></div>
+  <a href="https://posgraduacao.ufrn.br/5570" rel="noopener noreferrer" target="_blank">Acessar página do PPGDem</a>
+</article>
+<article class="info-card credit-card credit-card--institution">
+  <div class="credit-card-main"><div class="credit-card-visual credit-card-visual--icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M7 18 24 9l17 9-17 9L7 18Z" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round"/><path d="M13 22v8c4.5 4.8 17.5 4.8 22 0v-8M40 19v12" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/><circle cx="40" cy="34" r="2.2" fill="currentColor"/></svg></div><div class="credit-card-copy"><h3>Orientação acadêmica</h3><p><strong>José Vilton Costa</strong><br/>Orientador acadêmico do projeto e responsável pelo acompanhamento científico do desenvolvimento do observatório.</p></div></div>
+</article>
+<article class="info-card credit-card credit-card--institution">
+  <div class="credit-card-main"><div class="credit-card-visual credit-card-visual--vigitel"><img alt="Identidade visual do Vigitel" src="https://www.gov.br/saude/pt-br/composicao/svsa/inqueritos-de-saude/imagens/vigitel.png/@@images/image"/></div><div class="credit-card-copy"><h3>Vigitel / Ministério da Saúde</h3><p>Fonte oficial dos indicadores utilizados no painel. O Vigitel monitora fatores de risco e proteção para doenças crônicas nas capitais brasileiras e no Distrito Federal.</p></div></div>
+  <a href="https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/v/vigitel" rel="noopener noreferrer" target="_blank">Acessar página do Vigitel</a>
+</article>
+<article class="info-card credit-card credit-card--institution">
+  <div class="credit-card-main"><div class="credit-card-visual credit-card-visual--ufrn"><img alt="Brasão da Universidade Federal do Rio Grande do Norte" src="../assets/img/LogoUFRNTransparente.png"/></div><div class="credit-card-copy"><h3>UFRN</h3><p>Universidade Federal do Rio Grande do Norte, instituição de referência do projeto e espaço de formação, pesquisa, extensão e produção de conhecimento científico.</p></div></div>
+  <a href="https://www.ufrn.br/" rel="noopener noreferrer" target="_blank">Acessar site da UFRN</a>
+</article>
+<article class="info-card credit-card credit-card--institution">
+  <div class="credit-card-main"><div class="credit-card-visual credit-card-visual--icon" aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="17" cy="17" r="5" fill="none" stroke="currentColor" stroke-width="2.3"/><circle cx="31" cy="17" r="5" fill="none" stroke="currentColor" stroke-width="2.3"/><path d="M8 35c1.2-6 5-9 9-9s7.8 3 9 9M22 35c1.2-6 5-9 9-9s7.8 3 9 9" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg></div><div class="credit-card-copy"><h3>Demografia UFRN</h3><p>Portal de divulgação e circulação de conteúdos relacionados à demografia, população e saúde, aproximando produção acadêmica e comunicação científica.</p></div></div>
+  <a href="https://demografiaufrn.net/" rel="noopener noreferrer" target="_blank">Acessar Demografia UFRN</a>
+</article>
+<article class="info-card credit-card credit-card--institution">
+  <div class="credit-card-main"><div class="credit-card-visual credit-card-visual--icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M12 8h20l6 6v26H12V8Z" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round"/><path d="M32 8v8h8M18 23h14M18 29h14M18 35h9" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg></div><div class="credit-card-copy"><h3>Uso acadêmico</h3><p>Ao utilizar gráficos, tabelas ou arquivos exportados, cite o Vigitel/Ministério da Saúde como fonte dos dados e o Observatório Analítico do Vigitel como ferramenta de visualização.</p></div></div>
+</article>
+<article class="info-card credit-card credit-card--institution">
+  <div class="credit-card-main"><div class="credit-card-visual credit-card-visual--icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M8 12 20 8l8 4 12-4v28l-12 4-8-4-12 4V12Z" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round"/><path d="M20 8v28M28 12v28" fill="none" stroke="currentColor" stroke-width="2.3"/></svg></div><div class="credit-card-copy"><h3>Geometria do mapa</h3><p>Os limites vetoriais das unidades da Federação utilizam a geometria Brazil de @svg-maps, baseada no trabalho da MapSVG e adaptada ao projeto sob licença CC BY 4.0.</p></div></div>
+  <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener noreferrer" target="_blank">Consultar licença cartográfica</a>
+</article>
+</div>
+</section>
+
+<section class="info-section info-page info-page--downloads" hidden="" id="microdados">
+<header class="info-hero"><span class="info-hero-icon" aria-hidden="true">⇩</span><div><span class="info-eyebrow">Transparência que pode ser baixada</span><h2>Microdados e downloads</h2><p>Esta área orienta a consulta aos arquivos e às fontes oficiais. O acesso aos microdados e às bases tratadas amplia a transparência, permite conferir os Resultados Processados e apoia análises próprias fora do painel.</p><div class="info-tags"><span>Reprodução</span><span>Conferência</span><span>Dados oficiais</span></div></div></header>
+<div class="info-grid">
+<article class="info-card"><h3>Microdados e reprodução</h3><p>Os microdados não são redistribuídos neste repositório. Os scripts, dicionários e testes necessários para conferir e atualizar o painel estão organizados nas pastas scripts/, testes/, dados/ e documentacao/. A área de Administração prepara os arquivos atualizados sem publicar credenciais ou microdados.</p><a href="https://svs.aids.gov.br/daent/cgdnt/vigitel/" rel="noopener noreferrer" target="_blank">Consultar a página oficial do Vigitel</a></article>
+</div>
+</section>
+</main>
+<script>
+/**
+ * Exibe apenas a página informativa correspondente à aba escolhida no menu.
+ */
+function mostrarPaginaInformativa(){
+  const secoesValidas = new Set(['metodologia','sobre','contato','creditos','microdados']);
+  const secaoSolicitada = location.hash.slice(1);
+  const secaoAtiva = secoesValidas.has(secaoSolicitada) ? secaoSolicitada : 'metodologia';
+  document.querySelectorAll('.info-section').forEach((secao)=>{
+    secao.hidden = secao.id !== secaoAtiva;
+  });
+  document.querySelectorAll('[data-info-section]').forEach((link)=>{
+    const ativo = link.dataset.infoSection === secaoAtiva;
+    link.classList.toggle('active', ativo);
+    if(ativo) link.setAttribute('aria-current','page');
+    else link.removeAttribute('aria-current');
+  });
+}
+window.addEventListener('hashchange', mostrarPaginaInformativa);
+mostrarPaginaInformativa();
+</script>
+</body>
+</html>
