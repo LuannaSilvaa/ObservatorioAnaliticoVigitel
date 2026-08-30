@@ -150,8 +150,20 @@
   }
 
   /**
-   * Conecta os controles do guia. Ele é aberto somente quando a pessoa escolhe
-   * “Como usar” ou acessa explicitamente o atalho de tutorial pela URL.
+   * Informa se este navegador ainda não concluiu nem pulou o tutorial.
+   */
+  function tutorialAindaNaoVisto(){
+    try{
+      return localStorage.getItem(ONBOARDING_STORAGE_KEY) !== 'sim';
+    }catch(error){
+      return true;
+    }
+  }
+
+  /**
+   * Conecta os controles do guia. Para novos usuários, o tutorial é aberto
+   * automaticamente na primeira visita. Depois disso, continua disponível
+   * pelo botão “Como usar” ou pelo atalho explícito na URL.
    */
   function iniciarTutorial(){
     const dialogo = document.querySelector('#onboardingDialog');
@@ -165,6 +177,12 @@
       else mostrarEtapaTutorial(onboardingStep+1);
     });
     dialogo.addEventListener('cancel',event=>{event.preventDefault();fecharTutorial();});
+
+    if(tutorialAindaNaoVisto()){
+      window.setTimeout(()=>{
+        if(!dialogo.open) abrirTutorial();
+      },700);
+    }
   }
 
   /**
