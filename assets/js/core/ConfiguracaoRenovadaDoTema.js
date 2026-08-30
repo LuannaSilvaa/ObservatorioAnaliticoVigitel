@@ -8,7 +8,7 @@
     const temaDaUrl = new URLSearchParams(window.location.search).get('tema');
     const mode = ['light','dark','auto'].includes(temaDaUrl)
       ? temaDaUrl
-      : (localStorage.getItem('vigitel-theme-mode') || 'auto');
+      : (localStorage.getItem('vigitel-theme-mode') || 'light');
     const systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const applied = mode === 'auto' ? (systemDark ? 'dark' : 'light') : (mode === 'dark' ? 'dark' : 'light');
     document.documentElement.dataset.themeMode = mode;
@@ -18,7 +18,7 @@
       localStorage.setItem('vigitel-theme', applied);
     }
   }catch(error){
-    document.documentElement.dataset.themeMode = 'auto';
+    document.documentElement.dataset.themeMode = 'light';
     document.documentElement.dataset.theme = 'light';
   }
 })();
