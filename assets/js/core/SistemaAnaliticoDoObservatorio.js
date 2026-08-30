@@ -31,9 +31,9 @@ const THEME_MEDIA_QUERY = window.matchMedia ? window.matchMedia('(prefers-color-
  */
 function resolveThemeMode(){
   try{
-    return localStorage.getItem(THEME_MODE_STORAGE_KEY) || document.documentElement.dataset.themeMode || 'auto';
+    return localStorage.getItem(THEME_MODE_STORAGE_KEY) || document.documentElement.dataset.themeMode || 'light';
   }catch(error){
-    return document.documentElement.dataset.themeMode || 'auto';
+    return document.documentElement.dataset.themeMode || 'light';
   }
 }
 
@@ -7122,3 +7122,8 @@ function downloadSvg(){
   img.onerror=function(){URL.revokeObjectURL(url);announceSave('Não foi possível gerar a imagem PNG. Tente novamente ou use a exportação SVG.');};
   img.src=url;
 }
+
+/* Exportação explícita para o carregador progressivo. */
+window.VigitelAnalitico = window.VigitelAnalitico || {};
+window.VigitelAnalitico.init = init;
+
