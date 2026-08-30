@@ -6,7 +6,7 @@
  */
 
 (function(){
-  const EDICAO = 'modaisCompactos20260820v19';
+  const EDICAO = 'temaClaroTutorial20260829v28';
   const tela = document.querySelector('#appLoadingScreen');
   const barra = document.querySelector('#appLoadingBar');
   const percentual = document.querySelector('#appLoadingPercent');
@@ -103,7 +103,11 @@
    * Ativa o painel depois que base, sistema e complementos estão disponíveis.
    */
   function iniciarModulos(){
-    init();
+    const iniciarAnalitico = window.VigitelAnalitico?.init || window.init;
+    if(typeof iniciarAnalitico !== 'function'){
+      throw new Error('O módulo analítico principal não foi inicializado corretamente. Atualize os arquivos do sistema e recarregue a página.');
+    }
+    iniciarAnalitico();
     window.VigitelGlossary?.init();
     window.VigitelDiagnostics?.init();
     window.VigitelMobile?.init();
